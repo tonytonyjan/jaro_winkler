@@ -36,7 +36,9 @@ module JaroWinkler
     matches == 0 ? 0 : 1.0 / 3.0 * (matches / length1 + matches / length2 + (matches - transpositions) / matches)
   end
 
-  def jaro_winkler_distance s1, s2, weight: 0.1, threshold: 0.7, case_match: false
+  def jaro_winkler_distance s1, s2, options = {}
+    options = {weight: 0.1, threshold: 0.7, case_match: false}.merge options
+    weight, threshold, case_match = options[:weight], options[:threshold], options[:case_match]
     raise 'Scaling factor should not exceed 0.25, otherwise the distance can become larger than 1' if weight > 0.25
     s1, s2 = s1.downcase, s2.downcase if case_match
     distance = jaro_distance(s1, s2)
