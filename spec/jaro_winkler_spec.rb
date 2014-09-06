@@ -12,4 +12,13 @@ describe JaroWinkler do
     expect(JaroWinkler.jaro_winkler_distance("tony", "")).to eq 0.0
     expect(JaroWinkler.jaro_winkler_distance("", "tony")).to eq 0.0
   end
+
+  it 'can ignore case' do
+    expect(JaroWinkler.jaro_winkler_distance("MARTHA", "marhta", case_match: true)).to  be_within(0.0001).of(0.9611)
+  end
+
+  it 'can set weight' do
+    expect(JaroWinkler.jaro_winkler_distance("MARTHA", "MARHTA", weight: 0.2)).to  be_within(0.0001).of(0.9778)
+    expect{ JaroWinkler.jaro_winkler_distance("MARTHA", "MARHTA", weight: 0.26) }.to  raise_error
+  end
 end
