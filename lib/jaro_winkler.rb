@@ -33,7 +33,7 @@ module JaroWinkler
       end
     end
     # Don't divide transpositions by 2 since it's been counted directly by above code.
-    matches == 0 ? 0 : 1.0 / 3.0 * (matches / length1 + matches / length2 + (matches - transpositions) / matches)
+    matches == 0 ? 0 : (matches / length1 + matches / length2 + (matches - transpositions) / matches) / 3.0
   end
 
   def jaro_winkler_distance s1, s2, options = {}
