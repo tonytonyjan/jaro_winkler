@@ -16,7 +16,7 @@ JaroWinkler.jaro_winkler_distance "MARTHA", "MARHTA"
 # => 0.9611
 JaroWinkler.jaro_winkler_distance "MARTHA", "marhta", case_match: true
 # => 0.9611
-JaroWinkler.jaro_winkler_distance "MARTHA", "marhta", weight: 0.2
+JaroWinkler.jaro_winkler_distance "MARTHA", "MARHTA", weight: 0.2
 # => 0.9778
 ```
 
