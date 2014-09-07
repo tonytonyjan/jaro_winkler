@@ -8,12 +8,12 @@ module JaroWinkler
       tmp = s1; s1 = s2; s2 = tmp
     end
     length1, length2 = s1.length, s2.length
-    window_size      = ([length1, length2].max / 2) - 1
+    window_size      = (s2.length / 2) - 1
     matches          = 0.0
     transpositions   = 0
     previous_index   = -1
+    max_index = length2 - 1
     s1.chars.each_with_index do |c1, i|
-      max_index = length2 - 1
       left      = i - window_size
       right     = i + window_size
       left      = 0         if left  < 0
