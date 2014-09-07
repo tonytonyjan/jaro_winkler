@@ -40,10 +40,12 @@ describe JaroWinkler do
 
   it 'can ignore case' do
     expect(distance('MARTHA', 'marhta', case_match: true)).to be_within(0.0001).of(0.9611)
+    expect(c_distance('MARTHA', 'marhta', case_match: true)).to be_within(0.0001).of(0.9611)
   end
 
   it 'can set weight' do
     expect(distance('MARTHA', 'MARHTA', weight: 0.2)).to be_within(0.0001).of(0.9778)
+    expect(c_distance('MARTHA', 'MARHTA', weight: 0.2)).to be_within(0.0001).of(0.9778)
     expect{ distance('MARTHA', 'MARHTA', weight: 0.26) }.to raise_error
   end
 end

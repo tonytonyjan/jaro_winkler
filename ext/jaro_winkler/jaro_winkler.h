@@ -3,6 +3,6 @@
 
 #include "ruby.h"
 
-static VALUE rb_distance(int argc, VALUE *argv, VALUE obj);
+VALUE rb_distance(int argc, VALUE *argv, VALUE obj);
 
 #endif /* JARO_WINKLER_H */

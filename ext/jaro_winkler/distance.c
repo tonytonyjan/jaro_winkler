@@ -1,6 +1,15 @@
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "distance.h"
+
+Option* option_new(){
+  Option *opt = calloc(1, sizeof(Option));
+  opt->case_match = 0;
+  opt->weight = 0.1;
+  opt->threshold = 0.7;
+  return opt;
+}
 
 static int char_bytes_num(char first_char){
   unsigned char c = first_char;
@@ -26,9 +35,19 @@ static unsigned long* codepoints(const char *str, int *ret_len){
   return ret;
 }
 
-double c_distance(char *s1, char *s2){
+double c_distance(char *s1, char *s2, Option *opt){
+  // set default option if NULL passed
+  int free_opt_flag = 0;
+  if(!opt){ free_opt_flag = 1; opt = option_new(); }
+
   int ary_1_len, ary_2_len;
   unsigned long *ary_1 = codepoints(s1, &ary_1_len), *ary_2 = codepoints(s2, &ary_2_len);
+
+  if(opt->case_match){
+    for(int i = 0; i < ary_1_len; ++i) if(ary_1[i] < 256 && islower(ary_1[i])) ary_1[i] -= 32;
+    for(int i = 0; i < ary_2_len; ++i) if(ary_2[i] < 256 && islower(ary_2[i])) ary_2[i] -= 32;
+  }
+
   // Guarantee the order
   if(ary_1_len > ary_2_len){
     unsigned long *tmp = ary_1; ary_1 = ary_2; ary_2 = tmp;
@@ -67,7 +86,7 @@ double c_distance(char *s1, char *s2){
   double jaro_distance =  matches == 0 ? 0 : (matches / ary_1_len + matches / ary_2_len + (matches - transpositions) / matches) / 3.0;
 
   // calculate jaro-winkler distance
-  double threshold = 0.7, weight = 0.1;
+  double threshold = opt->threshold, weight = opt->weight;
   int prefix = 0;
   int max_length = ary_1_len > 4 ? 4 : ary_1_len;
   for(int i = 0; i < max_length; ++i){
@@ -75,5 +94,6 @@ double c_distance(char *s1, char *s2){
     else break;
   }
   free(ary_1); free(ary_2);
+  if(free_opt_flag) free(opt);
   return jaro_distance < threshold ? jaro_distance : jaro_distance + ((prefix * weight) * (1 - jaro_distance));
 }
