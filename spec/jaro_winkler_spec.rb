@@ -25,28 +25,24 @@ describe JaroWinkler do
 
   it 'works' do
     @ary.each do |s1, s2, ans|
-      expect(distance(s1, s2)).to be_within(0.0001).of(ans)
-    end
-  end
-
-  it 'supports C extension' do
-    @ary.each do |s1, s2, ans|
+      expect(r_distance(s1, s2)).to be_within(0.0001).of(ans)
       expect(c_distance(s1, s2)).to be_within(0.0001).of(ans)
     end
   end
 
   it 'works with UTF-8' do
-    expect(distance('變形金剛4:絕跡重生', '變形金剛4: 絕跡重生')).to eq c_distance('0123456789', '01234x56789')
+    expect(c_distance('變形金剛4:絕跡重生', '變形金剛4: 絕跡重生')).to eq c_distance('0123456789', '01234x56789')
   end
 
   it 'can ignore case' do
-    expect(distance('MARTHA', 'marhta', case_match: true)).to be_within(0.0001).of(0.9611)
+    expect(r_distance('MARTHA', 'marhta', case_match: true)).to be_within(0.0001).of(0.9611)
     expect(c_distance('MARTHA', 'marhta', case_match: true)).to be_within(0.0001).of(0.9611)
   end
 
   it 'can set weight' do
-    expect(distance('MARTHA', 'MARHTA', weight: 0.2)).to be_within(0.0001).of(0.9778)
+    expect(r_distance('MARTHA', 'MARHTA', weight: 0.2)).to be_within(0.0001).of(0.9778)
     expect(c_distance('MARTHA', 'MARHTA', weight: 0.2)).to be_within(0.0001).of(0.9778)
-    expect{ distance('MARTHA', 'MARHTA', weight: 0.26) }.to raise_error
+    expect{ r_distance('MARTHA', 'MARHTA', weight: 0.26) }.to raise_error
+    expect{ c_distance('MARTHA', 'MARHTA', weight: 0.26) }.to raise_error
   end
 end
