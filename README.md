@@ -1,6 +1,6 @@
 # About
 
-It's a pure Ruby implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm.
+It's a implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm, it uses C extension and will fallback to pure Ruby version in JRuby.
 
 # Installation
 
@@ -19,9 +19,9 @@ JaroWinkler.distance "MARTHA", "marhta", case_match: true
 JaroWinkler.distance "MARTHA", "MARHTA", weight: 0.2
 # => 0.9778
 
-# Native
-JaroWinkler.c_distance "MARTHA", "MARHTA" # Recommended one, it's 7 times faster than the latter.
-JaroWinkler.distance "MARTHA", "MARHTA", native: true
+# Force the strategy
+JaroWinkler.c_distance "MARTHA", "MARHTA"
+JaroWinkler.r_distance "MARTHA", "MARHTA"
 ```
 
 **Both implementations support UTF-8 string.**
@@ -33,7 +33,6 @@ Name        | Type    | Default | Note
 case_match  | boolean | false   | All upper case characters are converted to lower case prior to the comparison.
 weight      | number  | 0.1     | A constant scaling factor for how much the score is adjusted upwards for having common prefixes.
 threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above a this.
-native      | boolean | false   | Use native version.
 
 # Why This?
 
@@ -86,4 +85,3 @@ end
 # Todo
 
 - Adjusting word table (Reference to original C implementation.)
-- Remove `#c_distance`, use C extension as default, and fallback to Ruby in Java platform.
