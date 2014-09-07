@@ -5,8 +5,8 @@ ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'c
 
 n = 100000
 Benchmark.bmbm do |x|
-  x.report 'jaro_winkler    ' do
-    n.times{ ary.each{ |str1, str2| JaroWinkler.distance(str1, str2) } }
+  x.report 'jaro_winkler' do
+    n.times{ ary.each{ |str1, str2| JaroWinkler.r_distance(str1, str2) } }
   end
 
   x.report 'fuzzystringmatch' do

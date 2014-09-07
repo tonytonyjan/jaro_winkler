@@ -5,12 +5,8 @@ ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'c
 
 n = 100000
 Benchmark.bmbm do |x|
-  x.report '#c_distance(s1, s2)' do
+  x.report 'jaro_winkler' do
     n.times{ ary.each{ |str1, str2| JaroWinkler.c_distance(str1, str2) } }
-  end
-
-  x.report '#distance(s1, s2, native: true)' do
-    n.times{ ary.each{ |str1, str2| JaroWinkler.distance(str1, str2, native: true) } }
   end
 
   x.report 'fuzzystringmatch' do
@@ -19,7 +15,6 @@ Benchmark.bmbm do |x|
   end
 end
 
-#                                       user     system      total        real
-# #c_distance(s1, s2)               0.350000   0.000000   0.350000 (  0.349109)
-# #distance(s1, s2, native: true)   2.480000   0.050000   2.530000 (  2.526027)
-# fuzzystringmatch                  0.160000   0.000000   0.160000 (  0.155539)
+#                        user     system      total        real
+# jaro_winkler       0.380000   0.000000   0.380000 (  0.386071)
+# fuzzystringmatch   0.140000   0.000000   0.140000 (  0.138053)
