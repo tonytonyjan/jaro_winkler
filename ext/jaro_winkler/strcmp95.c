@@ -48,7 +48,7 @@ double  strcmp95(char *ying, char *yang, long y_length, int *ind_c)
 
    The suggested values are all zeros for character strings such as names.    */
 
-static  int pass=1, adjwt[91][91];
+static  int pass=1/* TODO: make it an option parameter */, adjwt[91][91];
 static  char  sp[39][2] =
  {'A','E',  'A','I',  'A','O',  'A','U',  'B','V',  'E','I',  'E','O',  'E','U',
   'I','O',  'I','U',  'O','U',  'I','Y',  'E','Y',  'C','G',  'E','F',
