@@ -28,5 +28,5 @@ static VALUE distance(VALUE self, VALUE s1, VALUE s2){
 
 void Init_jaro_winkler(void){
   rb_mJaroWinkler = rb_define_module("JaroWinkler");
-  rb_define_module_function(rb_mJaroWinkler, "distance", distance, 2);
+  rb_define_module_function(rb_mJaroWinkler, "c_distance", distance, 2);
 }

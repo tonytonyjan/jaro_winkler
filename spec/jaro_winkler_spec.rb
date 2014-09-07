@@ -21,22 +21,22 @@ describe JaroWinkler do
 
   it 'works' do
     @ary.each do |s1, s2, ans|
-      expect(jaro_winkler_distance(s1, s2)).to be_within(0.0001).of(ans)
+      expect(distance(s1, s2)).to be_within(0.0001).of(ans)
     end
   end
 
   it 'supports C extension' do
     @ary.each do |s1, s2, ans|
-      expect(distance(s1, s2)).to be_within(0.0001).of(ans)
+      expect(distance(s1, s2, native: true)).to be_within(0.0001).of(ans)
     end
   end
 
   it 'can ignore case' do
-    expect(jaro_winkler_distance('MARTHA', 'marhta', case_match: true)).to be_within(0.0001).of(0.9611)
+    expect(distance('MARTHA', 'marhta', case_match: true)).to be_within(0.0001).of(0.9611)
   end
 
   it 'can set weight' do
-    expect(jaro_winkler_distance('MARTHA', 'MARHTA', weight: 0.2)).to be_within(0.0001).of(0.9778)
-    expect{ jaro_winkler_distance('MARTHA', 'MARHTA', weight: 0.26) }.to raise_error
+    expect(distance('MARTHA', 'MARHTA', weight: 0.2)).to be_within(0.0001).of(0.9778)
+    expect{ distance('MARTHA', 'MARHTA', weight: 0.26) }.to raise_error
   end
 end
