@@ -9,7 +9,8 @@ module JaroWinkler
       s1, s2 = s2, s1
       length1, length2 = length2, length1
     end
-    window_size      = (s2.length / 2) - 1
+    window_size      = (length2 / 2) - 1
+    window_size = 0 if window_size < 0
     matches          = 0.0
     transpositions   = 0
     previous_index   = -1

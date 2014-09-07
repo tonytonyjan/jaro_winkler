@@ -13,6 +13,7 @@ describe JaroWinkler do
       ['fvie', 'ten', 0.0],
       ['tony', 'tony', 1.0],
       ['tonytonyjan', 'tonytonyjan', 1.0],
+      ['x', 'x', 1.0],
       ['', '', 0.0],
       ['tony', '', 0.0],
       ['', 'tony', 0.0],

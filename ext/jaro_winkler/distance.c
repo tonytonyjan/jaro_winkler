@@ -35,6 +35,7 @@ double c_distance(char *s1, char *s2){
     int tmp2 = ary_1_len; ary_1_len = ary_2_len; ary_2_len = tmp2;
   }
   int window_size = ary_2_len / 2 - 1;
+  if(window_size < 0) window_size = 0;
   double matches = 0.0;
   int transpositions = 0;
   int previous_index = -1;
