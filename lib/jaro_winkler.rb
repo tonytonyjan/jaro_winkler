@@ -1,3 +1,4 @@
+require 'jaro_winkler/jaro_winkler.so'
 module JaroWinkler
   module_function
   def jaro_distance s1, s2

@@ -8,6 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = JaroWinkler::VERSION
   spec.authors       = ["Jian Weihang"]
   spec.email         = ["tonytonyjan@gmail.com"]
+  spec.extensions    = ["ext/jaro_winkler/extconf.rb"]
   spec.summary       = %q{Pure Ruby implementation of Jaro-Winkler distance algorithm.}
   spec.description   = %q{Pure Ruby implementation of Jaro-Winkler distance algorithm.}
   spec.homepage      = "https://github.com/tonytonyjan/jaro_winkler"
@@ -20,4 +21,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake-compiler"
 end
