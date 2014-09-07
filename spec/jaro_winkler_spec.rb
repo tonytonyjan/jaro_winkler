@@ -15,7 +15,9 @@ describe JaroWinkler do
       ['tonytonyjan', 'tonytonyjan', 1.0],
       ['', '', 0.0],
       ['tony', '', 0.0],
-      ['', 'tony', 0.0]
+      ['', 'tony', 0.0],
+      ['tonytonyjan', 'tony', 0.8727],
+      ['tony', 'tonytonyjan', 0.8727]
     ]
   end
 
