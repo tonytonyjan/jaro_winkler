@@ -55,10 +55,10 @@ double c_distance(char *s1, char *s2, Option *opt){
   }
   int window_size = ary_2_len / 2 - 1;
   if(window_size < 0) window_size = 0;
-  double matches = 0.0;
+  double matches     = 0.0;
   int transpositions = 0;
   int previous_index = -1;
-  int max_index = ary_2_len - 1;
+  int max_index      = ary_2_len - 1;
   for(int i = 0; i < ary_1_len; i++){
     int left  = i - window_size;
     int right = i + window_size;

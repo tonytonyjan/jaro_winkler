@@ -8,12 +8,12 @@ module JaroWinkler
       s1, s2 = s2, s1
       length1, length2 = length2, length1
     end
-    window_size      = (length2 / 2) - 1
-    window_size = 0 if window_size < 0
-    matches          = 0.0
-    transpositions   = 0
-    previous_index   = -1
-    max_index = length2 - 1
+    window_size    = (length2 / 2) - 1
+    window_size    = 0 if window_size < 0
+    matches        = 0.0
+    transpositions = 0
+    previous_index = -1
+    max_index      = length2 - 1
     s1.chars.each_with_index do |c1, i|
       left      = i - window_size
       right     = i + window_size
@@ -46,9 +46,9 @@ module JaroWinkler
     options = {weight: 0.1, threshold: 0.7, case_match: false}.merge options
     weight, threshold, case_match = options[:weight], options[:threshold], options[:case_match]
     raise 'Scaling factor should not exceed 0.25, otherwise the distance can become larger than 1' if weight > 0.25
-    s1, s2 = s1.downcase, s2.downcase if case_match
-    distance = jaro_distance(s1, s2)
-    prefix = 0
+    s1, s2     = s1.downcase, s2.downcase if case_match
+    distance   = jaro_distance(s1, s2)
+    prefix     = 0
     max_length = [4, s1.length, s2.length].min
     s1[0, max_length].chars.each_with_index do |c1, i|
       c1 == s2[i] ? prefix += 1 : break
