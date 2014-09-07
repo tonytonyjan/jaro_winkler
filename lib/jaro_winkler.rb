@@ -1,4 +1,4 @@
-require 'jaro_winkler/jaro_winkler.so'
+require 'jaro_winkler/jaro_winkler.so' unless RUBY_PLATFORM == 'java'
 module JaroWinkler
   module_function
   def jaro_distance s1, s2
@@ -39,7 +39,7 @@ module JaroWinkler
 
   def distance s1, s2, options = {}
     options = {weight: 0.1, threshold: 0.7, case_match: false, native: false}.merge options
-    return c_distance(s1, s2) if options[:native]
+    return c_distance(s1, s2) if RUBY_PLATFORM != 'java' && options[:native]
     weight, threshold, case_match = options[:weight], options[:threshold], options[:case_match]
     raise 'Scaling factor should not exceed 0.25, otherwise the distance can become larger than 1' if weight > 0.25
     s1, s2 = s1.downcase, s2.downcase if case_match
