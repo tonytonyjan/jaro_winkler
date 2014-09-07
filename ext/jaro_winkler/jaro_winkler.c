@@ -17,6 +17,7 @@ VALUE rb_distance(int argc, VALUE *argv, VALUE self){
     VALUE threshold = rb_hash_aref(opt, ID2SYM(rb_intern("threshold")));
     VALUE case_match = rb_hash_aref(opt, ID2SYM(rb_intern("case_match")));
     if(!NIL_P(weight)) c_opt->weight = NUM2DBL(weight);
+    if(c_opt->weight > 0.25) rb_raise(rb_eRuntimeError, "Scaling factor should not exceed 0.25, otherwise the distance can become larger than 1.");
     if(!NIL_P(threshold)) c_opt->threshold = NUM2DBL(threshold);
     if(!NIL_P(case_match)) c_opt->case_match = (TYPE(case_match) == T_FALSE || NIL_P(case_match)) ? 0 : 1;
   }

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'jaro_winkler'
 include JaroWinkler
 describe JaroWinkler do

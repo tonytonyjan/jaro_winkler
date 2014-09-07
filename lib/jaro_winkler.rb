@@ -42,7 +42,7 @@ module JaroWinkler
     matches == 0 ? 0 : (matches / length1 + matches / length2 + (matches - transpositions) / matches) / 3.0
   end
 
-  def distance s1, s2, options = {}
+  def r_distance s1, s2, options = {}
     options = {weight: 0.1, threshold: 0.7, case_match: false, native: false}.merge options
     return c_distance(s1, s2, options) if RUBY_PLATFORM != 'java' && options[:native]
     weight, threshold, case_match = options[:weight], options[:threshold], options[:case_match]
@@ -55,5 +55,12 @@ module JaroWinkler
       c1 == s2[i] ? prefix += 1 : break
     end
     distance < threshold ? distance : distance + ((prefix * weight) * (1 - distance))
+  end
+
+  if RUBY_PLATFORM == 'java'
+    alias :distance :r_distance
+    alias :c_distance :r_distance
+  else
+    alias :distance :c_distance
   end
 end
