@@ -18,6 +18,10 @@ JaroWinkler.distance "MARTHA", "marhta", case_match: true
 # => 0.9611
 JaroWinkler.distance "MARTHA", "MARHTA", weight: 0.2
 # => 0.9778
+
+# Native
+JaroWinkler.c_distance "MARTHA", "MARHTA"
+JaroWinkler.distance "MARTHA", "MARHTA", native: true
 ```
 
 ## Options
@@ -27,6 +31,14 @@ Name        | Type    | Default | Note
 case_match  | boolean | false   | All upper case characters are converted to lower case prior to the comparison.
 weight      | number  | 0.1     | A constant scaling factor for how much the score is adjusted upwards for having common prefixes.
 threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above a this.
+native      | boolean | false   | Use native version, note that it omits all the other options.
+
+## Pure Ruby v.s. Native
+
+               | Pure | Native
+-------------- | ---- | ------
+UTF-8 Support  | Yes  | No
+Option Setting | Yes  | No
 
 # Why This?
 
@@ -60,23 +72,28 @@ require 'fuzzystringmatch'
 ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'cabvwxyz'], ['dwayne', 'duane'], ['dixon', 'dicksonx'], ['fvie', 'ten']]
 
 n = 100000
-Benchmark.bm do |x|
+Benchmark.bmbm do |x|
   x.report 'jaro_winkler    ' do
     n.times{ ary.each{ |str1, str2| JaroWinkler.distance(str1, str2) } }
   end
+
   x.report 'fuzzystringmatch' do
     jarow = FuzzyStringMatch::JaroWinkler.create(:pure)
     n.times{ ary.each{ |str1, str2| jarow.getDistance(str1, str2) } }
   end
 end
-```
 
-```
-      user     system      total        real
-jaro_winkler     12.420000   0.010000  12.430000 ( 12.433671)
-fuzzystringmatch 14.910000   0.010000  14.920000 ( 14.931410)
+#                        user     system      total        real
+# jaro_winkler      12.480000   0.010000  12.490000 ( 12.497828)
+# fuzzystringmatch  14.990000   0.010000  15.000000 ( 15.014898)
 ```
 
 # Todo
 
-- Add C extension.
+- Speed up `#distance(s1, s2, native: true)`
+- Support UTF-8 in native version.
+- Add more optoins to natvie version.
+  - case_match
+  - weight
+  - threshold
+  - adjusting word table (It's from the original C implementation.)
