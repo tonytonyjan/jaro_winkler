@@ -3,6 +3,6 @@
 
 #include "ruby.h"
 
-double strcmp95(char *ying, char *yang, long y_length, int *ind_c);
+static VALUE rb_distance(int argc, VALUE *argv, VALUE obj);
 
 #endif /* JARO_WINKLER_H */

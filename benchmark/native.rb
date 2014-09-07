@@ -20,6 +20,6 @@ Benchmark.bmbm do |x|
 end
 
 #                                       user     system      total        real
-# #c_distance(s1, s2)               0.270000   0.000000   0.270000 (  0.270250)
-# #distance(s1, s2, native: true)   2.030000   0.050000   2.080000 (  2.075878)
-# fuzzystringmatch                  0.140000   0.000000   0.140000 (  0.141239)
+# #c_distance(s1, s2)               0.350000   0.000000   0.350000 (  0.349109)
+# #distance(s1, s2, native: true)   2.480000   0.050000   2.530000 (  2.526027)
+# fuzzystringmatch                  0.160000   0.000000   0.160000 (  0.155539)
