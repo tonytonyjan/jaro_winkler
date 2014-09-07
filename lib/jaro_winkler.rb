@@ -3,11 +3,12 @@ module JaroWinkler
   module_function
   def jaro_distance s1, s2
     return 0.0 if s1.empty? || s2.empty?
+    length1, length2 = s1.length, s2.length
     # Guarantee the length order
     if s1.length > s2.length
-      tmp = s1; s1 = s2; s2 = tmp
+      s1, s2 = s2, s1
+      length1, length2 = length2, length1
     end
-    length1, length2 = s1.length, s2.length
     window_size      = (s2.length / 2) - 1
     matches          = 0.0
     transpositions   = 0
