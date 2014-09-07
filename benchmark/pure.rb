@@ -4,7 +4,7 @@ require 'fuzzystringmatch'
 ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'cabvwxyz'], ['dwayne', 'duane'], ['dixon', 'dicksonx'], ['fvie', 'ten']]
 
 n = 100000
-Benchmark.bm do |x|
+Benchmark.bmbm do |x|
   x.report 'jaro_winkler    ' do
     n.times{ ary.each{ |str1, str2| JaroWinkler.distance(str1, str2) } }
   end
@@ -15,6 +15,6 @@ Benchmark.bm do |x|
   end
 end
 
-#        user     system      total        real
-# jaro_winkler     13.090000   0.020000  13.110000 ( 13.132467)
-# fuzzystringmatch 15.040000   0.010000  15.050000 ( 15.054266)
+#                        user     system      total        real
+# jaro_winkler      12.480000   0.010000  12.490000 ( 12.497828)
+# fuzzystringmatch  14.990000   0.010000  15.000000 ( 15.014898)
