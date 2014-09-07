@@ -20,9 +20,11 @@ JaroWinkler.distance "MARTHA", "MARHTA", weight: 0.2
 # => 0.9778
 
 # Native
-JaroWinkler.c_distance "MARTHA", "MARHTA"
+JaroWinkler.c_distance "MARTHA", "MARHTA" # Recommended one, it's 7 times faster than the latter.
 JaroWinkler.distance "MARTHA", "MARHTA", native: true
 ```
+
+**Both implementations support UTF-8 string.**
 
 ## Options
 
@@ -32,13 +34,6 @@ case_match  | boolean | false   | All upper case characters are converted to low
 weight      | number  | 0.1     | A constant scaling factor for how much the score is adjusted upwards for having common prefixes.
 threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above a this.
 native      | boolean | false   | Use native version, note that it omits all the other options.
-
-## Pure Ruby v.s. Native
-
-               | Pure | Native
--------------- | ---- | ------
-UTF-8 Support  | Yes  | No
-Option Setting | Yes  | No
 
 # Why This?
 
@@ -90,10 +85,9 @@ end
 
 # Todo
 
-- Speed up `#distance(s1, s2, native: true)`
-- Support UTF-8 in native version.
 - Add more optoins to natvie version.
   - case_match
   - weight
   - threshold
   - adjusting word table (It's from the original C implementation.)
+- Remove `#c_distance`, use C extension as default, and fallback to Ruby in Java platform.
