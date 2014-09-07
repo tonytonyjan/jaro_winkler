@@ -20,8 +20,8 @@ JaroWinkler.distance "MARTHA", "MARHTA", weight: 0.2
 # => 0.9778
 
 # Force the strategy
-JaroWinkler.c_distance "MARTHA", "MARHTA"
-JaroWinkler.r_distance "MARTHA", "MARHTA"
+JaroWinkler.c_distance "MARTHA", "MARHTA" # C extension
+JaroWinkler.r_distance "MARTHA", "MARHTA" # Pure Ruby
 ```
 
 **Both implementations support UTF-8 string.**
