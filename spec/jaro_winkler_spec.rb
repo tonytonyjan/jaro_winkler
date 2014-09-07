@@ -30,7 +30,7 @@ describe JaroWinkler do
 
   it 'supports C extension' do
     @ary.each do |s1, s2, ans|
-      expect(distance(s1, s2, native: true)).to be_within(0.0001).of(ans)
+      expect(c_distance(s1, s2)).to be_within(0.0001).of(ans)
     end
   end
 
