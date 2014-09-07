@@ -33,7 +33,7 @@ Name        | Type    | Default | Note
 case_match  | boolean | false   | All upper case characters are converted to lower case prior to the comparison.
 weight      | number  | 0.1     | A constant scaling factor for how much the score is adjusted upwards for having common prefixes.
 threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above a this.
-native      | boolean | false   | Use native version, note that it omits all the other options.
+native      | boolean | false   | Use native version.
 
 # Why This?
 
@@ -85,9 +85,5 @@ end
 
 # Todo
 
-- Add more optoins to natvie version.
-  - case_match
-  - weight
-  - threshold
-  - adjusting word table (It's from the original C implementation.)
+- Adjusting word table (Reference to original C implementation.)
 - Remove `#c_distance`, use C extension as default, and fallback to Ruby in Java platform.
