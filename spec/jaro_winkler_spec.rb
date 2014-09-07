@@ -33,6 +33,10 @@ describe JaroWinkler do
     end
   end
 
+  it 'works with UTF-8' do
+    expect(distance('變形金剛4:絕跡重生', '變形金剛4: 絕跡重生')).to eq c_distance('0123456789', '01234x56789')
+  end
+
   it 'can ignore case' do
     expect(distance('MARTHA', 'marhta', case_match: true)).to be_within(0.0001).of(0.9611)
   end
