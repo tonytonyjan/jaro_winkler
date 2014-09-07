@@ -12,11 +12,11 @@ gem install jaro_winkler
 
 ```ruby
 require 'jaro_winkler'
-JaroWinkler.jaro_winkler_distance "MARTHA", "MARHTA"
+JaroWinkler.distance "MARTHA", "MARHTA"
 # => 0.9611
-JaroWinkler.jaro_winkler_distance "MARTHA", "marhta", case_match: true
+JaroWinkler.distance "MARTHA", "marhta", case_match: true
 # => 0.9611
-JaroWinkler.jaro_winkler_distance "MARTHA", "MARHTA", weight: 0.2
+JaroWinkler.distance "MARTHA", "MARHTA", weight: 0.2
 # => 0.9778
 ```
 
@@ -62,7 +62,7 @@ ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'c
 n = 100000
 Benchmark.bm do |x|
   x.report 'jaro_winkler    ' do
-    n.times{ ary.each{ |str1, str2| JaroWinkler.jaro_winkler_distance(str1, str2) } }
+    n.times{ ary.each{ |str1, str2| JaroWinkler.distance(str1, str2) } }
   end
   x.report 'fuzzystringmatch' do
     jarow = FuzzyStringMatch::JaroWinkler.create(:pure)
