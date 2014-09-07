@@ -32,7 +32,7 @@ Name        | Type    | Default | Note
 ----------- | ------  | ------- | ------------------------------------------------------------------------------------------------------------
 case_match  | boolean | false   | All upper case characters are converted to lower case prior to the comparison.
 weight      | number  | 0.1     | A constant scaling factor for how much the score is adjusted upwards for having common prefixes.
-threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above a this.
+threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above the threshold.
 
 # Why This?
 
