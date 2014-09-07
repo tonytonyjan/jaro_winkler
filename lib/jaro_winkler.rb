@@ -59,7 +59,9 @@ module JaroWinkler
   if RUBY_PLATFORM == 'java'
     alias :distance :r_distance
     alias :c_distance :r_distance
+    module_function :distance, :c_distance
   else
     alias :distance :c_distance
+    module_function :distance
   end
 end
