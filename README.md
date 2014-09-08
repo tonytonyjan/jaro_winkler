@@ -60,7 +60,7 @@ string 1   | string 2   | origin   | fuzzy-string-match | jaro_winkler
 
 ## Benchmark
 
-- jaro_winkler (1.0.1)
+- jaro_winkler (1.2.3)
 - fuzzy-string-match (0.9.6)
 
 ```ruby
@@ -71,8 +71,8 @@ ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'c
 
 n = 100000
 Benchmark.bmbm do |x|
-  x.report 'jaro_winkler    ' do
-    n.times{ ary.each{ |str1, str2| JaroWinkler.distance(str1, str2) } }
+  x.report 'jaro_winkler' do
+    n.times{ ary.each{ |str1, str2| JaroWinkler.r_distance(str1, str2) } }
   end
 
   x.report 'fuzzystringmatch' do
@@ -80,11 +80,12 @@ Benchmark.bmbm do |x|
     n.times{ ary.each{ |str1, str2| jarow.getDistance(str1, str2) } }
   end
 end
-
-#                        user     system      total        real
-# jaro_winkler      12.480000   0.010000  12.490000 ( 12.497828)
-# fuzzystringmatch  14.990000   0.010000  15.000000 ( 15.014898)
 ```
+
+                 | user      | system   | total     | real
+ --------------- | --------- | -------- | --------- | ------------
+jaro_winkler     | 12.750000 | 0.030000 | 12.780000 | ( 12.782842)
+fuzzystringmatch | 16.240000 | 0.030000 | 16.270000 | ( 16.287380)
 
 # Todo
 
