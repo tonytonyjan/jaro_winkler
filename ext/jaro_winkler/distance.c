@@ -22,7 +22,7 @@ static int char_bytes_num(char first_char){
 }
 
 static unsigned long long* codepoints(const char *str, int byte_len, int *ret_len){
-  unsigned long long *ret = calloc(byte_len, sizeof(long));
+  unsigned long long *ret = calloc(byte_len, sizeof(long long));
   int count = 0;
   for(int i = 0; i < byte_len;){
     int bytes_num = char_bytes_num(str[i]);
