@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Jian Weihang"]
   spec.email         = ["tonytonyjan@gmail.com"]
   spec.extensions    = ["ext/jaro_winkler/extconf.rb"] unless JaroWinkler.fallback?
-  spec.summary       = %q{Pure Ruby implementation of Jaro-Winkler distance algorithm.}
-  spec.description   = %q{Pure Ruby implementation of Jaro-Winkler distance algorithm.}
+  spec.summary       = %q{Ruby & C implementation of Jaro-Winkler distance algorithm which both support UTF-8 string.}
+  spec.description   = %q{It's a implementation of Jaro-Winkler distance algorithm, it uses C extension and will fallback to pure Ruby version in JRuby. Both implementation supports UTF-8 string.}
   spec.homepage      = "https://github.com/tonytonyjan/jaro_winkler"
   spec.license       = "MIT"
 
