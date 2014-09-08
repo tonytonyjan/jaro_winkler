@@ -21,8 +21,7 @@ VALUE rb_distance(int argc, VALUE *argv, VALUE self){
     if(!NIL_P(threshold)) c_opt->threshold = NUM2DBL(threshold);
     if(!NIL_P(case_match)) c_opt->case_match = (TYPE(case_match) == T_FALSE || NIL_P(case_match)) ? 0 : 1;
   }
-  // TODO: replace StringValueCStr with StringValuePtr and RSTRING_LEN
-  VALUE ret = rb_float_new(c_distance(StringValueCStr(s1), StringValueCStr(s2), c_opt));
+  VALUE ret = rb_float_new(c_distance(StringValuePtr(s1), RSTRING_LEN(s1), StringValuePtr(s2), RSTRING_LEN(s2), c_opt));
   free(c_opt);
   return ret;
 }

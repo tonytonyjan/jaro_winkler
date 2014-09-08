@@ -21,11 +21,10 @@ static int char_bytes_num(char first_char){
   else return 1;
 }
 
-static unsigned long* codepoints(const char *str, int *ret_len){
-  int str_len = strlen(str);
-  unsigned long *ret = calloc(str_len, sizeof(long));
+static unsigned long* codepoints(const char *str, int byte_len, int *ret_len){
+  unsigned long *ret = calloc(byte_len, sizeof(long));
   int count = 0;
-  for(int i = 0; i < str_len;){
+  for(int i = 0; i < byte_len;){
     int bytes_num = char_bytes_num(str[i]);
     memcpy(&ret[count], &str[i], bytes_num);
     count++;
@@ -35,13 +34,13 @@ static unsigned long* codepoints(const char *str, int *ret_len){
   return ret;
 }
 
-double c_distance(char *s1, char *s2, Option *opt){
+double c_distance(char *s1, int byte_len1, char *s2, int byte_len2, Option *opt){
   // set default option if NULL passed
   int free_opt_flag = 0;
   if(!opt){ free_opt_flag = 1; opt = option_new(); }
 
   int ary_1_len, ary_2_len;
-  unsigned long *ary_1 = codepoints(s1, &ary_1_len), *ary_2 = codepoints(s2, &ary_2_len);
+  unsigned long *ary_1 = codepoints(s1, byte_len1, &ary_1_len), *ary_2 = codepoints(s2, byte_len2, &ary_2_len);
 
   if(opt->case_match){
     for(int i = 0; i < ary_1_len; ++i) if(ary_1[i] < 256 && islower(ary_1[i])) ary_1[i] -= 32;
