@@ -5,15 +5,20 @@ Rake::ExtensionTask.new("jaro_winkler") do |ext|
   ext.lib_dir = "lib/jaro_winkler"
 end
 
-task :benchmark do
+desc 'type can be "native" or "pure"'
+task :benchmark, :type do |t, args|
+  args.with_defaults(type: :all)
   ROOT_PATH = File.expand_path('..', __FILE__)
   LIB_PATH = File.join(ROOT_PATH, 'lib')
   BENCHMARK_PATH = File.join(ROOT_PATH, 'benchmark')
-  Dir[File.join(BENCHMARK_PATH, '*.rb')].each do |path|
+
+  files = File.join(BENCHMARK_PATH, args[:type] == :all ? '*.rb' : "#{args[:type]}.rb")
+  Dir[files].each do |path|
     output_path = File.join(BENCHMARK_PATH, File.basename(path, '*.rb').sub('.rb', '.txt'))
-    cmd = "RUBYLIB=#{LIB_PATH} ruby #{path} > #{output_path}"
+    cmd = "RUBYLIB=#{LIB_PATH} ruby #{path}"
     puts cmd
-    system(cmd)
+    output = `#{cmd}`
+    File.write(output_path, output)
   end
 end
 
