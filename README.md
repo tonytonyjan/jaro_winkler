@@ -2,10 +2,6 @@
 
 It's a implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm, it uses C extension and will fallback to pure Ruby version in JRuby. Both implementation supports UTF-8 string.
 
-**Windows Issue**
-
-It will fallabck to pure Ruby implementation on Windows since it can't be compiled currently. (ref [#1](https://github.com/tonytonyjan/jaro_winkler/issues/1))
-
 # Installation
 
 ```
