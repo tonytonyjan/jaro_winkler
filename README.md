@@ -34,7 +34,7 @@ JaroWinkler.r_distance "MARTHA", "MARHTA" # Pure Ruby
 
 Name        | Type    | Default | Note
 ----------- | ------  | ------- | ------------------------------------------------------------------------------------------------------------
-case_match  | boolean | false   | All upper case characters are converted to lower case prior to the comparison.
+case_match  | boolean | false   | All lower case characters are converted to upper case prior to the comparison.
 weight      | number  | 0.1     | A constant scaling factor for how much the score is adjusted upwards for having common prefixes.
 threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above the threshold.
 
