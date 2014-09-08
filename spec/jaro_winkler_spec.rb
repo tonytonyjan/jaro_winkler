@@ -66,13 +66,13 @@ describe JaroWinkler do
 
   it 'works with adjusting table' do
     ary = [
-      ['HENKA'       , 'HENKAN'      , 0.9667] ,
-      ['AL'          , 'AL'          , 1.0]    ,
-      ['MARTHA'      , 'MARHTA'      , 0.9708] ,
-      ['JONES'       , 'JOHNSON'     , 0.8738] ,
-      ['ABCVWXYZ'    , 'CABVWXYZ'    , 0.9745] ,
-      ['DWAYNE'      , 'DUANE'       , 0.8961] ,
-      ['DIXON'       , 'DICKSONX'    , 0.8539] ,
+      ['HENKA'       , 'HENKAN'      , 0.9667] , # m=5, t=0, s=0
+      ['AL'          , 'AL'          , 1.0]  , # m=2, t=0, s=0
+      ['MARTHA'      , 'MARHTA'      , 0.9611] , # m=6, t=1, s=0
+      ['JONES'       , 'JOHNSON'     , 0.8598] , # m=4, t=0, s=3
+      ['ABCVWXYZ'    , 'CABVWXYZ'    , 0.9583] , # m=8, t=1, s=0
+      ['DWAYNE'      , 'DUANE'       , 0.8730] , # m=4, t=0, s=3
+      ['DIXON'       , 'DICKSONX'    , 0.8393] , # m=4, t=0, s=3
       ['FVIE'        , 'TEN'         , 0.0]
     ]
     ary.each do |s1, s2, ans|

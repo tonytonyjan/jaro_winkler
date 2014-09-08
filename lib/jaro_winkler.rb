@@ -1,8 +1,10 @@
 require 'jaro_winkler/fallback'
+require 'jaro_winkler/adjusting_table'
 require 'jaro_winkler/jaro_winkler.so' unless JaroWinkler.fallback?
 module JaroWinkler
   module_function
-  def jaro_distance s1, s2
+  def jaro_distance s1, s2, options = {}
+    options = {adj_table: false}.merge options
     length1, length2 = s1.length, s2.length
     # Guarantee the length order
     if s1.length > s2.length
@@ -12,6 +14,7 @@ module JaroWinkler
     window_size    = (length2 / 2) - 1
     window_size    = 0 if window_size < 0
     matches        = 0.0
+    sim_matches    = 0.0
     transpositions = 0
     previous_index = -1
     max_index      = length2 - 1
@@ -21,6 +24,7 @@ module JaroWinkler
       left      = 0         if left  < 0
       right     = max_index if right > max_index
       matched   = false
+      sim_matched = false
       found     = false
       s2[left..right].chars.each_with_index do |c2, j|
         if c1 == c2
@@ -30,15 +34,21 @@ module JaroWinkler
             previous_index = s2_index
             found          = true
           end
+        else
+          sim_matched = true if ADJ_TABLE[c1][c2]
         end
       end
       if matched
         matches += 1
         transpositions += 1 unless found
+      elsif sim_matched # not matched but similarly matched
+        sim_matches += 3
       end
     end
     # Don't divide transpositions by 2 since it's been counted directly by above code.
-    matches == 0 ? 0 : (matches / length1 + matches / length2 + (matches - transpositions) / matches) / 3.0
+    similarity = matches
+    similarity += sim_matches / 10 if options[:adj_table]
+    matches == 0 ? 0 : (similarity / length1 + similarity / length2 + (matches - transpositions) / matches) / 3.0
   end
 
   def r_distance s1, s2, options = {}
@@ -46,7 +56,7 @@ module JaroWinkler
     weight, threshold, ignore_case = options[:weight], options[:threshold], options[:ignore_case]
     raise 'Scaling factor should not exceed 0.25, otherwise the distance can become larger than 1' if weight > 0.25
     s1, s2     = s1.upcase, s2.upcase if ignore_case
-    distance   = jaro_distance(s1, s2)
+    distance   = jaro_distance(s1, s2, options)
     prefix     = 0
     max_length = [4, s1.length, s2.length].min
     s1[0, max_length].chars.each_with_index do |c1, i|
