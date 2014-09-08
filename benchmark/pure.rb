@@ -14,7 +14,3 @@ Benchmark.bmbm do |x|
     n.times{ ary.each{ |str1, str2| jarow.getDistance(str1, str2) } }
   end
 end
-
-#                        user     system      total        real
-# jaro_winkler      12.480000   0.010000  12.490000 ( 12.497828)
-# fuzzystringmatch  14.990000   0.010000  15.000000 ( 15.014898)
