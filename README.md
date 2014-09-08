@@ -42,50 +42,58 @@ threshold   | number  | 0.7     | The prefix bonus is only added when the compar
 
 There is also another gem named [fuzzy-string-match](https://github.com/kiyoka/fuzzy-string-match), it uses the same algorithm and both provides C and Ruby implementation.
 
-I reinvent this wheel because of the naming in `fuzzy-string-match` such as `getDistance` breaks convention, and some weird code like `a1 = s1.split( // )` (`s1.chars` could be better), furthermore, it's bugged:
+I reinvent this wheel because of the naming in `fuzzy-string-match` such as `getDistance` breaks convention, and some weird code like `a1 = s1.split( // )` (`s1.chars` could be better), furthermore, it's bugged (see table below).
 
-string 1   | string 2   | origin   | fuzzy-string-match | jaro_winkler
----------- | ---------- | -------- | ------------------ | ------------------
-"henka"    | "henkan"   | 0.966667 | 0.9722 (wrong)     | 0.9666666666666667
-"al"       | "al"       | 1.000000 | 1.0                | 1.0
-"martha"   | "marhta"   | 0.961111 | 0.9611             | 0.9611111111111111
-"jones"    | "johnson"  | 0.832381 | 0.8323             | 0.8323809523809523
-"abcvwxyz" | "cabvwxyz" | 0.958333 | 0.9583             | 0.9583333333333333
-"dwayne"   | "duane"    | 0.840000 | 0.8400             | 0.84
-"dixon"    | "dicksonx" | 0.813333 | 0.8133             | 0.8133333333333332
-"fvie"     | "ten"      | 0.000000 | 0.0                | 0
+# Compare with other gems
+
+             | jaro_winkler | fuzzystringmatch | hotwater | amatch
+------------ | ------------ | ---------------- | -------- | ------
+UTF-8 Suport | Yes          | Pure Ruby only   |          |
+Native       | Yes          | Yes              | Yes      | Yes
+Pure Ruby    | Yes          | Yes              |          |
+Speed        | Medium       | Fast             | Medium   | Low
+Bug Found    |              | Yes              |          | Yes
+
+
+str_1      | str_2      | origin       | jaro_winkler | fuzzystringmatch | hotwater | amatch
+---        | ---        | ---          | ---          | ---              | ---      | ---
+"henka"    | "henkan"   | 0.9667       | 0.9667       | 0.9722           | 0.9667   | 0.9444
+"al"       | "al"       | 1.0          | 1.0          | 1.0              | 1.0      | 1.0
+"martha"   | "marhta"   | 0.9611       | 0.9611       | 0.9611           | 0.9611   | 0.9444
+"jones"    | "johnson"  | 0.8324       | 0.8324       | 0.8324           | 0.8324   | 0.7905
+"abcvwxyz" | "cabvwxyz" | 0.9583       | 0.9583       | 0.9583           | 0.9583   | 0.9583
+"dwayne"   | "duane"    | 0.84         | 0.84         | 0.84             | 0.84     | 0.8222
+"dixon"    | "dicksonx" | 0.8133       | 0.8133       | 0.8133           | 0.8133   | 0.7667
+"fvie"     | "ten"      | 0.0          | 0.0          | 0.0              | 0.0      | 0.0
 
 - The origin result is from the [original C implementation by the author of the algorithm](http://web.archive.org/web/20100227020019/http://www.census.gov/geo/msb/stand/strcmp.c).
 - Test data are borrowed from [fuzzy-string-match's rspec file](https://github.com/kiyoka/fuzzy-string-match/blob/master/test/basic_pure_spec.rb).
 
 ## Benchmark
 
+### Pure Ruby
+
+                 | user      | system   | total     | real
+---------------- | --------- | -------- | --------- | ------------
+jaro_winkler     | 12.750000 | 0.030000 | 12.780000 | ( 12.782842)
+fuzzystringmatch | 16.240000 | 0.030000 | 16.270000 | ( 16.287380)
+
 - jaro_winkler (1.2.3)
 - fuzzy-string-match (0.9.6)
 
-```ruby
-require 'benchmark'
-require 'jaro_winkler'
-require 'fuzzystringmatch'
-ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'cabvwxyz'], ['dwayne', 'duane'], ['dixon', 'dicksonx'], ['fvie', 'ten']]
+### Native
 
-n = 100000
-Benchmark.bmbm do |x|
-  x.report 'jaro_winkler' do
-    n.times{ ary.each{ |str1, str2| JaroWinkler.r_distance(str1, str2) } }
-  end
+                 | user     | system   | total    | real
+---------------- | -------- | -------- | -------- | ------------
+jaro_winkler     | 0.390000 | 0.000000 | 0.390000 | (  0.392408)
+fuzzystringmatch | 0.150000 | 0.000000 | 0.150000 | (  0.151552)
+hotwater         | 0.320000 | 0.000000 | 0.320000 | (  0.317740)
+amatch           | 0.960000 | 0.010000 | 0.970000 | (  0.964803)
 
-  x.report 'fuzzystringmatch' do
-    jarow = FuzzyStringMatch::JaroWinkler.create(:pure)
-    n.times{ ary.each{ |str1, str2| jarow.getDistance(str1, str2) } }
-  end
-end
-```
-
-                 | user      | system   | total     | real
- --------------- | --------- | -------- | --------- | ------------
-jaro_winkler     | 12.750000 | 0.030000 | 12.780000 | ( 12.782842)
-fuzzystringmatch | 16.240000 | 0.030000 | 16.270000 | ( 16.287380)
+- jaro_winkler (1.2.3)
+- fuzzy-string-match (0.9.6)
+- hotwater (0.1.2)
+- amatch (0.3.0)
 
 # Todo
 
