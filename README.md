@@ -14,7 +14,7 @@ gem install jaro_winkler
 require 'jaro_winkler'
 JaroWinkler.distance "MARTHA", "MARHTA"
 # => 0.9611
-JaroWinkler.distance "MARTHA", "marhta", case_match: true
+JaroWinkler.distance "MARTHA", "marhta", ignore_case: true
 # => 0.9611
 JaroWinkler.distance "MARTHA", "MARHTA", weight: 0.2
 # => 0.9778
@@ -30,7 +30,7 @@ JaroWinkler.r_distance "MARTHA", "MARHTA" # Pure Ruby
 
 Name        | Type    | Default | Note
 ----------- | ------  | ------- | ------------------------------------------------------------------------------------------------------------
-case_match  | boolean | false   | All lower case characters are converted to upper case prior to the comparison.
+ignore_case | boolean | false   | All lower case characters are converted to upper case prior to the comparison.
 weight      | number  | 0.1     | A constant scaling factor for how much the score is adjusted upwards for having common prefixes.
 threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above the threshold.
 

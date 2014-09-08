@@ -42,10 +42,10 @@ module JaroWinkler
   end
 
   def r_distance s1, s2, options = {}
-    options = {weight: 0.1, threshold: 0.7, case_match: false}.merge options
-    weight, threshold, case_match = options[:weight], options[:threshold], options[:case_match]
+    options = {weight: 0.1, threshold: 0.7, ignore_case: false}.merge options
+    weight, threshold, ignore_case = options[:weight], options[:threshold], options[:ignore_case]
     raise 'Scaling factor should not exceed 0.25, otherwise the distance can become larger than 1' if weight > 0.25
-    s1, s2     = s1.upcase, s2.upcase if case_match
+    s1, s2     = s1.upcase, s2.upcase if ignore_case
     distance   = jaro_distance(s1, s2)
     prefix     = 0
     max_length = [4, s1.length, s2.length].min

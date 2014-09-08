@@ -2,7 +2,7 @@
 #define DISTANCE_H 1
 
 typedef struct{
-  char case_match;
+  char ignore_case;
   double weight, threshold;
 } Option;
 

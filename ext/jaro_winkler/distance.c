@@ -5,7 +5,7 @@
 
 Option* option_new(){
   Option *opt = calloc(1, sizeof(Option));
-  opt->case_match = 0;
+  opt->ignore_case = 0;
   opt->weight = 0.1;
   opt->threshold = 0.7;
   return opt;
@@ -42,7 +42,7 @@ double c_distance(char *s1, int byte_len1, char *s2, int byte_len2, Option *opt)
   int ary_1_len, ary_2_len;
   unsigned long long *ary_1 = codepoints(s1, byte_len1, &ary_1_len), *ary_2 = codepoints(s2, byte_len2, &ary_2_len);
 
-  if(opt->case_match){
+  if(opt->ignore_case){
     for(int i = 0; i < ary_1_len; ++i) if(ary_1[i] < 256 && islower(ary_1[i])) ary_1[i] -= 32;
     for(int i = 0; i < ary_2_len; ++i) if(ary_2[i] < 256 && islower(ary_2[i])) ary_2[i] -= 32;
   }
