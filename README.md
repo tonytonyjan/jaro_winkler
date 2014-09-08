@@ -54,16 +54,17 @@ Pure Ruby    | Yes          | Yes              |          |
 Speed        | Medium       | Fast             | Medium   | Low
 Bug Found    |              | Yes              |          | Yes
 
+For `Bug Found`, I made a rake task to build the table below, the source code is in `Rakefile`:
 
 str_1      | str_2      | origin       | jaro_winkler | fuzzystringmatch | hotwater | amatch
 ---        | ---        | ---          | ---          | ---              | ---      | ---
-"henka"    | "henkan"   | 0.9667       | 0.9667       | 0.9722           | 0.9667   | 0.9444
+"henka"    | "henkan"   | 0.9667       | 0.9667       | **0.9722**           | 0.9667   | **0.9444**
 "al"       | "al"       | 1.0          | 1.0          | 1.0              | 1.0      | 1.0
-"martha"   | "marhta"   | 0.9611       | 0.9611       | 0.9611           | 0.9611   | 0.9444
-"jones"    | "johnson"  | 0.8324       | 0.8324       | 0.8324           | 0.8324   | 0.7905
+"martha"   | "marhta"   | 0.9611       | 0.9611       | 0.9611           | 0.9611   | **0.9444**
+"jones"    | "johnson"  | 0.8324       | 0.8324       | 0.8324           | 0.8324   | **0.7905**
 "abcvwxyz" | "cabvwxyz" | 0.9583       | 0.9583       | 0.9583           | 0.9583   | 0.9583
-"dwayne"   | "duane"    | 0.84         | 0.84         | 0.84             | 0.84     | 0.8222
-"dixon"    | "dicksonx" | 0.8133       | 0.8133       | 0.8133           | 0.8133   | 0.7667
+"dwayne"   | "duane"    | 0.84         | 0.84         | 0.84             | 0.84     | **0.8222**
+"dixon"    | "dicksonx" | 0.8133       | 0.8133       | 0.8133           | 0.8133   | **0.7667**
 "fvie"     | "ten"      | 0.0          | 0.0          | 0.0              | 0.0      | 0.0
 
 - The origin result is from the [original C implementation by the author of the algorithm](http://web.archive.org/web/20100227020019/http://www.census.gov/geo/msb/stand/strcmp.c).
@@ -97,4 +98,5 @@ amatch           | 0.960000 | 0.010000 | 0.970000 | (  0.964803)
 
 # Todo
 
+- Make it faster
 - Adjusting word table (Reference to original C implementation.)
