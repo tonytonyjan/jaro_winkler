@@ -26,11 +26,9 @@ module JaroWinkler
         if c1 == c2
           matched  = true
           s2_index = left + j
-          unless found
-            if s2_index > previous_index
-              previous_index = s2_index
-              found          = true
-            end
+          if !found && s2_index > previous_index
+            previous_index = s2_index
+            found          = true
           end
         end
       end

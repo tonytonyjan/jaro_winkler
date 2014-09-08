@@ -21,8 +21,8 @@ static int char_bytes_num(char first_char){
   else return 1;
 }
 
-static unsigned long* codepoints(const char *str, int byte_len, int *ret_len){
-  unsigned long *ret = calloc(byte_len, sizeof(long));
+static unsigned long long* codepoints(const char *str, int byte_len, int *ret_len){
+  unsigned long long *ret = calloc(byte_len, sizeof(long));
   int count = 0;
   for(int i = 0; i < byte_len;){
     int bytes_num = char_bytes_num(str[i]);
@@ -40,7 +40,7 @@ double c_distance(char *s1, int byte_len1, char *s2, int byte_len2, Option *opt)
   if(!opt){ free_opt_flag = 1; opt = option_new(); }
 
   int ary_1_len, ary_2_len;
-  unsigned long *ary_1 = codepoints(s1, byte_len1, &ary_1_len), *ary_2 = codepoints(s2, byte_len2, &ary_2_len);
+  unsigned long long *ary_1 = codepoints(s1, byte_len1, &ary_1_len), *ary_2 = codepoints(s2, byte_len2, &ary_2_len);
 
   if(opt->case_match){
     for(int i = 0; i < ary_1_len; ++i) if(ary_1[i] < 256 && islower(ary_1[i])) ary_1[i] -= 32;
@@ -49,7 +49,7 @@ double c_distance(char *s1, int byte_len1, char *s2, int byte_len2, Option *opt)
 
   // Guarantee the order
   if(ary_1_len > ary_2_len){
-    unsigned long *tmp = ary_1; ary_1 = ary_2; ary_2 = tmp;
+    unsigned long long *tmp = ary_1; ary_1 = ary_2; ary_2 = tmp;
     int tmp2 = ary_1_len; ary_1_len = ary_2_len; ary_2_len = tmp2;
   }
   int window_size = ary_2_len / 2 - 1;
@@ -63,17 +63,14 @@ double c_distance(char *s1, int byte_len1, char *s2, int byte_len2, Option *opt)
     int right = i + window_size;
     if(left  < 0) left = 0;
     if(right > max_index) right = max_index;
-    char matched   = 0;
-    char found     = 0;
+    char matched = 0, found = 0;
     for(int j = left; j <= right; j++){
       if(ary_1[i] == ary_2[j]){
         matched = 1;
-        if(!found){
-          if(j > previous_index){
-            previous_index = j;
-            found = 1;
-          }
-        } // if(!found){
+        if(!found && j > previous_index){
+          previous_index = j;
+          found = 1;
+        }
       } // if(ary_1[i] == ary_2[j]){
     } // for(int j = left; j <= right; j++){
     if(matched){
