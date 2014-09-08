@@ -63,4 +63,21 @@ describe JaroWinkler do
     expect{ r_distance(*params) }.to raise_error
     expect{ c_distance(*params) }.to raise_error
   end
+
+  it 'works with adjusting table' do
+    ary = [
+      ['HENKA'       , 'HENKAN'      , 0.9667] ,
+      ['AL'          , 'AL'          , 1.0]    ,
+      ['MARTHA'      , 'MARHTA'      , 0.9708] ,
+      ['JONES'       , 'JOHNSON'     , 0.8738] ,
+      ['ABCVWXYZ'    , 'CABVWXYZ'    , 0.9745] ,
+      ['DWAYNE'      , 'DUANE'       , 0.8961] ,
+      ['DIXON'       , 'DICKSONX'    , 0.8539] ,
+      ['FVIE'        , 'TEN'         , 0.0]
+    ]
+    ary.each do |s1, s2, ans|
+      expect(r_distance(s1, s2, adj_table: true)).to be_within(0.0001).of(ans)
+      expect(c_distance(s1, s2, adj_table: true)).to be_within(0.0001).of(ans)
+    end
+  end
 end
