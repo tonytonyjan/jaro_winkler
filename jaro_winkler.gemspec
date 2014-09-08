@@ -1,6 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'jaro_winkler/fallback'
 require 'jaro_winkler/version'
 
 Gem::Specification.new do |spec|
@@ -8,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.version       = JaroWinkler::VERSION
   spec.authors       = ["Jian Weihang"]
   spec.email         = ["tonytonyjan@gmail.com"]
-  spec.extensions    = ["ext/jaro_winkler/extconf.rb"] unless RUBY_PLATFORM == 'java'
+  spec.extensions    = ["ext/jaro_winkler/extconf.rb"] unless JaroWinkler.fallback?
   spec.summary       = %q{Pure Ruby implementation of Jaro-Winkler distance algorithm.}
   spec.description   = %q{Pure Ruby implementation of Jaro-Winkler distance algorithm.}
   spec.homepage      = "https://github.com/tonytonyjan/jaro_winkler"

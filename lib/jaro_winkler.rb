@@ -1,4 +1,5 @@
-require 'jaro_winkler/jaro_winkler.so' unless RUBY_PLATFORM == 'java'
+require 'jaro_winkler/fallback'
+require 'jaro_winkler/jaro_winkler.so' unless JaroWinkler.fallback?
 module JaroWinkler
   module_function
   def jaro_distance s1, s2
@@ -56,7 +57,7 @@ module JaroWinkler
     distance < threshold ? distance : distance + ((prefix * weight) * (1 - distance))
   end
 
-  if RUBY_PLATFORM == 'java'
+  if JaroWinkler.fallback?
     alias :distance :r_distance
     alias :c_distance :r_distance
     module_function :distance, :c_distance
