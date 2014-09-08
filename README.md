@@ -1,6 +1,6 @@
 # About
 
-It's a implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm, it uses C extension and will fallback to pure Ruby version in JRuby. Both implementation supports UTF-8 string.
+It's an implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm, it uses C extension and will fallback to pure Ruby version in JRuby. Both of them supports UTF-8 string.
 
 # Installation
 
@@ -24,8 +24,6 @@ JaroWinkler.c_distance "MARTHA", "MARHTA" # C extension
 JaroWinkler.r_distance "MARTHA", "MARHTA" # Pure Ruby
 ```
 
-**Both implementations support UTF-8 string.**
-
 ## Options
 
 Name        | Type    | Default | Note
@@ -36,32 +34,33 @@ threshold   | number  | 0.7     | The prefix bonus is only added when the compar
 
 # Why This?
 
-There is also another gem named [fuzzy-string-match](https://github.com/kiyoka/fuzzy-string-match), it uses the same algorithm and both provides C and Ruby implementation.
+There is also another similar gem named [fuzzy-string-match](https://github.com/kiyoka/fuzzy-string-match) which both provides C and Ruby version as well.
 
-I reinvent this wheel because of the naming in `fuzzy-string-match` such as `getDistance` breaks convention, and some weird code like `a1 = s1.split( // )` (`s1.chars` could be better), furthermore, it's bugged (see table below).
+I reinvent this wheel because of the naming in `fuzzy-string-match` such as `getDistance` breaks convention, and some weird code like `a1 = s1.split( // )` (`s1.chars` could be better), furthermore, it's bugged (see tables below).
 
 # Compare with other gems
 
-             | jaro_winkler | fuzzystringmatch | hotwater | amatch
------------- | ------------ | ---------------- | -------- | ------
-UTF-8 Suport | Yes          | Pure Ruby only   |          |
-Native       | Yes          | Yes              | Yes      | Yes
-Pure Ruby    | Yes          | Yes              |          |
-Speed        | Medium       | Fast             | Medium   | Low
-Bug Found    |              | Yes              |          | Yes
+                | jaro_winkler | fuzzystringmatch | hotwater    | amatch
+--------------- | ------------ | ---------------- | --------    | ------
+UTF-8 Suport    | **Yes**      | Pure Ruby only   | No          | No
+Windows Support | **Yes**      |                  | No          | **Yes**
+Native          | **Yes**      | **Yes**          | **Yes**     | **Yes**
+Pure Ruby       | **Yes**      | **Yes**          | No          | No
+Speed           | Medium       | Fast             | Medium      | Slow
+Bug Found       | **Not Yet**  | Yes              | **Not Yet** | Yes
 
 For `Bug Found`, I made a rake task to build the table below, the source code is in `Rakefile`:
 
-str_1      | str_2      | origin       | jaro_winkler | fuzzystringmatch | hotwater | amatch
----        | ---        | ---          | ---          | ---              | ---      | ---
-"henka"    | "henkan"   | 0.9667       | 0.9667       | **0.9722**           | 0.9667   | **0.9444**
-"al"       | "al"       | 1.0          | 1.0          | 1.0              | 1.0      | 1.0
-"martha"   | "marhta"   | 0.9611       | 0.9611       | 0.9611           | 0.9611   | **0.9444**
-"jones"    | "johnson"  | 0.8324       | 0.8324       | 0.8324           | 0.8324   | **0.7905**
-"abcvwxyz" | "cabvwxyz" | 0.9583       | 0.9583       | 0.9583           | 0.9583   | 0.9583
-"dwayne"   | "duane"    | 0.84         | 0.84         | 0.84             | 0.84     | **0.8222**
-"dixon"    | "dicksonx" | 0.8133       | 0.8133       | 0.8133           | 0.8133   | **0.7667**
-"fvie"     | "ten"      | 0.0          | 0.0          | 0.0              | 0.0      | 0.0
+str_1      | str_2      | origin | jaro_winkler | fuzzystringmatch | hotwater | amatch
+---        | ---        | ---    | ---          | ---              | ---      | ---
+"henka"    | "henkan"   | 0.9667 | 0.9667       | **0.9722**       | 0.9667   | **0.9444**
+"al"       | "al"       | 1.0    | 1.0          | 1.0              | 1.0      | 1.0
+"martha"   | "marhta"   | 0.9611 | 0.9611       | 0.9611           | 0.9611   | **0.9444**
+"jones"    | "johnson"  | 0.8324 | 0.8324       | 0.8324           | 0.8324   | **0.7905**
+"abcvwxyz" | "cabvwxyz" | 0.9583 | 0.9583       | 0.9583           | 0.9583   | 0.9583
+"dwayne"   | "duane"    | 0.84   | 0.84         | 0.84             | 0.84     | **0.8222**
+"dixon"    | "dicksonx" | 0.8133 | 0.8133       | 0.8133           | 0.8133   | **0.7667**
+"fvie"     | "ten"      | 0.0    | 0.0          | 0.0              | 0.0      | 0.0
 
 - The origin result is from the [original C implementation by the author of the algorithm](http://web.archive.org/web/20100227020019/http://www.census.gov/geo/msb/stand/strcmp.c).
 - Test data are borrowed from [fuzzy-string-match's rspec file](https://github.com/kiyoka/fuzzy-string-match/blob/master/test/basic_pure_spec.rb).
