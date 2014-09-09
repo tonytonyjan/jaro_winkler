@@ -11,22 +11,25 @@ Option* option_new(){
   return opt;
 }
 
-static int char_bytes_num(char first_char){
-  unsigned char c = first_char;
-  if(c >= 252) return 6;      // 1111110x
-  else if(c >= 248) return 5; // 111110xx
-  else if(c >= 240) return 4; // 11110xxx
-  else if(c >= 224) return 3; // 1110xxxx
-  else if(c >= 192) return 2; // 110xxxxx
-  else return 1;
+static unsigned long long unicode_hash(const char *str, int *bytes_num){
+  unsigned char first_char = str[0];
+  if(first_char >= 252) *bytes_num = 6;      // 1111110x
+  else if(first_char >= 248) *bytes_num = 5; // 111110xx
+  else if(first_char >= 240) *bytes_num = 4; // 11110xxx
+  else if(first_char >= 224) *bytes_num = 3; // 1110xxxx
+  else if(first_char >= 192) *bytes_num = 2; // 110xxxxx
+  else *bytes_num = 1;
+  unsigned long long ret = 0;
+  memcpy(&ret, str, *bytes_num);
+  return ret;
 }
 
 static unsigned long long* codepoints(const char *str, int byte_len, int *ret_len){
   unsigned long long *ret = calloc(byte_len, sizeof(long long));
   int count = 0;
   for(int i = 0; i < byte_len;){
-    int bytes_num = char_bytes_num(str[i]);
-    memcpy(&ret[count], &str[i], bytes_num);
+    int bytes_num;
+    ret[count] = unicode_hash(&str[i], &bytes_num);
     count++;
     i += bytes_num;
   }
