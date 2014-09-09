@@ -11,30 +11,27 @@ Option* option_new(){
   return opt;
 }
 
-static unsigned long long unicode_hash(const char *str, int *bytes_num){
+void unicode_hash(const char *str, unsigned long long *ret_hash, int *ret_length){
   unsigned char first_char = str[0];
-  if(first_char >= 252) *bytes_num = 6;      // 1111110x
-  else if(first_char >= 248) *bytes_num = 5; // 111110xx
-  else if(first_char >= 240) *bytes_num = 4; // 11110xxx
-  else if(first_char >= 224) *bytes_num = 3; // 1110xxxx
-  else if(first_char >= 192) *bytes_num = 2; // 110xxxxx
-  else *bytes_num = 1;
-  unsigned long long ret = 0;
-  memcpy(&ret, str, *bytes_num);
-  return ret;
+  if(first_char >= 252) *ret_length = 6;      // 1111110x
+  else if(first_char >= 248) *ret_length = 5; // 111110xx
+  else if(first_char >= 240) *ret_length = 4; // 11110xxx
+  else if(first_char >= 224) *ret_length = 3; // 1110xxxx
+  else if(first_char >= 192) *ret_length = 2; // 110xxxxx
+  else *ret_length = 1;
+  memcpy(ret_hash, str, *ret_length);
 }
 
-static unsigned long long* codepoints(const char *str, int byte_len, int *ret_len){
-  unsigned long long *ret = calloc(byte_len, sizeof(long long));
+static void codepoints(const char *str, int byte_len, unsigned long long **ret_ary, int *ret_len){
+  *ret_ary = calloc(byte_len, sizeof(long long));
   int count = 0;
   for(int i = 0; i < byte_len;){
     int bytes_num;
-    ret[count] = unicode_hash(&str[i], &bytes_num);
+    unicode_hash(str + i, *ret_ary + count, &bytes_num);
     count++;
     i += bytes_num;
   }
   *ret_len = count;
-  return ret;
 }
 
 double c_distance(char *s1, int byte_len1, char *s2, int byte_len2, Option *opt){
@@ -43,7 +40,9 @@ double c_distance(char *s1, int byte_len1, char *s2, int byte_len2, Option *opt)
   if(!opt){ free_opt_flag = 1; opt = option_new(); }
 
   int ary_1_len, ary_2_len;
-  unsigned long long *ary_1 = codepoints(s1, byte_len1, &ary_1_len), *ary_2 = codepoints(s2, byte_len2, &ary_2_len);
+  unsigned long long *ary_1, *ary_2;
+  codepoints(s1, byte_len1, &ary_1, &ary_1_len);
+  codepoints(s2, byte_len2, &ary_2, &ary_2_len);
 
   if(opt->ignore_case){
     for(int i = 0; i < ary_1_len; ++i) if(ary_1[i] < 256 && islower(ary_1[i])) ary_1[i] -= 32;
@@ -81,6 +80,7 @@ double c_distance(char *s1, int byte_len1, char *s2, int byte_len2, Option *opt)
       if(!found) transpositions++;
     }
   } // for(int i = 0; i < ary_1_len; i++){
+
   // Don't divide transpositions by 2 since it's been counted directly by above code.
   double jaro_distance =  matches == 0 ? 0 : (matches / ary_1_len + matches / ary_2_len + (matches - transpositions) / matches) / 3.0;
 
