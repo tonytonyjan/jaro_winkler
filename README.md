@@ -46,7 +46,7 @@ adj_table   | boolean | false   | The option is used to give partial credit for 
 
 origin formula:
 
-![origin](https://chart.googleapis.com/chart?cht=tx&chl=%5Cbegin%7Bcases%7D%200%20%26%20m%3D0%20%5C%5C%20%5Cfrac%20%7B%201%20%7D%7B%203%20%7D%20(%5Cfrac%20%7B%20m%20%7D%7B%20%5Cleft%7C%20s1%20%5Cright%7C%20%20%7D%20%2B%5Cfrac%20%7B%20m%20%7D%7B%20%5Cleft%7C%20s2%20%5Cright%7C%20%20%7D%20%2B%5Cfrac%20%7B%20m-t%20%7D%7B%20m%20%7D%20)%20%26%20others%20%5Cend%7Bcases%7D)
+![origin](https://chart.googleapis.com/chart?cht=tx&chs&chl=%5Cbegin%7Bcases%7D0%26%7B%5Ctext%7Bif%20%7Dm%3D0%7D%5C%5C%5Cfrac%7B1%7D%7B3%7D(%5Cfrac%7Bm%7D%7B%5Cleft%7Cs1%5Cright%7C%7D%2B%5Cfrac%7Bm%7D%7B%5Cleft%7Cs2%5Cright%7C%7D%2B%5Cfrac%7Bm-t%7D%7Bm%7D)%26%5Ctext%7Bothers%7D%5Cend%7Bcases%7D)
 
 where
 
@@ -55,7 +55,7 @@ where
 
 with adjusting table:
 
-![adj](https://chart.googleapis.com/chart?cht=tx&chl=%5Cbegin%7Bcases%7D%200%20%26%20m%3D0%20%5C%5C%20%5Cfrac%20%7B%201%20%7D%7B%203%20%7D%20(%5Cfrac%20%7B%20%5Cfrac%20%7B%20s%20%7D%7B%2010%20%7D%20%2Bm%20%7D%7B%20%5Cleft%7C%20s1%20%5Cright%7C%20%20%7D%20%2B%5Cfrac%20%7B%20%5Cfrac%20%7B%20s%20%7D%7B%2010%20%7D%20%2Bm%20%7D%7B%20%5Cleft%7C%20s2%20%5Cright%7C%20%20%7D%20%2B%5Cfrac%20%7B%20m-t%20%7D%7B%20m%20%7D%20)%20%26%20others%20%5Cend%7Bcases%7D)
+![adj](https://chart.googleapis.com/chart?cht=tx&chs&chl=%5Cbegin%7Bcases%7D0%26%5Ctext%7Bif%20%7Dm%3D0%5C%5C%5Cfrac%7B1%7D%7B3%7D(%5Cfrac%7B%5Cfrac%7Bs%7D%7B10%7D%2Bm%7D%7B%5Cleft%7Cs1%5Cright%7C%7D%2B%5Cfrac%7B%5Cfrac%7Bs%7D%7B10%7D%2Bm%7D%7B%5Cleft%7Cs2%5Cright%7C%7D%2B%5Cfrac%7Bm-t%7D%7Bm%7D)%26%5Ctext%7Bothers%7D%5Cend%7Bcases%7D)
 
 where
 
