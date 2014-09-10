@@ -4,7 +4,7 @@ require 'jaro_winkler/jaro_winkler.so' unless JaroWinkler.fallback?
 module JaroWinkler
   module_function
   def jaro_distance s1, s2, options = {}
-    options = {adj_table: false}.merge options
+    options[:adj_table]
     length1, length2 = s1.length, s2.length
     # Guarantee the length order
     if s1.length > s2.length
@@ -52,7 +52,7 @@ module JaroWinkler
   end
 
   def r_distance s1, s2, options = {}
-    options = {weight: 0.1, threshold: 0.7, ignore_case: false}.merge options
+    options = {weight: 0.1, threshold: 0.7, ignore_case: false, adj_table: false}.merge options
     weight, threshold, ignore_case = options[:weight], options[:threshold], options[:ignore_case]
     raise 'Scaling factor should not exceed 0.25, otherwise the distance can become larger than 1' if weight > 0.25
     s1, s2     = s1.upcase, s2.upcase if ignore_case
