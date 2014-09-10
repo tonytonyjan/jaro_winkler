@@ -55,7 +55,7 @@ shared_examples 'common' do |strategy|
   it 'works with adjusting table' do
     ary = [
       ['HENKA'       , 'HENKAN'      , 0.9667] , # m=5, t=0, s=0
-      ['AL'          , 'AL'          , 1.0   ],  # m=2, t=0, s=0
+      ['AL'          , 'AL'          , 1.0   ] , # m=2, t=0, s=0
       ['MARTHA'      , 'MARHTA'      , 0.9611] , # m=6, t=1, s=0
       ['JONES'       , 'JOHNSON'     , 0.8598] , # m=4, t=0, s=3
       ['ABCVWXYZ'    , 'CABVWXYZ'    , 0.9583] , # m=8, t=1, s=0

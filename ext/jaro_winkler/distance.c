@@ -130,7 +130,7 @@ static UnicodeHash unicode_hash_new(const char *str){
 }
 
 static Codepoints codepoints_new(const char *str, int byte_len){
-  Codepoints ret = {0};
+  Codepoints ret = {};
   ret.ary = calloc(byte_len, sizeof(long long));
   int count = 0;
   for(int i = 0; i < byte_len;){
