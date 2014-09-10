@@ -6,7 +6,7 @@ typedef struct{
   double weight, threshold;
 } Option;
 
-double      c_distance(char *s1, int byte_len1, char *s2, int byte_len2, Option opt);
+double      c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option opt);
 Option      option_new();
 
 #endif /* DISTANCE_H */

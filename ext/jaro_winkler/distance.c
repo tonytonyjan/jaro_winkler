@@ -25,12 +25,12 @@ Option option_new(){
   return opt;
 }
 
-double c_distance(char *s1, int byte_len1, char *s2, int byte_len2, Option opt){
+double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option opt){
   // set default option if NULL passed
   int free_opt_flag = 0;
 
-  Codepoints code_ary_1 = codepoints_new(s1, byte_len1);
-  Codepoints code_ary_2 = codepoints_new(s2, byte_len2);
+  Codepoints code_ary_1 = codepoints_new(s1, s1_byte_len);
+  Codepoints code_ary_2 = codepoints_new(s2, s2_byte_len);
 
   if(opt.ignore_case){
     for(int i = 0; i < code_ary_1.length; ++i) if(code_ary_1.ary[i] < 256 && islower(code_ary_1.ary[i])) code_ary_1.ary[i] -= 32;
