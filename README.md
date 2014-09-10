@@ -76,7 +76,7 @@ Windows Support | **Yes**      |                  | No          | **Yes**
 Adjusting Table | **Yes**      | No               | No          | No
 Native          | **Yes**      | **Yes**          | **Yes**     | **Yes**
 Pure Ruby       | **Yes**      | **Yes**          | No          | No
-Speed           | Medium       | Fast             | Medium      | Slow
+Speed           | Medium       | **Fast**         | Medium      | Slow
 Bug Found       | **Not Yet**  | Yes              | **Not Yet** | Yes
 
 For `Bug Found`, I made a rake task to build the table below, the source code is in `Rakefile`:
@@ -124,4 +124,4 @@ amatch           | 0.960000 | 0.000000 | 0.960000 | (  0.961509)
 # Todo
 
 - Custom adjusting word table.
-- If the adjusting table is ASCII encoded, use dense matrix instread of sparse matrix to speed up.
+- If the adjusting table is ASCII encoded, use dense matrix instread of sparse matrix to speed up performance.
