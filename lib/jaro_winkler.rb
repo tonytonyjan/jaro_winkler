@@ -34,8 +34,8 @@ module JaroWinkler
             previous_index = s2_index
             found          = true
           end
-        else
-          sim_matched = true if DEFAULT_ADJ_TABLE[c1][c2]
+        elsif options[:adj_table] && DEFAULT_ADJ_TABLE[c1][c2]
+          sim_matched = true
         end
       end
       if matched

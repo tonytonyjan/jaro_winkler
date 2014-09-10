@@ -2,8 +2,8 @@
 #define DISTANCE_H 1
 
 typedef struct{
-  char ignore_case;
   double weight, threshold;
+  char ignore_case, adj_table;
 } Option;
 
 double      c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option opt);
