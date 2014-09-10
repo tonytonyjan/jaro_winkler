@@ -3,7 +3,7 @@ require 'jaro_winkler'
 require 'fuzzystringmatch'
 ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'cabvwxyz'], ['dwayne', 'duane'], ['dixon', 'dicksonx'], ['fvie', 'ten']]
 
-n = 100000
+n = 10000
 Benchmark.bmbm do |x|
   x.report 'jaro_winkler' do
     n.times{ ary.each{ |str1, str2| JaroWinkler.r_distance(str1, str2) } }
