@@ -28,6 +28,7 @@ static const char *DEFAULT_ADJ_TABLE[] = {
   "M","N", "L","I", "Q","O", "P","R", "I","J", "2","Z", "5","S", "8","B", "1","I", "1","L", "0","O",
   "0","Q", "C","K", "G","J", "E"," ", "Y"," ", "S"," "
 };
+static Matrix DEFAULT_MATRIX;
 
 static UnicodeHash unicode_hash_new(const char *str);
 static Codepoints codepoints_new(const char *str, int byte_len);
@@ -61,11 +62,10 @@ double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option o
   }
 
   // Adjusting table
-  Matrix matrix;
-  char free_matrix = 0;
+  static char first_time = 1;
   if(opt.adj_table){
-    matrix = matrix_new(DEFAULT_ADJ_TABLE, sizeof(DEFAULT_ADJ_TABLE) / 8);
-    free_matrix = 1;
+    if(first_time) DEFAULT_MATRIX = matrix_new(DEFAULT_ADJ_TABLE, sizeof(DEFAULT_ADJ_TABLE) / 8);
+    first_time = 0;
   }
 
   // Compute jaro distance
@@ -91,7 +91,7 @@ double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option o
           previous_index = j;
           found = 1;
         }
-      }else if(opt.adj_table && matrix_find(matrix, code_ary_1.ary[i], code_ary_2.ary[j])) sim_matched = 1;
+      }else if(opt.adj_table && matrix_find(DEFAULT_MATRIX, code_ary_1.ary[i], code_ary_2.ary[j])) sim_matched = 1;
     } // for(int j = left; j <= right; j++){
     if(matched){
       matches++;
@@ -112,7 +112,7 @@ double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option o
     if(code_ary_1.ary[i] == code_ary_2.ary[i]) prefix++;
     else break;
   }
-  free(code_ary_1.ary); free(code_ary_2.ary); if(free_matrix) free(matrix.coords);
+  free(code_ary_1.ary); free(code_ary_2.ary);
   return jaro_distance < threshold ? jaro_distance : jaro_distance + ((prefix * weight) * (1 - jaro_distance));
 }
 
