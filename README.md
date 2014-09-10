@@ -31,6 +31,16 @@ Name        | Type    | Default | Note
 ignore_case | boolean | false   | All lower case characters are converted to upper case prior to the comparison.
 weight      | number  | 0.1     | A constant scaling factor for how much the score is adjusted upwards for having common prefixes.
 threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above the threshold.
+adj_table   | boolean | false   | The option is used to give partial credit for characters that may be errors due to known phonetic or character recognition errors. A typical example is to match the letter "O" with the number "0".
+
+## Default Adjusting Table
+
+```
+['A', 'E'], ['A', 'I'], ['A', 'O'], ['A', 'U'], ['B', 'V'], ['E', 'I'], ['E', 'O'], ['E', 'U'], ['I', 'O'], ['I', 'U'],
+['O', 'U'], ['I', 'Y'], ['E', 'Y'], ['C', 'G'], ['E', 'F'], ['W', 'U'], ['W', 'V'], ['X', 'K'], ['S', 'Z'], ['X', 'S'],
+['Q', 'C'], ['U', 'V'], ['M', 'N'], ['L', 'I'], ['Q', 'O'], ['P', 'R'], ['I', 'J'], ['2', 'Z'], ['5', 'S'], ['8', 'B'],
+['1', 'I'], ['1', 'L'], ['0', 'O'], ['0', 'Q'], ['C', 'K'], ['G', 'J'], ['E', ' '], ['Y', ' '], ['S', ' ']
+```
 
 # Why This?
 
@@ -93,5 +103,5 @@ amatch           | 0.960000 | 0.010000 | 0.970000 | (  0.964803)
 
 # Todo
 
-- Make it faster
-- Adjusting word table (Reference to original C implementation.)
+- Custom adjusting word table.
+- If the adjusting table is ASCII encoded, use dense matrix instread of sparse matrix to speed up.
