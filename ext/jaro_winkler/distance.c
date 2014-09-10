@@ -37,7 +37,7 @@ static char matrix_find(Matrix matrix, unsigned long long code_1, unsigned long 
 
 Option option_new(){
   Option opt;
-  opt.ignore_case = 0;
+  opt.ignore_case = opt.adj_table = 0;
   opt.weight = 0.1;
   opt.threshold = 0.7;
   return opt;
