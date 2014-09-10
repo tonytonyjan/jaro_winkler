@@ -54,6 +54,7 @@ I reinvent this wheel because of the naming in `fuzzy-string-match` such as `get
 --------------- | ------------ | ---------------- | --------    | ------
 UTF-8 Suport    | **Yes**      | Pure Ruby only   | No          | No
 Windows Support | **Yes**      |                  | No          | **Yes**
+Adjusting Table | **Yes**      | No               | No          | No
 Native          | **Yes**      | **Yes**          | **Yes**     | **Yes**
 Pure Ruby       | **Yes**      | **Yes**          | No          | No
 Speed           | Medium       | Fast             | Medium      | Slow
