@@ -42,6 +42,25 @@ adj_table   | boolean | false   | The option is used to give partial credit for 
 ['1', 'I'], ['1', 'L'], ['0', 'O'], ['0', 'Q'], ['C', 'K'], ['G', 'J'], ['E', ' '], ['Y', ' '], ['S', ' ']
 ```
 
+## How Adjusting Table Work
+
+origin formula:
+
+![origin](https://chart.googleapis.com/chart?cht=tx&chl=%5Cbegin%7Bcases%7D%200%20%26%20m%3D0%20%5C%5C%20%5Cfrac%20%7B%201%20%7D%7B%203%20%7D%20(%5Cfrac%20%7B%20m%20%7D%7B%20%5Cleft%7C%20s1%20%5Cright%7C%20%20%7D%20%2B%5Cfrac%20%7B%20m%20%7D%7B%20%5Cleft%7C%20s2%20%5Cright%7C%20%20%7D%20%2B%5Cfrac%20%7B%20m-t%20%7D%7B%20m%20%7D%20)%20%26%20others%20%5Cend%7Bcases%7D)
+
+where
+
+- `m` is the number of matching characters.
+- `t` is half the number of transpositions.
+
+with adjusting table:
+
+![adj](https://chart.googleapis.com/chart?cht=tx&chl=%5Cbegin%7Bcases%7D%200%20%26%20m%3D0%20%5C%5C%20%5Cfrac%20%7B%201%20%7D%7B%203%20%7D%20(%5Cfrac%20%7B%20%5Cfrac%20%7B%20s%20%7D%7B%2010%20%7D%20%2Bm%20%7D%7B%20%5Cleft%7C%20s1%20%5Cright%7C%20%20%7D%20%2B%5Cfrac%20%7B%20%5Cfrac%20%7B%20s%20%7D%7B%2010%20%7D%20%2Bm%20%7D%7B%20%5Cleft%7C%20s2%20%5Cright%7C%20%20%7D%20%2B%5Cfrac%20%7B%20m-t%20%7D%7B%20m%20%7D%20)%20%26%20others%20%5Cend%7Bcases%7D)
+
+where
+
+- `s` is the number of nonmatching but similar characters.
+
 # Why This?
 
 There is also another similar gem named [fuzzy-string-match](https://github.com/kiyoka/fuzzy-string-match) which both provides C and Ruby version as well.
@@ -106,3 +125,4 @@ amatch           | 0.960000 | 0.010000 | 0.970000 | (  0.964803)
 
 - Custom adjusting word table.
 - If the adjusting table is ASCII encoded, use dense matrix instread of sparse matrix to speed up.
+- Call by reference instead of call by value to enhance performance.
