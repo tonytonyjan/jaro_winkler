@@ -125,4 +125,3 @@ amatch           | 0.960000 | 0.010000 | 0.970000 | (  0.964803)
 
 - Custom adjusting word table.
 - If the adjusting table is ASCII encoded, use dense matrix instread of sparse matrix to speed up.
-- Call by reference instead of call by value to enhance performance.
