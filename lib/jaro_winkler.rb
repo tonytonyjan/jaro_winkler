@@ -35,7 +35,7 @@ module JaroWinkler
             found          = true
           end
         else
-          sim_matched = true if ADJ_TABLE[c1][c2]
+          sim_matched = true if DEFAULT_ADJ_TABLE[c1][c2]
         end
       end
       if matched
