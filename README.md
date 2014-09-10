@@ -99,24 +99,24 @@ str_1      | str_2      | origin | jaro_winkler | fuzzystringmatch | hotwater | 
 
 ### Pure Ruby
 
-                 | user      | system   | total     | real
----------------- | --------- | -------- | --------- | ------------
-jaro_winkler     | 12.750000 | 0.030000 | 12.780000 | ( 12.782842)
-fuzzystringmatch | 16.240000 | 0.030000 | 16.270000 | ( 16.287380)
+                 | user     | system   | total    | real
+---------------- | -------- | -------- | -------- | ------------
+jaro_winkler     | 1.300000 | 0.000000 | 1.300000 | (  1.299802)
+fuzzystringmatch | 1.510000 | 0.000000 | 1.510000 | (  1.510136)
 
-- jaro_winkler (1.2.3)
+- jaro_winkler (1.3.1)
 - fuzzy-string-match (0.9.6)
 
 ### Native
 
                  | user     | system   | total    | real
 ---------------- | -------- | -------- | -------- | ------------
-jaro_winkler     | 0.390000 | 0.000000 | 0.390000 | (  0.392408)
-fuzzystringmatch | 0.150000 | 0.000000 | 0.150000 | (  0.151552)
-hotwater         | 0.320000 | 0.000000 | 0.320000 | (  0.317740)
-amatch           | 0.960000 | 0.010000 | 0.970000 | (  0.964803)
+jaro_winkler     | 0.350000 | 0.010000 | 0.360000 | (  0.345293)
+fuzzystringmatch | 0.140000 | 0.000000 | 0.140000 | (  0.138711)
+hotwater         | 0.310000 | 0.000000 | 0.310000 | (  0.306498)
+amatch           | 0.960000 | 0.000000 | 0.960000 | (  0.961509)
 
-- jaro_winkler (1.2.3)
+- jaro_winkler (1.3.1)
 - fuzzy-string-match (0.9.6)
 - hotwater (0.1.2)
 - amatch (0.3.0)
