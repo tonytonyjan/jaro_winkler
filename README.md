@@ -124,4 +124,4 @@ amatch           | 0.960000 | 0.000000 | 0.960000 | (  0.961509)
 # Todo
 
 - Custom adjusting word table.
-- If the adjusting table is ASCII encoded, use dense matrix instread of sparse matrix to speed up performance.
+- If the adjusting table is ASCII encoded, use dense matrix instread of sparse matrix to speed up performance (or just use a good hash function).

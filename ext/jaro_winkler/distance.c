@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "distance.h"
+#include "adj_matrix.h"
 
 typedef struct{
   unsigned long long code;
@@ -13,27 +14,16 @@ typedef struct{
   int length;
 } Codepoints;
 
-typedef struct{
-  unsigned long long x, y;
-} Coord;
-
-typedef struct{
-  Coord *coords;
-  int length;
-} Matrix;
-
-static const char *DEFAULT_ADJ_TABLE[] = {
+const char *DEFAULT_ADJ_TABLE[] = {
   "A","E", "A","I", "A","O", "A","U", "B","V", "E","I", "E","O", "E","U", "I","O", "I","U", "O","U",
   "I","Y", "E","Y", "C","G", "E","F", "W","U", "W","V", "X","K", "S","Z", "X","S", "Q","C", "U","V",
   "M","N", "L","I", "Q","O", "P","R", "I","J", "2","Z", "5","S", "8","B", "1","I", "1","L", "0","O",
   "0","Q", "C","K", "G","J", "E"," ", "Y"," ", "S"," "
 };
-static Matrix DEFAULT_MATRIX;
+static AdjMatrix *DEFAULT_MATRIX;
 
 static UnicodeHash unicode_hash_new(const char *str);
 static Codepoints codepoints_new(const char *str, int byte_len);
-static Matrix matrix_new(const char **adj_table, int length);
-static char matrix_find(Matrix matrix, unsigned long long code_1, unsigned long long code_2);
 
 Option option_new(){
   Option opt;
@@ -64,7 +54,13 @@ double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option o
   // Adjusting table
   static char first_time = 1;
   if(opt.adj_table){
-    if(first_time) DEFAULT_MATRIX = matrix_new(DEFAULT_ADJ_TABLE, sizeof(DEFAULT_ADJ_TABLE) / 8);
+    if(first_time){
+      DEFAULT_MATRIX = adj_matrix_new(ADJ_MATRIX_DEFAULT_LENGTH);
+      for (int i = 0; i < 78; i += 2){
+        UnicodeHash h1 = unicode_hash_new(DEFAULT_ADJ_TABLE[i]), h2 = unicode_hash_new(DEFAULT_ADJ_TABLE[i + 1]);
+        adj_matrix_add(DEFAULT_MATRIX, h1.code, h2.code);
+      }
+    }
     first_time = 0;
   }
 
@@ -91,7 +87,7 @@ double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option o
           previous_index = j;
           found = 1;
         }
-      }else if(opt.adj_table && matrix_find(DEFAULT_MATRIX, code_ary_1.ary[i], code_ary_2.ary[j])) sim_matched = 1;
+      }else if(opt.adj_table && adj_matrix_find(DEFAULT_MATRIX, code_ary_1.ary[i], code_ary_2.ary[j])) sim_matched = 1;
     } // for(int j = left; j <= right; j++){
     if(matched){
       matches++;
@@ -141,23 +137,4 @@ static Codepoints codepoints_new(const char *str, int byte_len){
   }
   ret.length += count;
   return ret;
-}
-
-static Matrix matrix_new(const char **adj_table, int length){
-  Matrix ret;
-  ret.coords = calloc(length, sizeof(Coord));
-  ret.length = length;
-  for(int i = 0; i < length; i += 2){
-    UnicodeHash h1 = unicode_hash_new(adj_table[i]);
-    UnicodeHash h2 = unicode_hash_new(adj_table[i+1]);
-    ret.coords[i].x = ret.coords[i+1].y = h1.code;
-    ret.coords[i].y = ret.coords[i+1].x = h2.code;
-  }
-  return ret;
-}
-
-static char matrix_find(Matrix matrix, unsigned long long code_1, unsigned long long code_2){
-  for (int i = 0; i < matrix.length; i++)
-    if(matrix.coords[i].x == code_1 && matrix.coords[i].y == code_2) return 1;
-  return 0;
 }
