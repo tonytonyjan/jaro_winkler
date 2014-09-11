@@ -33,7 +33,9 @@ weight      | number  | 0.1     | A constant scaling factor for how much the sco
 threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above the threshold.
 adj_table   | boolean | false   | The option is used to give partial credit for characters that may be errors due to known phonetic or character recognition errors. A typical example is to match the letter "O" with the number "0".
 
-## Default Adjusting Table
+# About Adjusting Table
+
+## Default Table
 
 ```
 ['A', 'E'], ['A', 'I'], ['A', 'O'], ['A', 'U'], ['B', 'V'], ['E', 'I'], ['E', 'O'], ['E', 'U'], ['I', 'O'], ['I', 'U'],
@@ -42,9 +44,9 @@ adj_table   | boolean | false   | The option is used to give partial credit for 
 ['1', 'I'], ['1', 'L'], ['0', 'O'], ['0', 'Q'], ['C', 'K'], ['G', 'J'], ['E', ' '], ['Y', ' '], ['S', ' ']
 ```
 
-## How Adjusting Table Work
+## How it works?
 
-origin formula:
+Original Formula:
 
 ![origin](https://chart.googleapis.com/chart?cht=tx&chs&chl=%5Cbegin%7Bcases%7D0%26%7B%5Ctext%7Bif%20%7Dm%3D0%7D%5C%5C%5Cfrac%7B1%7D%7B3%7D(%5Cfrac%7Bm%7D%7B%5Cleft%7Cs1%5Cright%7C%7D%2B%5Cfrac%7Bm%7D%7B%5Cleft%7Cs2%5Cright%7C%7D%2B%5Cfrac%7Bm-t%7D%7Bm%7D)%26%5Ctext%7Bothers%7D%5Cend%7Bcases%7D)
 
@@ -53,13 +55,22 @@ where
 - `m` is the number of matching characters.
 - `t` is half the number of transpositions.
 
-with adjusting table:
+With Adjusting Table:
 
 ![adj](https://chart.googleapis.com/chart?cht=tx&chs&chl=%5Cbegin%7Bcases%7D0%26%5Ctext%7Bif%20%7Dm%3D0%5C%5C%5Cfrac%7B1%7D%7B3%7D(%5Cfrac%7B%5Cfrac%7Bs%7D%7B10%7D%2Bm%7D%7B%5Cleft%7Cs1%5Cright%7C%7D%2B%5Cfrac%7B%5Cfrac%7Bs%7D%7B10%7D%2Bm%7D%7B%5Cleft%7Cs2%5Cright%7C%7D%2B%5Cfrac%7Bm-t%7D%7Bm%7D)%26%5Ctext%7Bothers%7D%5Cend%7Bcases%7D)
 
 where
 
 - `s` is the number of nonmatching but similar characters.
+
+## Difference Between v1.3.1 And v1.3.2.beta
+
+Version     | Algorithm
+----------- | -----------------------------------------------------------------------
+v1.3.1      | One linked list to store sparse matrix and iterate to find similar character.
+v1.3.2.beta | One hash table with multiple linked lists for collision handling.
+
+In theory, the latter should work more efficient than the former (more test data needed).
 
 # Why This?
 
