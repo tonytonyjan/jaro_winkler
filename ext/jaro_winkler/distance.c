@@ -20,10 +20,10 @@ const char *DEFAULT_ADJ_TABLE[] = {
   "M","N", "L","I", "Q","O", "P","R", "I","J", "2","Z", "5","S", "8","B", "1","I", "1","L", "0","O",
   "0","Q", "C","K", "G","J", "E"," ", "Y"," ", "S"," "
 };
-static AdjMatrix *DEFAULT_MATRIX;
 
 static UnicodeHash unicode_hash_new(const char *str);
 static Codepoints codepoints_new(const char *str, int byte_len);
+static AdjMatrix* adj_matrix_default();
 
 Option option_new(){
   Option opt;
@@ -51,19 +51,6 @@ double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option o
     int tmp2 = code_ary_1.length; code_ary_1.length = code_ary_2.length; code_ary_2.length = tmp2;
   }
 
-  // Adjusting table
-  static char first_time = 1;
-  if(opt.adj_table){
-    if(first_time){
-      DEFAULT_MATRIX = adj_matrix_new(ADJ_MATRIX_DEFAULT_LENGTH);
-      for (int i = 0; i < 78; i += 2){
-        UnicodeHash h1 = unicode_hash_new(DEFAULT_ADJ_TABLE[i]), h2 = unicode_hash_new(DEFAULT_ADJ_TABLE[i + 1]);
-        adj_matrix_add(DEFAULT_MATRIX, h1.code, h2.code);
-      }
-    }
-    first_time = 0;
-  }
-
   // Compute jaro distance
   int window_size = code_ary_2.length / 2 - 1;
   if(window_size < 0) window_size = 0;
@@ -87,7 +74,7 @@ double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option o
           previous_index = j;
           found = 1;
         }
-      }else if(opt.adj_table && adj_matrix_find(DEFAULT_MATRIX, code_ary_1.ary[i], code_ary_2.ary[j])) sim_matched = 1;
+      }else if(opt.adj_table && adj_matrix_find(adj_matrix_default(), code_ary_1.ary[i], code_ary_2.ary[j])) sim_matched = 1;
     } // for(int j = left; j <= right; j++){
     if(matched){
       matches++;
@@ -137,4 +124,18 @@ static Codepoints codepoints_new(const char *str, int byte_len){
   }
   ret.length += count;
   return ret;
+}
+
+static AdjMatrix* adj_matrix_default(){
+  static char first_time = 1;
+  static AdjMatrix *ret_matrix;
+  if(first_time){
+    ret_matrix = adj_matrix_new(ADJ_MATRIX_DEFAULT_LENGTH);
+    for(int i = 0; i < 78; i += 2){
+      UnicodeHash h1 = unicode_hash_new(DEFAULT_ADJ_TABLE[i]), h2 = unicode_hash_new(DEFAULT_ADJ_TABLE[i + 1]);
+      adj_matrix_add(ret_matrix, h1.code, h2.code);
+    }
+    first_time = 0;
+  }
+  return ret_matrix;
 }
