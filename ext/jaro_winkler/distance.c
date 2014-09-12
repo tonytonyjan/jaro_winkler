@@ -34,11 +34,8 @@ Option option_new(){
 }
 
 double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option opt){
-  // set default option if NULL passed
-  int free_opt_flag = 0;
-
-  Codepoints code_ary_1 = codepoints_new(s1, s1_byte_len);
-  Codepoints code_ary_2 = codepoints_new(s2, s2_byte_len);
+  Codepoints code_ary_1 = codepoints_new(s1, s1_byte_len),
+             code_ary_2 = codepoints_new(s2, s2_byte_len);
 
   if(opt.ignore_case){
     for(int i = 0; i < code_ary_1.length; ++i) if(code_ary_1.ary[i] < 256 && islower(code_ary_1.ary[i])) code_ary_1.ary[i] -= 32;
@@ -114,15 +111,14 @@ static UnicodeHash unicode_hash_new(const char *str){
 
 static Codepoints codepoints_new(const char *str, int byte_len){
   Codepoints ret = {};
-  ret.ary = calloc(byte_len, sizeof(long long));
-  int count = 0;
+  ret.ary = malloc(byte_len * sizeof(long long));
+  ret.length = 0;
   for(int i = 0; i < byte_len;){
     UnicodeHash hash = unicode_hash_new(str + i);
-    ret.ary[count] = hash.code;
-    count++;
+    ret.ary[ret.length] = hash.code;
+    ret.length++;
     i += hash.byte_length;
   }
-  ret.length += count;
   return ret;
 }
 
