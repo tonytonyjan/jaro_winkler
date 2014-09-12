@@ -12,7 +12,7 @@ Option option_new(){
   return opt;
 }
 
-double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option opt){
+double distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option opt){
   Codepoints code_ary_1 = codepoints_new(s1, s1_byte_len),
              code_ary_2 = codepoints_new(s2, s2_byte_len);
 
@@ -30,19 +30,19 @@ double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option o
   // Compute jaro distance
   int window_size = code_ary_2.length / 2 - 1;
   if(window_size < 0) window_size = 0;
-  double matches     = 0.0;
-  double sim_matches = 0.0;
-  int transpositions = 0;
-  int previous_index = -1;
-  int max_index      = code_ary_2.length - 1;
+  double matches     = 0.0,
+         sim_matches = 0.0;
+  int transpositions = 0,
+      previous_index = -1,
+      max_index      = code_ary_2.length - 1;
   for(int i = 0; i < code_ary_1.length; i++){
     int left  = i - window_size;
     int right = i + window_size;
     if(left  < 0) left = 0;
     if(right > max_index) right = max_index;
-    char matched     = 0;
-    char found       = 0;
-    char sim_matched = 0;
+    char matched     = 0,
+         found       = 0,
+         sim_matched = 0;
     for(int j = left; j <= right; j++){
       if(code_ary_1.ary[i] == code_ary_2.ary[j]){
         matched = 1;

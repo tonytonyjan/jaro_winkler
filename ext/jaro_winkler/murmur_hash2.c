@@ -12,7 +12,7 @@
 // 2. It will not produce the same results on little-endian and big-endian
 //    machines.
 
-unsigned int MurmurHash2 ( const void * key, int len, unsigned int seed )
+inline unsigned int MurmurHash2 ( const void * key, int len, unsigned int seed )
 {
 	// 'm' and 'r' are mixing constants generated offline.
 	// They're not really 'magic', they just happen to work well.

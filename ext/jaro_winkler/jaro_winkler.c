@@ -23,5 +23,5 @@ VALUE rb_distance(int argc, VALUE *argv, VALUE self){
     if(!NIL_P(ignore_case)) c_opt.ignore_case = (TYPE(ignore_case)  == T_FALSE || NIL_P(ignore_case)) ? 0 : 1;
     if(!NIL_P(adj_table)) c_opt.adj_table     = (TYPE(adj_table)    == T_FALSE || NIL_P(adj_table))   ? 0 : 1;
   }
-  return rb_float_new(c_distance(StringValuePtr(s1), RSTRING_LEN(s1), StringValuePtr(s2), RSTRING_LEN(s2), c_opt));
+  return rb_float_new(distance(StringValuePtr(s1), RSTRING_LEN(s1), StringValuePtr(s2), RSTRING_LEN(s2), c_opt));
 }
