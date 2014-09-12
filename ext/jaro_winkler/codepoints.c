@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "codepoints.h"
 
-inline UnicodeHash unicode_hash_new(const char *str){
+UnicodeHash unicode_hash_new(const char *str){
   UnicodeHash ret = {};
   unsigned char first_char = str[0];
   if(first_char >= 252) ret.byte_length = 6;      // 1111110x
@@ -15,7 +15,7 @@ inline UnicodeHash unicode_hash_new(const char *str){
   return ret;
 }
 
-inline Codepoints codepoints_new(const char *str, int byte_len){
+Codepoints codepoints_new(const char *str, int byte_len){
   Codepoints ret = {};
   ret.ary = malloc(byte_len * sizeof(long long));
   ret.length = 0;

@@ -13,10 +13,10 @@ typedef struct{
   unsigned int length;
 } AdjMatrix;
 
-AdjMatrix* adj_matrix_new(unsigned int length);
-void adj_matrix_add(AdjMatrix *matrix, unsigned long long x, unsigned long long y);
-char adj_matrix_find(AdjMatrix *matrix, unsigned long long x, unsigned long long y);
-void adj_matrix_free(AdjMatrix *matrix);
+AdjMatrix* adj_matrix_new    (unsigned int length);
+void       adj_matrix_add    (AdjMatrix *matrix, unsigned long long x, unsigned long long y);
+char       adj_matrix_find   (AdjMatrix *matrix, unsigned long long x, unsigned long long y);
+void       adj_matrix_free   (AdjMatrix *matrix);
 AdjMatrix* adj_matrix_default();
 
 #endif /* ADJ_MATRIX_H */

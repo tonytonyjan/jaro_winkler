@@ -13,10 +13,10 @@ VALUE rb_distance(int argc, VALUE *argv, VALUE self){
   rb_scan_args(argc, argv, "2:", &s1, &s2, &opt);
   Option c_opt = option_new();
   if(TYPE(opt) == T_HASH){
-    VALUE weight      = rb_hash_aref(opt, ID2SYM(rb_intern("weight")));
-    VALUE threshold   = rb_hash_aref(opt, ID2SYM(rb_intern("threshold")));
-    VALUE ignore_case = rb_hash_aref(opt, ID2SYM(rb_intern("ignore_case")));
-    VALUE adj_table   = rb_hash_aref(opt, ID2SYM(rb_intern("adj_table")));
+    VALUE weight      = rb_hash_aref(opt, ID2SYM(rb_intern("weight"))),
+          threshold   = rb_hash_aref(opt, ID2SYM(rb_intern("threshold"))),
+          ignore_case = rb_hash_aref(opt, ID2SYM(rb_intern("ignore_case"))),
+          adj_table   = rb_hash_aref(opt, ID2SYM(rb_intern("adj_table")));
     if(!NIL_P(weight)) c_opt.weight = NUM2DBL(weight);
     if(c_opt.weight > 0.25) rb_raise(rb_eRuntimeError, "Scaling factor should not exceed 0.25, otherwise the distance can become larger than 1.");
     if(!NIL_P(threshold)) c_opt.threshold     = NUM2DBL(threshold);

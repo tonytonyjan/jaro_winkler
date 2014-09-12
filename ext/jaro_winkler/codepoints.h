@@ -12,6 +12,6 @@ typedef struct{
 } Codepoints;
 
 UnicodeHash unicode_hash_new(const char *str);
-Codepoints codepoints_new(const char *str, int byte_len);
+Codepoints  codepoints_new  (const char *str, int byte_len);
 
 #endif /* CODEPOINTS_H */

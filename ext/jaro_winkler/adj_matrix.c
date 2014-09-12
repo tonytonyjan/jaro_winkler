@@ -10,9 +10,9 @@ const char *DEFAULT_ADJ_TABLE[] = {
 };
 
 extern unsigned int MurmurHash2(const void * key, int len, unsigned int seed);
-void node_free(Node *head);
+inline void node_free(Node *head);
 
-inline AdjMatrix* adj_matrix_new(unsigned int length){
+AdjMatrix* adj_matrix_new(unsigned int length){
   AdjMatrix *matrix = malloc(sizeof(AdjMatrix));
   matrix->length = length == 0 ? ADJ_MATRIX_DEFAULT_LENGTH : length;
   matrix->table = malloc(matrix->length * sizeof(Node**));
@@ -24,7 +24,7 @@ inline AdjMatrix* adj_matrix_new(unsigned int length){
   return matrix;
 }
 
-inline void adj_matrix_add(AdjMatrix *matrix, unsigned long long x, unsigned long long y){
+void adj_matrix_add(AdjMatrix *matrix, unsigned long long x, unsigned long long y){
   unsigned int h1 = MurmurHash2(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
                h2 = MurmurHash2(&y, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
   Node *new_node = malloc(sizeof(Node)); new_node->x = h1; new_node->y = h2; new_node->next = NULL;
@@ -38,7 +38,7 @@ inline void adj_matrix_add(AdjMatrix *matrix, unsigned long long x, unsigned lon
   }
 }
 
-inline char adj_matrix_find(AdjMatrix *matrix, unsigned long long x, unsigned long long y){
+char adj_matrix_find(AdjMatrix *matrix, unsigned long long x, unsigned long long y){
   unsigned int h1 = MurmurHash2(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
                h2 = MurmurHash2(&y, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
   Node *node = matrix->table[h1][h2];
