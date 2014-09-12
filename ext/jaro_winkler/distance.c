@@ -2,17 +2,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "distance.h"
+#include "codepoints.h"
 #include "adj_matrix.h"
-
-typedef struct{
-  unsigned long long code;
-  unsigned int byte_length;
-} UnicodeHash;
-
-typedef struct{
-  unsigned long long *ary;
-  int length;
-} Codepoints;
 
 const char *DEFAULT_ADJ_TABLE[] = {
   "A","E", "A","I", "A","O", "A","U", "B","V", "E","I", "E","O", "E","U", "I","O", "I","U", "O","U",
@@ -21,8 +12,6 @@ const char *DEFAULT_ADJ_TABLE[] = {
   "0","Q", "C","K", "G","J", "E"," ", "Y"," ", "S"," "
 };
 
-static UnicodeHash unicode_hash_new(const char *str);
-static Codepoints codepoints_new(const char *str, int byte_len);
 static AdjMatrix* adj_matrix_default();
 
 Option option_new(){
@@ -94,32 +83,6 @@ double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option o
   }
   free(code_ary_1.ary); free(code_ary_2.ary);
   return jaro_distance < threshold ? jaro_distance : jaro_distance + ((prefix * weight) * (1 - jaro_distance));
-}
-
-static UnicodeHash unicode_hash_new(const char *str){
-  UnicodeHash ret = {};
-  unsigned char first_char = str[0];
-  if(first_char >= 252) ret.byte_length = 6;      // 1111110x
-  else if(first_char >= 248) ret.byte_length = 5; // 111110xx
-  else if(first_char >= 240) ret.byte_length = 4; // 11110xxx
-  else if(first_char >= 224) ret.byte_length = 3; // 1110xxxx
-  else if(first_char >= 192) ret.byte_length = 2; // 110xxxxx
-  else ret.byte_length = 1;
-  memcpy(&ret.code, str, ret.byte_length);
-  return ret;
-}
-
-static Codepoints codepoints_new(const char *str, int byte_len){
-  Codepoints ret = {};
-  ret.ary = malloc(byte_len * sizeof(long long));
-  ret.length = 0;
-  for(int i = 0; i < byte_len;){
-    UnicodeHash hash = unicode_hash_new(str + i);
-    ret.ary[ret.length] = hash.code;
-    ret.length++;
-    i += hash.byte_length;
-  }
-  return ret;
 }
 
 static AdjMatrix* adj_matrix_default(){
