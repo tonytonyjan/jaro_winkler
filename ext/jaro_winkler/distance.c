@@ -4,15 +4,6 @@
 #include "codepoints.h"
 #include "adj_matrix.h"
 
-const char *DEFAULT_ADJ_TABLE[] = {
-  "A","E", "A","I", "A","O", "A","U", "B","V", "E","I", "E","O", "E","U", "I","O", "I","U", "O","U",
-  "I","Y", "E","Y", "C","G", "E","F", "W","U", "W","V", "X","K", "S","Z", "X","S", "Q","C", "U","V",
-  "M","N", "L","I", "Q","O", "P","R", "I","J", "2","Z", "5","S", "8","B", "1","I", "1","L", "0","O",
-  "0","Q", "C","K", "G","J", "E"," ", "Y"," ", "S"," "
-};
-
-static AdjMatrix* adj_matrix_default();
-
 Option option_new(){
   Option opt;
   opt.ignore_case = opt.adj_table = 0;
@@ -82,19 +73,4 @@ double c_distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option o
   }
   free(code_ary_1.ary); free(code_ary_2.ary);
   return jaro_distance < threshold ? jaro_distance : jaro_distance + ((prefix * weight) * (1 - jaro_distance));
-}
-
-static AdjMatrix* adj_matrix_default(){
-  static char first_time = 1;
-  static AdjMatrix *ret_matrix;
-  if(first_time){
-    ret_matrix = adj_matrix_new(ADJ_MATRIX_DEFAULT_LENGTH);
-    int length = sizeof(DEFAULT_ADJ_TABLE) / sizeof(char*);
-    for(int i = 0; i < length; i += 2){
-      UnicodeHash h1 = unicode_hash_new(DEFAULT_ADJ_TABLE[i]), h2 = unicode_hash_new(DEFAULT_ADJ_TABLE[i + 1]);
-      adj_matrix_add(ret_matrix, h1.code, h2.code);
-    }
-    first_time = 0;
-  }
-  return ret_matrix;
 }
