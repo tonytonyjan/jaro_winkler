@@ -5,22 +5,23 @@ include JaroWinkler
 shared_examples 'common' do |strategy|
   it 'works' do
     ary = [
-      ['henka'       , 'henkan'      , 0.9667] ,
-      ['al'          , 'al'          , 1.0]    ,
-      ['martha'      , 'marhta'      , 0.9611] ,
-      ['jones'       , 'johnson'     , 0.8323] ,
-      ['abcvwxyz'    , 'cabvwxyz'    , 0.9583] ,
-      ['dwayne'      , 'duane'       , 0.8400] ,
-      ['dixon'       , 'dicksonx'    , 0.8133] ,
-      ['fvie'        , 'ten'         , 0.0]    ,
-      ['tony'        , 'tony'        , 1.0]    ,
-      ['tonytonyjan' , 'tonytonyjan' , 1.0]    ,
-      ['x'           , 'x'           , 1.0]    ,
-      [''            , ''            , 0.0]    ,
-      ['tony'        , ''            , 0.0]    ,
-      [''            , 'tony'        , 0.0]    ,
-      ['tonytonyjan' , 'tony'        , 0.8727] ,
-      ['tony'        , 'tonytonyjan' , 0.8727]
+      ['henka'         , 'henkan'       , 0.9667] ,
+      ['al'            , 'al'           , 1.0]    ,
+      ['martha'        , 'marhta'       , 0.9611] ,
+      ['jones'         , 'johnson'      , 0.8323] ,
+      ['abcvwxyz'      , 'cabvwxyz'     , 0.9583] ,
+      ['dwayne'        , 'duane'        , 0.8400] ,
+      ['dixon'         , 'dicksonx'     , 0.8133] ,
+      ['fvie'          , 'ten'          , 0.0]    ,
+      ['tony'          , 'tony'         , 1.0]    ,
+      ['tonytonyjan'   , 'tonytonyjan'  , 1.0]    ,
+      ['x'             , 'x'            , 1.0]    ,
+      [''              , ''             , 0.0]    ,
+      ['tony'          , ''             , 0.0]    ,
+      [''              , 'tony'         , 0.0]    ,
+      ['tonytonyjan'   , 'tony'         , 0.8727] ,
+      ['tony'          , 'tonytonyjan'  , 0.8727] ,
+      ['San Francisco' , 'Santa Monica' , 0.8180]
     ]
     ary.each do |s1, s2, ans|
       expect(send(strategy, s1, s2)).to be_within(0.0001).of(ans)

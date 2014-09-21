@@ -27,7 +27,7 @@ task :compare do
   require 'fuzzystringmatch'
   require 'hotwater'
   require 'amatch'
-  @ary = [['henka', 'henkan'], ['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'cabvwxyz'], ['dwayne', 'duane'], ['dixon', 'dicksonx'], ['fvie', 'ten']]
+  @ary = [['henka', 'henkan'], ['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'cabvwxyz'], ['dwayne', 'duane'], ['dixon', 'dicksonx'], ['fvie', 'ten'], ['San Francisco', 'Santa Monica']]
   table = []
   table << %w[str_1 str_2 jaro_winkler fuzzystringmatch hotwater amatch]
   table << %w[--- --- --- --- --- ---]
