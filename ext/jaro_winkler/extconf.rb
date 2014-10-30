@@ -1,3 +1,3 @@
 require "mkmf"
-$CFLAGS << ' -std=gnu99' if Gem.win_platform?
+$CFLAGS << ' -std=c99 '
 create_makefile("jaro_winkler/jaro_winkler")
