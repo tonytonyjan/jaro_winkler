@@ -10,7 +10,7 @@ const char *DEFAULT_ADJ_TABLE[] = {
 };
 
 extern unsigned int MurmurHash2(const void * key, int len, unsigned int seed);
-inline void node_free(Node *head);
+void node_free(Node *head);
 
 AdjMatrix* adj_matrix_new(unsigned int length){
   AdjMatrix *matrix = malloc(sizeof(AdjMatrix));
@@ -50,7 +50,7 @@ char adj_matrix_find(AdjMatrix *matrix, unsigned long long x, unsigned long long
   }
 }
 
-inline void node_free(Node *head){
+void node_free(Node *head){
   if(head == NULL) return;
   node_free(head->next);
   free(head);
