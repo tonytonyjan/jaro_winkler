@@ -1,9 +1,13 @@
 require "bundler/gem_tasks"
 require "rake/extensiontask"
+require 'rspec/core/rake_task'
 
+RSpec::Core::RakeTask.new(:spec)
 Rake::ExtensionTask.new("jaro_winkler") do |ext|
   ext.lib_dir = "lib/jaro_winkler"
 end
+
+task default: :spec
 
 desc 'type can be "native" or "pure"'
 task :benchmark, :type do |t, args|
