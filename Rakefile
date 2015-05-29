@@ -33,11 +33,11 @@ task :compare do
   require 'amatch'
   @ary = [['henka', 'henkan'], ['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'cabvwxyz'], ['dwayne', 'duane'], ['dixon', 'dicksonx'], ['fvie', 'ten'], ['San Francisco', 'Santa Monica']]
   table = []
-  table << %w[str_1 str_2 jaro_winkler fuzzystringmatch hotwater amatch]
+  table << %w[str_1 str_2 jaro_winkler jaro_winkler_pure fuzzystringmatch hotwater amatch]
   table << %w[--- --- --- --- --- ---]
   jarow = FuzzyStringMatch::JaroWinkler.create(:native)
   @ary.each do |str_1, str_2|
-    table << ["\"#{str_1}\"", "\"#{str_2}\"", JaroWinkler.distance(str_1, str_2).round(4), jarow.getDistance(str_1, str_2).round(4), Hotwater.jaro_winkler_distance(str_1, str_2).round(4), Amatch::Jaro.new(str_1).match(str_2).round(4)]
+    table << ["\"#{str_1}\"", "\"#{str_2}\"", JaroWinkler.distance(str_1, str_2).round(4), JaroWinkler.r_distance(str_1, str_2).round(4), jarow.getDistance(str_1, str_2).round(4), Hotwater.jaro_winkler_distance(str_1, str_2).round(4), Amatch::Jaro.new(str_1).match(str_2).round(4)]
   end
   col_len = []
   table.first.length.times{ |i| col_len << table.map{ |row| row[i].to_s.length }.max }

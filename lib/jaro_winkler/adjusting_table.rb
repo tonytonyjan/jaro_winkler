@@ -15,4 +15,5 @@ module JaroWinkler
     end
     DEFAULT_ADJ_TABLE[s1][s2] = DEFAULT_ADJ_TABLE[s2][s1] = true
   }
+  DEFAULT_ADJ_TABLE.default = Hash.new
 end
