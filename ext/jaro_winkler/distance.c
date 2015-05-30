@@ -17,14 +17,16 @@ double distance(char *s1, int s1_byte_len, char *s2, int s2_byte_len, Option opt
              code_ary_2 = codepoints_new(s2, s2_byte_len);
 
   if(opt.ignore_case){
-    for(int i = 0; i < code_ary_1.length; ++i) if(code_ary_1.ary[i] < 256 && islower(code_ary_1.ary[i])) code_ary_1.ary[i] -= 32;
-    for(int i = 0; i < code_ary_2.length; ++i) if(code_ary_2.ary[i] < 256 && islower(code_ary_2.ary[i])) code_ary_2.ary[i] -= 32;
+    for(int i = 0; i < code_ary_1.length; ++i) if(code_ary_1.ary[i] < 256u && islower(code_ary_1.ary[i])) code_ary_1.ary[i] -= 32u;
+    for(int i = 0; i < code_ary_2.length; ++i) if(code_ary_2.ary[i] < 256u && islower(code_ary_2.ary[i])) code_ary_2.ary[i] -= 32u;
   }
 
   // Guarantee the order
   if(code_ary_1.length > code_ary_2.length){
-    unsigned long long *tmp = code_ary_1.ary; code_ary_1.ary = code_ary_2.ary; code_ary_2.ary = tmp;
-    int tmp2 = code_ary_1.length; code_ary_1.length = code_ary_2.length; code_ary_2.length = tmp2;
+    UnicodeCharCode *tmp = code_ary_1.ary; 
+    int tmp2 = code_ary_1.length; 
+    code_ary_1.ary = code_ary_2.ary; code_ary_2.ary = tmp;
+    code_ary_1.length = code_ary_2.length; code_ary_2.length = tmp2;
   }
 
   // Compute jaro distance
