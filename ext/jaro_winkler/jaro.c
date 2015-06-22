@@ -1,5 +1,6 @@
 #include "jaro.h"
 #include "code.h"
+#include "adj_matrix.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -64,10 +65,23 @@ double jaro_winkler_distance(char* short_str, int short_str_len, char* long_str,
     }
   }
 
+  // count similarities in nonmatched characters
+  int similar_count = 0;
+  if(opt->adj_table && short_codes_len > match_count)
+    for(int i = 0; i < short_codes_len; i++)
+      if(!short_codes_flag[i])
+        for(int j = 0; j < long_codes_len; j++)
+          if(!long_codes_flag[j])
+            if(adj_matrix_find(adj_matrix_default(), short_codes[i], long_codes[j])){
+              similar_count += 3;
+              break;
+            }
+
   // jaro distance
   double jaro_distance;
   double m = (double)match_count;
   double t = (double)(transposition_count/2);
+  if(opt->adj_table) m = similar_count/10.0 + m;
   jaro_distance = (m/short_codes_len + m/long_codes_len + (m-t)/m) / 3;
 
   // jaro winkler distance

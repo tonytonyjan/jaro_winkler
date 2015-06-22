@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 void utf_char_to_code(char *str, unsigned long long *ret_code, int *ret_byte_length){
   unsigned char first_char = str[0];
@@ -8,6 +9,7 @@ void utf_char_to_code(char *str, unsigned long long *ret_code, int *ret_byte_len
   else if(first_char >= 224) *ret_byte_length = 3; // 1110xxxx
   else if(first_char >= 192) *ret_byte_length = 2; // 110xxxxx
   else *ret_byte_length = 1;
+  *ret_code = 0;
   memcpy(ret_code, str, *ret_byte_length);
 }
 
