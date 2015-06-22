@@ -1,7 +1,5 @@
 [![Build Status](https://travis-ci.org/tonytonyjan/jaro_winkler.svg?branch=master)](https://travis-ci.org/tonytonyjan/jaro_winkler)
 
-# About
-
 It's an implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm, it uses C extension and will fallback to pure Ruby version in JRuby. Both of them supports UTF-8 string.
 
 # Installation
@@ -35,7 +33,7 @@ weight      | number  | 0.1     | A constant scaling factor for how much the sco
 threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above the threshold.
 adj_table   | boolean | false   | The option is used to give partial credit for characters that may be errors due to known phonetic or character recognition errors. A typical example is to match the letter "O" with the number "0".
 
-# About Adjusting Table
+# Adjusting Table
 
 ## Default Table
 
@@ -64,15 +62,6 @@ With Adjusting Table:
 where
 
 - `s` is the number of nonmatching but similar characters.
-
-## Difference Between v1.3.1 And v1.3.2.beta
-
-Version     | Algorithm
------------ | -----------------------------------------------------------------------
-v1.3.1      | One linked list to store sparse matrix and iterate to find similar character.
-v1.3.2.beta | One hash table with multiple linked lists for collision handling.
-
-In theory, the latter should work more efficient than the former (more test data needed).
 
 # Why This?
 
@@ -108,9 +97,9 @@ str_1      | str_2      | origin | jaro_winkler | fuzzystringmatch | hotwater | 
 - The origin result is from the [original C implementation by the author of the algorithm](http://web.archive.org/web/20100227020019/http://www.census.gov/geo/msb/stand/strcmp.c).
 - Test data are borrowed from [fuzzy-string-match's rspec file](https://github.com/kiyoka/fuzzy-string-match/blob/master/test/basic_pure_spec.rb).
 
-## Benchmark
+# Benchmark
 
-### Pure Ruby
+## Pure Ruby
 
                  | user     | system   | total    | real
 ---------------- | -------- | -------- | -------- | ------------
@@ -120,7 +109,7 @@ fuzzystringmatch | 1.510000 | 0.000000 | 1.510000 | (  1.510136)
 - jaro_winkler (1.3.1)
 - fuzzy-string-match (0.9.6)
 
-### Native
+## Native
 
                  | user     | system   | total    | real
 ---------------- | -------- | -------- | -------- | ------------
@@ -137,3 +126,4 @@ amatch           | 0.960000 | 0.000000 | 0.960000 | (  0.961509)
 # Todo
 
 - Custom adjusting word table.
+- The algorithm between C and Ruby are different.
