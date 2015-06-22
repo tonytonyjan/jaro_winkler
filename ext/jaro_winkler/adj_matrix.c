@@ -1,6 +1,7 @@
-#include <stdlib.h>
 #include "adj_matrix.h"
-#include "codepoints.h"
+#include "code.h"
+
+#include <stdlib.h>
 
 const char *DEFAULT_ADJ_TABLE[] = {
   "A","E", "A","I", "A","O", "A","U", "B","V", "E","I", "E","O", "E","U", "I","O", "I","U", "O","U",
@@ -76,8 +77,11 @@ AdjMatrix* adj_matrix_default(){
     ret_matrix = adj_matrix_new(ADJ_MATRIX_DEFAULT_LENGTH);
     int length = sizeof(DEFAULT_ADJ_TABLE) / sizeof(char*);
     for(int i = 0; i < length; i += 2){
-      UnicodeHash h1 = unicode_hash_new(DEFAULT_ADJ_TABLE[i]), h2 = unicode_hash_new(DEFAULT_ADJ_TABLE[i + 1]);
-      adj_matrix_add(ret_matrix, h1.code, h2.code);
+      unsigned long long code_1, code_2;
+      int dummy_length;
+      utf_char_to_code((char*)DEFAULT_ADJ_TABLE[i], &code_1, &dummy_length);
+      utf_char_to_code((char*)DEFAULT_ADJ_TABLE[i+1], &code_2, &dummy_length);
+      adj_matrix_add(ret_matrix, code_1, code_2);
     }
     first_time = 0;
   }
