@@ -9,7 +9,7 @@ end
 
 task default: [:compile, :spec]
 
-task benchmark: %i[benchmark:native benchmark:pure]
+task benchmark: %w[benchmark:native benchmark:pure]
 
 task :print_time do
   puts Time.now.utc
