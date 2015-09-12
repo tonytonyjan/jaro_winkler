@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/tonytonyjan/jaro_winkler.svg?branch=master)](https://travis-ci.org/tonytonyjan/jaro_winkler)
 
-It's an implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm, it uses C extension and will fallback to pure Ruby version in JRuby. Both of them supports UTF-8 string.
+It's an implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm, it's a C extension and will fallback to pure Ruby version in JRuby. **Both of them supports UTF-8 string.**
 
 # Installation
 
@@ -19,7 +19,7 @@ JaroWinkler.distance "MARTHA", "marhta", ignore_case: true
 JaroWinkler.distance "MARTHA", "MARHTA", weight: 0.2
 # => 0.9778
 
-# Force the strategy
+# specific methods
 JaroWinkler.c_distance "MARTHA", "MARHTA" # C extension
 JaroWinkler.r_distance "MARTHA", "MARHTA" # Pure Ruby
 ```
@@ -79,9 +79,8 @@ Adjusting Table | **Yes**      | No               | No          | No
 Native          | **Yes**      | **Yes**          | **Yes**     | **Yes**
 Pure Ruby       | **Yes**      | **Yes**          | No          | No
 Speed           | Medium       | **Fast**         | Medium      | Slow
-Bug Found       | **Not Yet**  | Yes              | **Not Yet** | Yes
 
-For `Bug Found`, I made a rake task to build the table below, the source code is in `Rakefile`:
+I made a table below to compare accuracy between each gem:
 
 str_1      | str_2      | origin | jaro_winkler | fuzzystringmatch | hotwater | amatch
 ---        | ---        | ---    | ---          | ---              | ---      | ---
@@ -94,7 +93,7 @@ str_1      | str_2      | origin | jaro_winkler | fuzzystringmatch | hotwater | 
 "dixon"    | "dicksonx" | 0.8133 | 0.8133       | 0.8133           | 0.8133   | **0.7667**
 "fvie"     | "ten"      | 0.0    | 0.0          | 0.0              | 0.0      | 0.0
 
-- The origin result is from the [original C implementation by the author of the algorithm](http://web.archive.org/web/20100227020019/http://www.census.gov/geo/msb/stand/strcmp.c).
+- The "origin" result is from the [original C implementation by the author of the algorithm](http://web.archive.org/web/20100227020019/http://www.census.gov/geo/msb/stand/strcmp.c).
 - Test data are borrowed from [fuzzy-string-match's rspec file](https://github.com/kiyoka/fuzzy-string-match/blob/master/test/basic_pure_spec.rb).
 
 # Benchmark
