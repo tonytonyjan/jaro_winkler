@@ -5,11 +5,11 @@ ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'c
 
 n = 10000
 Benchmark.bmbm do |x|
-  x.report 'jaro_winkler' do
+  x.report "jaro_winkler #{Gem.loaded_specs['jaro_winkler'].version}" do
     n.times{ ary.each{ |str1, str2| JaroWinkler.r_distance(str1, str2) } }
   end
 
-  x.report 'fuzzystringmatch' do
+  x.report "fuzzystringmatch #{Gem.loaded_specs['fuzzy-string-match'].version}" do
     jarow = FuzzyStringMatch::JaroWinkler.create(:pure)
     n.times{ ary.each{ |str1, str2| jarow.getDistance(str1, str2) } }
   end
