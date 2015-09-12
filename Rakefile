@@ -9,24 +9,28 @@ end
 
 task default: [:compile, :spec]
 
-desc 'type can be "native" or "pure"'
-task :benchmark, :type do |t, args|
-  args.with_defaults(type: :all)
-  ROOT_PATH = File.expand_path('..', __FILE__)
-  LIB_PATH = File.join(ROOT_PATH, 'lib')
-  BENCHMARK_PATH = File.join(ROOT_PATH, 'benchmark')
+task benchmark: %i[benchmark:native benchmark:pure]
 
-  files = File.join(BENCHMARK_PATH, args[:type] == :all ? '*.rb' : "#{args[:type]}.rb")
-  Dir[files].each do |path|
-    output_path = File.join(BENCHMARK_PATH, File.basename(path, '*.rb').sub('.rb', '.txt'))
-    cmd = "RUBYLIB=#{LIB_PATH} ruby #{path}"
-    puts cmd
-    output = `#{cmd}`
-    File.write(output_path, output)
+task :print_time do
+  puts Time.now.utc
+  puts
+end
+
+namespace :benchmark do
+  task :native => :print_time do |t, args|
+    puts '# C Extension'
+    load File.expand_path("../benchmark/native.rb", __FILE__)
+    puts
+  end
+
+  task :pure => :print_time do |t, args|
+    puts '# Pure Ruby'
+    load File.expand_path("../benchmark/pure.rb", __FILE__)
+    puts
   end
 end
 
-task :compare do
+task compare: :compile do
   require 'jaro_winkler'
   require 'fuzzystringmatch'
   require 'hotwater'
