@@ -24,5 +24,10 @@ VALUE distance(int argc, VALUE *argv, VALUE self){
     if(!NIL_P(ignore_case)) c_opt.ignore_case = (TYPE(ignore_case) == T_FALSE || NIL_P(ignore_case)) ? 0 : 1;
     if(!NIL_P(adj_table)) c_opt.adj_table = (TYPE(adj_table) == T_FALSE || NIL_P(adj_table)) ? 0 : 1;
   }
+
+  if (RSTRING_LEN(s1) > MAX_WORD_LENGTH || RSTRING_LEN(s2) > MAX_WORD_LENGTH) {
+    return rb_funcall(rb_mJaroWinkler, rb_intern("r_distance"), argc, s1, s2, opt);
+  }
+
   return rb_float_new(jaro_winkler_distance(StringValuePtr(s1), RSTRING_LEN(s1), StringValuePtr(s2), RSTRING_LEN(s2), &c_opt));
 }

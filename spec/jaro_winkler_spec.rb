@@ -58,6 +58,12 @@ shared_examples 'common' do |strategy|
       expect{ send(strategy, 'MARTHA', 'MARHTA', weight: 0.26) }.to raise_error
     end
   end
+
+  context 'long string' do
+    it 'works without exception' do
+      expect { send(strategy, 'haisai' * 1024, 'haisai' * 1024) }.not_to raise_error
+    end
+  end
 end
 
 describe 'Pure Ruby' do
