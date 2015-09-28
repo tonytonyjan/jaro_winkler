@@ -2,7 +2,6 @@
 #define LIBJARO_JARO_H
 
 #define SWAP(x, y) do{ __typeof__(x) SWAP = x; x = y; y = SWAP; }while(0)
-#define MAX_WORD_LENGTH 64
 #define DEFAULT_WEIGHT 0.1
 #define DEFAULT_THRESHOLD 0.7
 
