@@ -61,7 +61,7 @@ shared_examples 'common' do |strategy|
 
   context 'long string' do
     it 'works without exception' do
-      expect { send(strategy, 'haisai' * 1024, 'haisai' * 1024) }.not_to raise_error
+      expect { send(strategy, 'haisai' * 20, 'haisai' * 20) }.not_to raise_error
     end
   end
 end
