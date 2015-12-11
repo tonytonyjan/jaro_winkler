@@ -55,13 +55,13 @@ shared_examples 'common' do |strategy|
 
   context 'with weight exceeding 0.25' do
     it 'throws exception' do
-      expect{ send(strategy, 'MARTHA', 'MARHTA', weight: 0.26) }.to raise_error
+      expect{ send(strategy, 'MARTHA', 'MARHTA', weight: 0.26) }.to raise_error RuntimeError
     end
   end
 
   context 'long string' do
     it 'works without exception' do
-      expect { send(strategy, 'haisai' * 20, 'haisai' * 20) }.not_to raise_error
+      expect { send(strategy, 'haisai' * 20, 'haisai' * 20) }.not_to raise_error RuntimeError
     end
   end
 end
