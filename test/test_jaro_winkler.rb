@@ -19,6 +19,11 @@ class TestJaroWinkler < Minitest::Test
     assert_distance 0.0,    '',            'tony'
     assert_distance 0.8727, 'tonytonyjan', 'tony'
     assert_distance 0.8727, 'tony',        'tonytonyjan'
+    assert_distance 0.9407, 'necessary',   'nessecary'
+    assert_distance 0.9067, 'does_exist',  'doesnt_exist'
+    assert_distance 0.975,  '12345678',    '12345687'
+    assert_distance 0.975,  '12345678',    '12345867'
+    assert_distance 0.95,  '12345678',     '12348567'
   end
 
   def test_unicode
