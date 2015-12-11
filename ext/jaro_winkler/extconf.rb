@@ -6,6 +6,6 @@ else
   dummy_makefile = open("Makefile", "wb")
   dummy_makefile.puts '.PHONY: install'
   dummy_makefile.puts 'install:'
-  dummy_makefile.puts "\t" + '@echo "Extensions not installed, falling back to pure Ruby version."'
+  dummy_makefile.puts "\t" + '@echo "C extension is not installed, fall back to pure Ruby version instead."'
   dummy_makefile.close
 end
