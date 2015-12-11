@@ -1,13 +1,8 @@
-require "bundler/gem_tasks"
-require "rake/extensiontask"
-require 'rspec/core/rake_task'
+require 'bundler/gem_tasks'
+require 'rake/extensiontask'
+require 'rake/testtask'
 
-RSpec::Core::RakeTask.new(:spec)
-Rake::ExtensionTask.new("jaro_winkler") do |ext|
-  ext.lib_dir = "lib/jaro_winkler"
-end
-
-task default: [:compile, :spec]
+task default: [:compile, :test]
 
 task benchmark: %w[benchmark:native benchmark:pure]
 
@@ -52,4 +47,14 @@ task compare: :compile do
     end
   end
   table.each{|row| puts row.join(' | ')}
+end
+
+Rake::ExtensionTask.new('jaro_winkler') do |ext|
+  ext.lib_dir = 'lib/jaro_winkler'
+end
+
+Rake::TestTask.new do |t|
+  t.libs << 'test'
+  t.test_files = FileList['test/**/test_*.rb']
+  t.verbose = true
 end
