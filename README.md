@@ -130,4 +130,3 @@ fuzzystringmatch 0.9.6   1.770000   0.000000   1.770000 (  1.775027)
 # Todo
 
 - Custom adjusting word table.
-- The algorithm between C and Ruby are different.
