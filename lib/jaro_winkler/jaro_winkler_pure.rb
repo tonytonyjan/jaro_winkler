@@ -13,11 +13,11 @@ module JaroWinkler
   module_function
 
   def distance str1, str2, options={}
-    _distance str1.codepoints, str2.codepoints, options
+    _distance str1.codepoints.to_a, str2.codepoints.to_a, options
   end
 
   def jaro_distance str1, str2, options={}
-    _jaro_distance str1.codepoints, str2.codepoints, options
+    _jaro_distance str1.codepoints.to_a, str2.codepoints.to_a, options
   end
 
   def _distance codes1, codes2, options={}

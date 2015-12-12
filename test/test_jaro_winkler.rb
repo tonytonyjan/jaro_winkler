@@ -1,11 +1,6 @@
+# encoding: utf-8
 require 'minitest/autorun'
-
-if fork
-  require 'jaro_winkler/jaro_winkler_ext'
-  Process.wait
-else
-  require 'jaro_winkler/jaro_winkler_pure'
-end
+require 'jaro_winkler'
 
 class TestJaroWinkler < Minitest::Test
   def test_distance
