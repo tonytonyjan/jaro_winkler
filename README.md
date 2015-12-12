@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/tonytonyjan/jaro_winkler.svg?branch=master)](https://travis-ci.org/tonytonyjan/jaro_winkler)
 
-It's an implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm, it's a C extension and will fallback to pure Ruby version in JRuby. **Both of them supports UTF-8 string.**
+An implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm, it's a C extension and will fallback to pure Ruby version in JRuby. **Both of them supports UTF-8 string.**
 
 # Installation
 
@@ -12,6 +12,9 @@ gem install jaro_winkler
 
 ```ruby
 require 'jaro_winkler'
+
+# Jaro Winkler Distance
+
 JaroWinkler.distance "MARTHA", "MARHTA"
 # => 0.9611
 JaroWinkler.distance "MARTHA", "marhta", ignore_case: true
@@ -19,10 +22,13 @@ JaroWinkler.distance "MARTHA", "marhta", ignore_case: true
 JaroWinkler.distance "MARTHA", "MARHTA", weight: 0.2
 # => 0.9778
 
-# specific methods
-JaroWinkler.c_distance "MARTHA", "MARHTA" # C extension
-JaroWinkler.r_distance "MARTHA", "MARHTA" # Pure Ruby
+# Jaro Distance
+
+JaroWinkler.jaro_distance "MARTHA", "MARHTA"
+# => 0.9444444444444445
 ```
+
+There is no `JaroWinkler.jaro_winkler_distance`, it's tediously long.
 
 ## Options
 
@@ -99,32 +105,32 @@ str_1      | str_2      | origin | jaro_winkler | fuzzystringmatch | hotwater | 
 # Benchmark
 
 ```
-$ be rake benchmark
-2015-09-12 05:08:34 UTC
+$ bundle exec rake benchmark
+2015-12-12 20:37:34 UTC
 
 # C Extension
 Rehearsal ----------------------------------------------------------
-jaro_winkler 1.3.7       0.340000   0.000000   0.340000 (  0.340248)
-fuzzystringmatch 0.9.6   0.150000   0.010000   0.160000 (  0.153519)
-hotwater 0.1.2           0.340000   0.000000   0.340000 (  0.348896)
-amatch 0.3.0             1.030000   0.000000   1.030000 (  1.042302)
-------------------------------------------------- total: 1.870000sec
+jaro_winkler 1.4.0       0.340000   0.000000   0.340000 (  0.345071)
+fuzzystringmatch 0.9.7   0.470000   0.000000   0.470000 (  0.467571)
+hotwater 0.1.2           0.380000   0.000000   0.380000 (  0.382495)
+amatch 0.3.0             1.020000   0.010000   1.030000 (  1.032459)
+------------------------------------------------- total: 2.220000sec
 
                              user     system      total        real
-jaro_winkler 1.3.7       0.340000   0.000000   0.340000 (  0.340455)
-fuzzystringmatch 0.9.6   0.140000   0.000000   0.140000 (  0.137103)
-hotwater 0.1.2           0.340000   0.000000   0.340000 (  0.345393)
-amatch 0.3.0             0.990000   0.010000   1.000000 (  0.997903)
+jaro_winkler 1.4.0       0.350000   0.000000   0.350000 (  0.354300)
+fuzzystringmatch 0.9.7   0.480000   0.000000   0.480000 (  0.480397)
+hotwater 0.1.2           0.400000   0.000000   0.400000 (  0.396380)
+amatch 0.3.0             1.030000   0.000000   1.030000 (  1.028923)
 
 # Pure Ruby
 Rehearsal ----------------------------------------------------------
-jaro_winkler 1.3.7       1.520000   0.000000   1.520000 (  1.524661)
-fuzzystringmatch 0.9.6   1.770000   0.010000   1.780000 (  1.778095)
-------------------------------------------------- total: 3.300000sec
+jaro_winkler 1.4.0       0.680000   0.010000   0.690000 (  0.690518)
+fuzzystringmatch 0.9.7   1.610000   0.000000   1.610000 (  1.608468)
+------------------------------------------------- total: 2.300000sec
 
                              user     system      total        real
-jaro_winkler 1.3.7       1.520000   0.000000   1.520000 (  1.527931)
-fuzzystringmatch 0.9.6   1.770000   0.000000   1.770000 (  1.775027)
+jaro_winkler 1.4.0       0.620000   0.000000   0.620000 (  0.619257)
+fuzzystringmatch 0.9.7   1.600000   0.010000   1.610000 (  1.597612)
 ```
 
 # Todo
