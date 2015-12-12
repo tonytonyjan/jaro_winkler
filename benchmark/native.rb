@@ -8,7 +8,7 @@ ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'c
 n = 100000
 Benchmark.bmbm do |x|
   x.report "jaro_winkler #{Gem.loaded_specs['jaro_winkler'].version}" do
-    n.times{ ary.each{ |str1, str2| JaroWinkler.c_distance(str1, str2) } }
+    n.times{ ary.each{ |str1, str2| JaroWinkler.distance(str1, str2) } }
   end
 
   x.report "fuzzystringmatch #{Gem.loaded_specs['fuzzy-string-match'].version}" do
