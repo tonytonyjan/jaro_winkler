@@ -47,14 +47,14 @@ class TestJaroWinkler < Minitest::Test
 
 
   def test_adjusting_table
-    assert_distance 0.9667, 'HENKA', 'HENKAN', adj_table: true
-    assert_distance 1.0, 'AL', 'AL', adj_table: true
-    assert_distance 0.9611, 'MARTHA', 'MARHTA', adj_table: true
-    assert_distance 0.8598, 'JONES', 'JOHNSON', adj_table: true
+    assert_distance 0.9667, 'HENKA',    'HENKAN',   adj_table: true
+    assert_distance 1.0,    'AL',       'AL',       adj_table: true
+    assert_distance 0.9611, 'MARTHA',   'MARHTA',   adj_table: true
+    assert_distance 0.8598, 'JONES',    'JOHNSON',  adj_table: true
     assert_distance 0.9583, 'ABCVWXYZ', 'CABVWXYZ', adj_table: true
-    assert_distance 0.8730, 'DWAYNE', 'DUANE', adj_table: true
-    assert_distance 0.8393, 'DIXON', 'DICKSONX', adj_table: true
-    assert_distance 0.0, 'FVIE', 'TEN', adj_table: true
+    assert_distance 0.8730, 'DWAYNE',   'DUANE',    adj_table: true
+    assert_distance 0.8393, 'DIXON',    'DICKSONX', adj_table: true
+    assert_distance 0.0,    'FVIE',     'TEN',      adj_table: true
   end
 
   def test_error
