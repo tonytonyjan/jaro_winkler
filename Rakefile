@@ -1,4 +1,4 @@
-require 'bundler/gem_tasks'
+require 'rubygems/package_task'
 require 'rake/extensiontask'
 require 'rake/testtask'
 
@@ -49,8 +49,11 @@ task compare: :compile do
   table.each{|row| puts row.join(' | ')}
 end
 
-Rake::ExtensionTask.new('jaro_winkler') do |ext|
-  ext.lib_dir = 'lib/jaro_winkler'
+unless RUBY_PLATFORM == 'java'
+  Rake::ExtensionTask.new 'jaro_winkler_ext' do |ext|
+    ext.lib_dir = 'lib/jaro_winkler'
+    ext.ext_dir = 'ext/jaro_winkler'
+  end
 end
 
 Rake::TestTask.new do |t|
@@ -58,3 +61,6 @@ Rake::TestTask.new do |t|
   t.test_files = FileList['test/**/test_*.rb']
   t.verbose = true
 end
+
+spec = Gem::Specification.load(File.expand_path('../jaro_winkler.gemspec', __FILE__))
+Gem::PackageTask.new(spec).define
