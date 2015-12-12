@@ -1,6 +1,11 @@
-# encoding: utf-8
 require 'minitest/autorun'
-require 'jaro_winkler'
+
+if fork
+  require 'jaro_winkler/jaro_winkler_ext'
+  Process.wait
+else
+  require 'jaro_winkler/jaro_winkler_pure'
+end
 
 class TestJaroWinkler < Minitest::Test
   def test_distance
@@ -102,4 +107,5 @@ private
   def assert_jaro_distance score, str1, str2, options={}
     assert_equal score, JaroWinkler.jaro_distance(str1, str2, options).round(4)
   end
+
 end
