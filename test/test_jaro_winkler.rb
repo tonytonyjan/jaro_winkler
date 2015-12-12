@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'minitest/autorun'
 require 'jaro_winkler'
 
@@ -8,7 +9,7 @@ class TestJaroWinkler < Minitest::Test
     assert_distance 0.9611, 'martha',      'marhta'
     assert_distance 0.8324, 'jones',       'johnson'
     assert_distance 0.9583, 'abcvwxyz',    'cabvwxyz'
-    assert_distance 0.8400, 'dwayne',      'duane'
+    assert_distance 0.84,   'dwayne',      'duane'
     assert_distance 0.8133, 'dixon',       'dicksonx'
     assert_distance 0.0,    'fvie',        'ten'
     assert_distance 1.0,    'tony',        'tony'
@@ -23,7 +24,32 @@ class TestJaroWinkler < Minitest::Test
     assert_distance 0.9067, 'does_exist',  'doesnt_exist'
     assert_distance 0.975,  '12345678',    '12345687'
     assert_distance 0.975,  '12345678',    '12345867'
-    assert_distance 0.95,  '12345678',     '12348567'
+    assert_distance 0.95,   '12345678',    '12348567'
+  end
+
+  def test_jaro_distance
+    assert_jaro_distance 0.9444, 'henka',       'henkan'
+    assert_jaro_distance 1.0,    'al',          'al'
+    assert_jaro_distance 0.9444, 'martha',      'marhta'
+    assert_jaro_distance 0.7905, 'jones',       'johnson'
+    assert_jaro_distance 0.9583, 'abcvwxyz',    'cabvwxyz'
+    assert_jaro_distance 0.8222, 'dwayne',      'duane'
+    assert_jaro_distance 0.7667, 'dixon',       'dicksonx'
+    assert_jaro_distance 0.0,    'fvie',        'ten'
+    assert_jaro_distance 1.0,    'tony',        'tony'
+    assert_jaro_distance 1.0,    'tonytonyjan', 'tonytonyjan'
+    assert_jaro_distance 1.0,    'x',           'x'
+    assert_jaro_distance 0.0,    '',            ''
+    assert_jaro_distance 0.0,    'tony',        ''
+    assert_jaro_distance 0.0,    '',            'tony'
+    assert_jaro_distance 0.7879, 'tonytonyjan', 'tony'
+    assert_jaro_distance 0.7879, 'tony',        'tonytonyjan'
+    assert_jaro_distance 0.9259, 'necessary',   'nessecary'
+    assert_jaro_distance 0.8444, 'does_exist',  'doesnt_exist'
+    assert_jaro_distance 0.9583, '12345678',    '12345687'
+    assert_jaro_distance 0.9583, '12345678',    '12345867'
+    assert_jaro_distance 0.9167, '12345678',    '12348567'
+    assert_jaro_distance 0.604,  'tonytonyjan', 'janjantony'
   end
 
   def test_unicode
@@ -69,7 +95,11 @@ class TestJaroWinkler < Minitest::Test
 
 private
 
-  def assert_distance score, str1, str2, **options
-    assert_equal score, JaroWinkler.distance(str1, str2, **options).round(4)
+  def assert_distance score, str1, str2, options={}
+    assert_equal score, JaroWinkler.distance(str1, str2, options).round(4)
+  end
+
+  def assert_jaro_distance score, str1, str2, options={}
+    assert_equal score, JaroWinkler.jaro_distance(str1, str2, options).round(4)
   end
 end
