@@ -1,6 +1,7 @@
 language: ruby
 bundler_args: --without benchmark
 rvm:
+  - 2.3.0
   - 2.2.0
   - 2.1.5
   - 2.0.0
