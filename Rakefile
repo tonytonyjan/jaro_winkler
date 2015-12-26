@@ -6,19 +6,22 @@ task default: [:compile, :test]
 
 task benchmark: %w[benchmark:native benchmark:pure]
 
+task :print_ruby_version do
+  print "#{RUBY_DESCRIPTION}\n\n"
+end
+
 task :print_time do
-  puts Time.now.utc
-  puts
+  print "#{Time.now.utc}\n\n"
 end
 
 namespace :benchmark do
-  task :native => :print_time do |t, args|
+  task :native => [:print_time, :print_ruby_version] do |t, args|
     puts '# C Extension'
     load File.expand_path("../benchmark/native.rb", __FILE__)
     puts
   end
 
-  task :pure => :print_time do |t, args|
+  task :pure => [:print_time, :print_ruby_version] do |t, args|
     puts '# Pure Ruby'
     load File.expand_path("../benchmark/pure.rb", __FILE__)
     puts

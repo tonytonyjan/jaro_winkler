@@ -1,5 +1,6 @@
 require 'benchmark'
 require 'jaro_winkler'
+require 'jaro_winkler/version'
 require 'fuzzystringmatch'
 require 'hotwater'
 require 'amatch'
@@ -7,7 +8,7 @@ ary = [['al', 'al'], ['martha', 'marhta'], ['jones', 'johnson'], ['abcvwxyz', 'c
 
 n = 100000
 Benchmark.bmbm do |x|
-  x.report "jaro_winkler #{Gem.loaded_specs['jaro_winkler'].version}" do
+  x.report "jaro_winkler #{JaroWinkler::VERSION}" do
     n.times{ ary.each{ |str1, str2| JaroWinkler.distance(str1, str2) } }
   end
 
