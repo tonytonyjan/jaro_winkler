@@ -1,5 +1,4 @@
-#ifndef ADJ_MATRIX_H
-#define ADJ_MATRIX_H
+#pragma once
 #define ADJ_MATRIX_DEFAULT_LENGTH 958
 #define ADJ_MATRIX_SEED 9527
 
@@ -18,5 +17,3 @@ void       adj_matrix_add    (AdjMatrix *matrix, unsigned long long x, unsigned 
 char       adj_matrix_find   (AdjMatrix *matrix, unsigned long long x, unsigned long long y);
 void       adj_matrix_free   (AdjMatrix *matrix);
 AdjMatrix* adj_matrix_default();
-
-#endif
