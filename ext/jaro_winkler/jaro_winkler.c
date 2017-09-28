@@ -5,9 +5,9 @@ VALUE rb_mJaroWinkler,
       rb_eError,
       rb_eInvalidWeightError;
 
-VALUE rb_jaro_winkler_distance(int argc, VALUE *argv, VALUE self);
-VALUE rb_jaro_distance(int argc, VALUE *argv, VALUE self);
-VALUE distance(int argc, VALUE *argv, VALUE self, double (*distance_fn)(char *str1, int len1, char *str2, int len2, LibJaroOption *opt));
+VALUE rb_jaro_winkler_distance(size_t argc, VALUE *argv, VALUE self);
+VALUE rb_jaro_distance(size_t argc, VALUE *argv, VALUE self);
+VALUE distance(size_t argc, VALUE *argv, VALUE self, double (*distance_fn)(char *str1, size_t len1, char *str2, size_t len2, LibJaroOption *opt));
 
 void Init_jaro_winkler_ext(void){
   rb_mJaroWinkler = rb_define_module("JaroWinkler");
@@ -18,7 +18,7 @@ void Init_jaro_winkler_ext(void){
 }
 
 
-VALUE distance(int argc, VALUE *argv, VALUE self, double (*distance_fn)(char *str1, int len1, char *str2, int len2, LibJaroOption *opt)){
+VALUE distance(size_t argc, VALUE *argv, VALUE self, double (*distance_fn)(char *str1, size_t len1, char *str2, size_t len2, LibJaroOption *opt)){
   VALUE s1, s2, opt;
   rb_scan_args(argc, argv, "2:", &s1, &s2, &opt);
   LibJaroOption c_opt = DEFAULT_OPT;
@@ -36,10 +36,10 @@ VALUE distance(int argc, VALUE *argv, VALUE self, double (*distance_fn)(char *st
   return rb_float_new((*distance_fn)(StringValuePtr(s1), RSTRING_LEN(s1), StringValuePtr(s2), RSTRING_LEN(s2), &c_opt));
 }
 
-VALUE rb_jaro_distance(int argc, VALUE *argv, VALUE self){
+VALUE rb_jaro_distance(size_t argc, VALUE *argv, VALUE self){
   return distance(argc, argv, self, jaro_distance);
 }
 
-VALUE rb_jaro_winkler_distance(int argc, VALUE *argv, VALUE self){
+VALUE rb_jaro_winkler_distance(size_t argc, VALUE *argv, VALUE self){
   return distance(argc, argv, self, jaro_winkler_distance);
 }

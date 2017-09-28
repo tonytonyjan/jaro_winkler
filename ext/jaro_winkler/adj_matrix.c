@@ -2,8 +2,6 @@
 #include "code.h"
 #include "ruby.h"
 
-#include <stdlib.h>
-
 const char *DEFAULT_ADJ_TABLE[] = {
   "A","E", "A","I", "A","O", "A","U", "B","V", "E","I", "E","O", "E","U", "I","O", "I","U", "O","U",
   "I","Y", "E","Y", "C","G", "E","F", "W","U", "W","V", "X","K", "S","Z", "X","S", "Q","C", "U","V",
@@ -13,20 +11,20 @@ const char *DEFAULT_ADJ_TABLE[] = {
 
 void node_free(Node *head);
 
-AdjMatrix* adj_matrix_new(unsigned int length){
+AdjMatrix* adj_matrix_new(uint32_t length){
   AdjMatrix *matrix = malloc(sizeof(AdjMatrix));
   matrix->length = length == 0 ? ADJ_MATRIX_DEFAULT_LENGTH : length;
   matrix->table = malloc(matrix->length * sizeof(Node**));
-  for(int i = 0; i < matrix->length; i++){
+  for(size_t i = 0; i < matrix->length; i++){
     matrix->table[i] = malloc(matrix->length * sizeof(Node*));
-    for (int j = 0; j < matrix->length; j++)
+    for (size_t j = 0; j < matrix->length; j++)
       matrix->table[i][j] = NULL;
   }
   return matrix;
 }
 
-void adj_matrix_add(AdjMatrix *matrix, unsigned long long x, unsigned long long y){
-  unsigned int h1 = st_hash(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
+void adj_matrix_add(AdjMatrix *matrix, uint64_t x, uint64_t y){
+  uint32_t h1 = st_hash(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
                h2 = st_hash(&y, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
   Node *new_node = malloc(sizeof(Node)); new_node->x = h1; new_node->y = h2; new_node->next = NULL;
   if(matrix->table[h1][h2] == NULL){
@@ -39,8 +37,8 @@ void adj_matrix_add(AdjMatrix *matrix, unsigned long long x, unsigned long long 
   }
 }
 
-char adj_matrix_find(AdjMatrix *matrix, unsigned long long x, unsigned long long y){
-  unsigned int h1 = st_hash(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
+char adj_matrix_find(AdjMatrix *matrix, uint64_t x, uint64_t y){
+  uint32_t h1 = st_hash(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
                h2 = st_hash(&y, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
   Node *node = matrix->table[h1][h2];
   if(node == NULL) return 0;
@@ -58,8 +56,8 @@ void node_free(Node *head){
 }
 
 void adj_matrix_free(AdjMatrix *matrix){
-  for(int i = 0; i < matrix->length; i++){
-    for(int j = 0; j < matrix->length; j++)
+  for(size_t i = 0; i < matrix->length; i++){
+    for(size_t j = 0; j < matrix->length; j++)
       if(matrix->table[i][j] != NULL){
         node_free(matrix->table[i][j]);
         matrix->table[i][j] = matrix->table[j][i] = NULL;
@@ -75,10 +73,10 @@ AdjMatrix* adj_matrix_default(){
   static AdjMatrix *ret_matrix;
   if(first_time){
     ret_matrix = adj_matrix_new(ADJ_MATRIX_DEFAULT_LENGTH);
-    int length = sizeof(DEFAULT_ADJ_TABLE) / sizeof(char*);
-    for(int i = 0; i < length; i += 2){
-      unsigned long long code_1, code_2;
-      int dummy_length;
+    size_t length = sizeof(DEFAULT_ADJ_TABLE) / sizeof(char*);
+    for(size_t i = 0; i < length; i += 2){
+      uint64_t code_1, code_2;
+      size_t dummy_length;
       utf_char_to_code((char*)DEFAULT_ADJ_TABLE[i], &code_1, &dummy_length);
       utf_char_to_code((char*)DEFAULT_ADJ_TABLE[i+1], &code_2, &dummy_length);
       adj_matrix_add(ret_matrix, code_1, code_2);

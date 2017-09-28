@@ -8,14 +8,14 @@
 
 #define SWAP(x, y) do{ __typeof__(x) SWAP = x; x = y; y = SWAP; }while(0)
 
-double jaro_distance_from_codes(unsigned long long *codes1, int len1, unsigned long long *codes2, int len2, LibJaroOption *opt);
-double jaro_winkler_distance_from_codes(unsigned long long *codes1, int len1, unsigned long long *codes2, int len2, LibJaroOption *opt);
+double jaro_distance_from_codes(uint64_t *codes1, size_t len1, uint64_t *codes2, size_t len2, LibJaroOption *opt);
+double jaro_winkler_distance_from_codes(uint64_t *codes1, size_t len1, uint64_t *codes2, size_t len2, LibJaroOption *opt);
 
-double jaro_distance(char* short_str, int short_str_len, char* long_str, int long_str_len, LibJaroOption *opt){
+double jaro_distance(char* short_str, size_t short_str_len, char* long_str, size_t long_str_len, LibJaroOption *opt){
   if(!short_str_len || !long_str_len) return 0.0;
 
-  unsigned long long *short_codes, *long_codes;
-  int short_codes_len, long_codes_len;
+  uint64_t *short_codes, *long_codes;
+  size_t short_codes_len, long_codes_len;
   string_to_codes(short_str, short_str_len, &short_codes, &short_codes_len);
   string_to_codes(long_str, long_str_len, &long_codes, &long_codes_len);
 
@@ -25,11 +25,11 @@ double jaro_distance(char* short_str, int short_str_len, char* long_str, int lon
   return ret;
 }
 
-double jaro_winkler_distance(char* short_str, int short_str_len, char* long_str, int long_str_len, LibJaroOption *opt){
+double jaro_winkler_distance(char* short_str, size_t short_str_len, char* long_str, size_t long_str_len, LibJaroOption *opt){
   if(!short_str_len || !long_str_len) return 0.0;
 
-  unsigned long long *short_codes, *long_codes;
-  int short_codes_len, long_codes_len;
+  uint64_t *short_codes, *long_codes;
+  size_t short_codes_len, long_codes_len;
   string_to_codes(short_str, short_str_len, &short_codes, &short_codes_len);
   string_to_codes(long_str, long_str_len, &long_codes, &long_codes_len);
 
@@ -39,7 +39,7 @@ double jaro_winkler_distance(char* short_str, int short_str_len, char* long_str,
   return ret;
 }
 
-double jaro_distance_from_codes(unsigned long long* short_codes, int short_codes_len, unsigned long long* long_codes, int long_codes_len, LibJaroOption *opt){
+double jaro_distance_from_codes(uint64_t* short_codes, size_t short_codes_len, uint64_t* long_codes, size_t long_codes_len, LibJaroOption *opt){
   if(!short_codes_len || !long_codes_len) return 0.0;
 
   if(short_codes_len > long_codes_len){
@@ -48,11 +48,11 @@ double jaro_distance_from_codes(unsigned long long* short_codes, int short_codes
   }
 
   if(opt->ignore_case){
-    for(int i = 0; i < short_codes_len; i++) short_codes[i] = tolower(short_codes[i]);
-    for(int i = 0; i < long_codes_len; i++) long_codes[i] = tolower(long_codes[i]);
+    for(size_t i = 0; i < short_codes_len; i++) short_codes[i] = tolower(short_codes[i]);
+    for(size_t i = 0; i < long_codes_len; i++) long_codes[i] = tolower(long_codes[i]);
   }
 
-  int window_size = long_codes_len/2 - 1;
+  int32_t window_size = long_codes_len/2 - 1;
   if(window_size < 0) window_size = 0;
 
   char short_codes_flag[short_codes_len];
@@ -61,12 +61,12 @@ double jaro_distance_from_codes(unsigned long long* short_codes, int short_codes
   memset(long_codes_flag, 0, long_codes_len);
 
   // count number of matching characters
-  int match_count = 0;
-  for(int i = 0; i < short_codes_len; i++){
-    int left = (i >= window_size) ? i - window_size : 0;
-    int right = (i + window_size <= long_codes_len - 1) ? (i + window_size) : (long_codes_len - 1);
+  size_t match_count = 0;
+  for(size_t i = 0; i < short_codes_len; i++){
+    size_t left = (i >= window_size) ? i - window_size : 0;
+    size_t right = (i + window_size <= long_codes_len - 1) ? (i + window_size) : (long_codes_len - 1);
     if(right > long_codes_len - 1) right = long_codes_len - 1;
-    for(int j = left; j <= right; j++){
+    for(size_t j = left; j <= right; j++){
       if(!long_codes_flag[j] && short_codes[i] == long_codes[j]){
         short_codes_flag[i] = long_codes_flag[j] = 1;
         match_count++;
@@ -78,8 +78,8 @@ double jaro_distance_from_codes(unsigned long long* short_codes, int short_codes
   if(!match_count) return 0.0;
 
   // count number of transpositions
-  int transposition_count = 0, j = 0, k = 0;
-  for(int i = 0; i < short_codes_len; i++){
+  size_t transposition_count = 0, j = 0, k = 0;
+  for(size_t i = 0; i < short_codes_len; i++){
     if(short_codes_flag[i]){
       for(j = k; j < long_codes_len; j++){
         if(long_codes_flag[j]){
@@ -92,11 +92,11 @@ double jaro_distance_from_codes(unsigned long long* short_codes, int short_codes
   }
 
   // count similarities in nonmatched characters
-  int similar_count = 0;
+  size_t similar_count = 0;
   if(opt->adj_table && short_codes_len > match_count)
-    for(int i = 0; i < short_codes_len; i++)
+    for(size_t i = 0; i < short_codes_len; i++)
       if(!short_codes_flag[i])
-        for(int j = 0; j < long_codes_len; j++)
+        for(size_t j = 0; j < long_codes_len; j++)
           if(!long_codes_flag[j])
             if(adj_matrix_find(adj_matrix_default(), short_codes[i], long_codes[j])){
               similar_count += 3;
@@ -109,13 +109,13 @@ double jaro_distance_from_codes(unsigned long long* short_codes, int short_codes
   return (m/short_codes_len + m/long_codes_len + (m-t)/m) / 3;
 }
 
-double jaro_winkler_distance_from_codes(unsigned long long* short_codes, int short_codes_len, unsigned long long* long_codes, int long_codes_len, LibJaroOption *opt){
+double jaro_winkler_distance_from_codes(uint64_t* short_codes, size_t short_codes_len, uint64_t* long_codes, size_t long_codes_len, LibJaroOption *opt){
   double jaro_distance = jaro_distance_from_codes(short_codes, short_codes_len, long_codes, long_codes_len, opt);
 
   if(jaro_distance < opt->threshold) return jaro_distance;
   else{
-    int prefix = 0;
-    int max_4 = short_codes_len > 4 ? 4 : short_codes_len;
+    size_t prefix = 0;
+    size_t max_4 = short_codes_len > 4 ? 4 : short_codes_len;
     for(prefix = 0; prefix < max_4 && short_codes[prefix] == long_codes[prefix]; prefix++);
     return jaro_distance + prefix*opt->weight*(1-jaro_distance);
   }
