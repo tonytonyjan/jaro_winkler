@@ -1,5 +1,6 @@
 #include "adj_matrix.h"
 #include "code.h"
+#include "ruby.h"
 
 #include <stdlib.h>
 
@@ -10,7 +11,6 @@ const char *DEFAULT_ADJ_TABLE[] = {
   "0","Q", "C","K", "G","J", "E"," ", "Y"," ", "S"," "
 };
 
-extern unsigned int MurmurHash2(const void * key, int len, unsigned int seed);
 void node_free(Node *head);
 
 AdjMatrix* adj_matrix_new(unsigned int length){
@@ -26,8 +26,8 @@ AdjMatrix* adj_matrix_new(unsigned int length){
 }
 
 void adj_matrix_add(AdjMatrix *matrix, unsigned long long x, unsigned long long y){
-  unsigned int h1 = MurmurHash2(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
-               h2 = MurmurHash2(&y, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
+  unsigned int h1 = st_hash(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
+               h2 = st_hash(&y, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
   Node *new_node = malloc(sizeof(Node)); new_node->x = h1; new_node->y = h2; new_node->next = NULL;
   if(matrix->table[h1][h2] == NULL){
     matrix->table[h1][h2] = matrix->table[h2][h1] = new_node;
@@ -40,8 +40,8 @@ void adj_matrix_add(AdjMatrix *matrix, unsigned long long x, unsigned long long 
 }
 
 char adj_matrix_find(AdjMatrix *matrix, unsigned long long x, unsigned long long y){
-  unsigned int h1 = MurmurHash2(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
-               h2 = MurmurHash2(&y, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
+  unsigned int h1 = st_hash(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
+               h2 = st_hash(&y, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
   Node *node = matrix->table[h1][h2];
   if(node == NULL) return 0;
   else{
