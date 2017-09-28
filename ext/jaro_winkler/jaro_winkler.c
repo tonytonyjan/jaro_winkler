@@ -13,8 +13,8 @@ void Init_jaro_winkler_ext(void){
   rb_mJaroWinkler = rb_define_module("JaroWinkler");
   rb_eError = rb_define_class_under(rb_mJaroWinkler, "Error", rb_eRuntimeError);
   rb_eInvalidWeightError = rb_define_class_under(rb_mJaroWinkler, "InvalidWeightError", rb_eError);
-  rb_define_module_function(rb_mJaroWinkler, "distance", rb_jaro_winkler_distance, -1);
-  rb_define_module_function(rb_mJaroWinkler, "jaro_distance", rb_jaro_distance, -1);
+  rb_define_singleton_method(rb_mJaroWinkler, "distance", rb_jaro_winkler_distance, -1);
+  rb_define_singleton_method(rb_mJaroWinkler, "jaro_distance", rb_jaro_distance, -1);
 }
 
 
