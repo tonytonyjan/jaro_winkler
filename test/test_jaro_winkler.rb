@@ -96,11 +96,11 @@ class TestJaroWinkler < Minitest::Test
 private
 
   def assert_distance score, str1, str2, options={}
-    assert_equal score, JaroWinkler.distance(str1, str2, options).round(4)
+    assert_in_delta score, JaroWinkler.distance(str1, str2, options)
   end
 
   def assert_jaro_distance score, str1, str2, options={}
-    assert_equal score, JaroWinkler.jaro_distance(str1, str2, options).round(4)
+    assert_in_delta score, JaroWinkler.jaro_distance(str1, str2, options)
   end
 
 end
