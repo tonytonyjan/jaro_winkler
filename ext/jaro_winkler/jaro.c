@@ -8,6 +8,8 @@
 
 #define SWAP(x, y) do{ __typeof__(x) SWAP = x; x = y; y = SWAP; }while(0)
 
+const LibJaroOption DEFAULT_OPT = {.weight = DEFAULT_WEIGHT, .threshold = DEFAULT_THRESHOLD, .ignore_case = 0, .adj_table = 0};
+
 double jaro_distance_from_codes(uint64_t *codes1, size_t len1, uint64_t *codes2, size_t len2, LibJaroOption *opt);
 double jaro_winkler_distance_from_codes(uint64_t *codes1, size_t len1, uint64_t *codes2, size_t len2, LibJaroOption *opt);
 
