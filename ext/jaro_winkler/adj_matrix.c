@@ -24,8 +24,8 @@ AdjMatrix* adj_matrix_new(uint32_t length){
 }
 
 void adj_matrix_add(AdjMatrix *matrix, uint64_t x, uint64_t y){
-  uint32_t h1 = st_hash(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
-               h2 = st_hash(&y, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
+  uint32_t h1 = st_hash(&x, sizeof(x), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
+               h2 = st_hash(&y, sizeof(y), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
   Node *new_node = malloc(sizeof(Node)); new_node->x = h1; new_node->y = h2; new_node->next = NULL;
   if(matrix->table[h1][h2] == NULL){
     matrix->table[h1][h2] = matrix->table[h2][h1] = new_node;
@@ -38,8 +38,8 @@ void adj_matrix_add(AdjMatrix *matrix, uint64_t x, uint64_t y){
 }
 
 char adj_matrix_find(AdjMatrix *matrix, uint64_t x, uint64_t y){
-  uint32_t h1 = st_hash(&x, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
-               h2 = st_hash(&y, sizeof(long long), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
+  uint32_t h1 = st_hash(&x, sizeof(x), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH,
+               h2 = st_hash(&y, sizeof(y), ADJ_MATRIX_SEED) % ADJ_MATRIX_DEFAULT_LENGTH;
   Node *node = matrix->table[h1][h2];
   if(node == NULL) return 0;
   else{
