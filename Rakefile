@@ -52,14 +52,14 @@ task compare: :compile do
   table.each{|row| puts row.join(' | ')}
 end
 
-if RUBY_PLATFORM == 'java'
-  task :compile do
-    puts 'Can not compile C extension, fallback to pure Ruby version.'
-  end
-else
+if RUBY_ENGINE == 'ruby'
   Rake::ExtensionTask.new 'jaro_winkler_ext' do |ext|
     ext.lib_dir = 'lib/jaro_winkler'
     ext.ext_dir = 'ext/jaro_winkler'
+  end
+else
+  task :compile do
+    puts 'Can not compile C extension, fallback to pure Ruby version.'
   end
 end
 

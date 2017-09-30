@@ -2,9 +2,8 @@
 
 require 'jaro_winkler/version'
 
-case RUBY_PLATFORM
-when 'java'
-  require 'jaro_winkler/jaro_winkler_pure'
-else
+if RUBY_ENGINE == 'ruby'
   require 'jaro_winkler/jaro_winkler_ext'
+else
+  require 'jaro_winkler/jaro_winkler_pure'
 end
