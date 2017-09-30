@@ -1,6 +1,6 @@
 #include "ruby.h"
 #include "jaro.h"
-#include "code.h"
+#include "codepoints.h"
 
 VALUE rb_mJaroWinkler,
       rb_eError,

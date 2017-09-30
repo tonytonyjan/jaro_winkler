@@ -3,7 +3,7 @@
 #include <string.h>
 #include "ruby.h"
 #include "ruby/encoding.h"
-#include "code.h"
+#include "codepoints.h"
 
 void codepoints_init(CodePoints *codepoints, VALUE str){
   int32_t n;

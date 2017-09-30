@@ -1,5 +1,5 @@
 #include "adj_matrix.h"
-#include "code.h"
+#include "codepoints.h"
 #include "ruby.h"
 
 const char *DEFAULT_ADJ_TABLE[] = {

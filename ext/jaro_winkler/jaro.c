@@ -1,5 +1,5 @@
 #include "jaro.h"
-#include "code.h"
+#include "codepoints.h"
 #include "adj_matrix.h"
 
 #include <string.h>
