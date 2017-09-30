@@ -5,11 +5,18 @@ os:
   - linux
   - osx
 rvm:
-  - 2.4.0
-  - 2.3.3
-  - 2.2.6
+  - 2.3.5
+  - 2.2.8
   - 2.1.10
   - 2.0.0
   - 1.9.3
   - jruby-19mode
-  - jruby-9.0.4.0
+matrix:
+  include:
+    # https://github.com/travis-ci/travis-ci/issues/7848
+    - os: osx
+      rvm: ruby-head
+      osx_image: xcode9
+    - os: osx
+      rvm: 2.4.2
+      osx_image: xcode9
