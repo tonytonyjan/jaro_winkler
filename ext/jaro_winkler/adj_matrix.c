@@ -77,8 +77,8 @@ AdjMatrix* adj_matrix_default(){
     for(size_t i = 0; i < length; i += 2){
       uint64_t code_1, code_2;
       size_t dummy_length;
-      utf_char_to_code((char*)DEFAULT_ADJ_TABLE[i], &code_1, &dummy_length);
-      utf_char_to_code((char*)DEFAULT_ADJ_TABLE[i+1], &code_2, &dummy_length);
+      code_1 = *DEFAULT_ADJ_TABLE[i] & 0xff;
+      code_2 = *DEFAULT_ADJ_TABLE[i+1] & 0xff;
       adj_matrix_add(ret_matrix, code_1, code_2);
     }
     first_time = 0;

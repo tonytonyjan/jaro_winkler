@@ -1,6 +1,13 @@
 #pragma once
 #include <stdint.h>
 #include <stddef.h>
+#include "ruby.h"
 
-void utf_char_to_code(char *str, uint64_t *ret_code, size_t *ret_byte_length);
-void string_to_codes(char *str, size_t length, uint64_t **ret_codes, size_t *ret_length);
+typedef struct {
+  uint32_t *data;
+  size_t length;
+  size_t size;
+} CodePoints;
+
+void codepoints_init(CodePoints*, VALUE str);
+void codepoints_free(CodePoints*);

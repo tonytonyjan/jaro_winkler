@@ -93,10 +93,22 @@ class TestJaroWinkler < Minitest::Test
     JaroWinkler.distance 'haisai' * 20, 'haisai' * 20
   end
 
+  def test_encoding
+    assert_encoding '焦玟綾', '焦紋綾', Encoding::Big5
+    assert_encoding '簡煒航', '簡偉航', Encoding::Big5_HKSCS
+    assert_encoding '西島之', '西鳥志', Encoding::EUCJP
+    assert_encoding '松本行弘', '枩本行弘', Encoding::Shift_JIS
+    assert_distance 1.0, "\xe8".force_encoding('iso8859-1'), 'è'
+  end
+
 private
 
   def assert_distance score, str1, str2, options={}
     assert_in_delta score, JaroWinkler.distance(str1, str2, options)
+  end
+
+  def assert_encoding str1, str2, encoding, options={}
+    assert_distance JaroWinkler.distance(str1, str2), str1.encode(encoding), str2.encode(encoding)
   end
 
   def assert_jaro_distance score, str1, str2, options={}

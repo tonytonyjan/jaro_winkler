@@ -1,30 +1,37 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include "ruby.h"
+#include "ruby/encoding.h"
+#include "code.h"
 
-void utf_char_to_code(char *str, uint64_t *ret_code, size_t *ret_byte_length){
-  unsigned char first_char = str[0];
-  if(first_char >= 252) *ret_byte_length = 6;      // 1111110x
-  else if(first_char >= 248) *ret_byte_length = 5; // 111110xx
-  else if(first_char >= 240) *ret_byte_length = 4; // 11110xxx
-  else if(first_char >= 224) *ret_byte_length = 3; // 1110xxxx
-  else if(first_char >= 192) *ret_byte_length = 2; // 110xxxxx
-  else *ret_byte_length = 1;
-  *ret_code = 0;
-  memcpy(ret_code, str, *ret_byte_length);
+void codepoints_init(CodePoints *codepoints, VALUE str){
+  int32_t n;
+  uint32_t c;
+  const char *ptr, *end;
+  rb_encoding *enc;
+
+  codepoints->length = 0;
+  codepoints->size = 32;
+  codepoints->data = malloc(codepoints->size * sizeof(*codepoints->data));
+  str = rb_str_new_frozen(str);
+  ptr = RSTRING_PTR(str);
+  end = RSTRING_END(str);
+  enc = rb_enc_get(str);
+
+  while (ptr < end) {
+  	c = rb_enc_codepoint_len(ptr, end, &n, enc);
+    if(codepoints->length == codepoints->size) {
+      codepoints->size *= 2;
+      codepoints->data = realloc(codepoints->data, sizeof(*codepoints->data) * codepoints->size);
+    }
+    codepoints->data[codepoints->length++] = c;
+  	ptr += n;
+  }
+  RB_GC_GUARD(str);
 }
 
-void string_to_codes(char *str, size_t length, uint64_t **ret_codes, size_t *ret_length){
-  uint32_t code;
-  char byte_length;
 
-  *ret_codes = calloc(length, sizeof(long long));
-  *ret_length = 0;
-
-  for(size_t i = 0; i < length;){
-    size_t byte_length;
-    utf_char_to_code(&str[i], &(*ret_codes)[*ret_length], &byte_length);
-    *ret_length += 1;
-    i += byte_length;
-  }
+void codepoints_free(CodePoints *codepoints) {
+  free(codepoints->data);
 }

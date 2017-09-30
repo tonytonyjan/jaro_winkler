@@ -6,42 +6,13 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#define DEFAULT_WEIGHT 0.1
+#define DEFAULT_THRESHOLD 0.7
 #define SWAP(x, y) do{ __typeof__(x) SWAP = x; x = y; y = SWAP; }while(0)
 
 const LibJaroOption DEFAULT_OPT = {.weight = DEFAULT_WEIGHT, .threshold = DEFAULT_THRESHOLD, .ignore_case = 0, .adj_table = 0};
 
-double jaro_distance_from_codes(uint64_t *codes1, size_t len1, uint64_t *codes2, size_t len2, LibJaroOption *opt);
-double jaro_winkler_distance_from_codes(uint64_t *codes1, size_t len1, uint64_t *codes2, size_t len2, LibJaroOption *opt);
-
-double jaro_distance(char* short_str, size_t short_str_len, char* long_str, size_t long_str_len, LibJaroOption *opt){
-  if(!short_str_len || !long_str_len) return 0.0;
-
-  uint64_t *short_codes, *long_codes;
-  size_t short_codes_len, long_codes_len;
-  string_to_codes(short_str, short_str_len, &short_codes, &short_codes_len);
-  string_to_codes(long_str, long_str_len, &long_codes, &long_codes_len);
-
-  double ret = jaro_distance_from_codes(short_codes, short_codes_len, long_codes, long_codes_len, opt);
-
-  free(short_codes); free(long_codes);
-  return ret;
-}
-
-double jaro_winkler_distance(char* short_str, size_t short_str_len, char* long_str, size_t long_str_len, LibJaroOption *opt){
-  if(!short_str_len || !long_str_len) return 0.0;
-
-  uint64_t *short_codes, *long_codes;
-  size_t short_codes_len, long_codes_len;
-  string_to_codes(short_str, short_str_len, &short_codes, &short_codes_len);
-  string_to_codes(long_str, long_str_len, &long_codes, &long_codes_len);
-
-  double ret = jaro_winkler_distance_from_codes(short_codes, short_codes_len, long_codes, long_codes_len, opt);
-
-  free(short_codes); free(long_codes);
-  return ret;
-}
-
-double jaro_distance_from_codes(uint64_t* short_codes, size_t short_codes_len, uint64_t* long_codes, size_t long_codes_len, LibJaroOption *opt){
+double jaro_distance_from_codes(uint32_t* short_codes, size_t short_codes_len, uint32_t* long_codes, size_t long_codes_len, LibJaroOption *opt){
   if(!short_codes_len || !long_codes_len) return 0.0;
 
   if(short_codes_len > long_codes_len){
@@ -111,7 +82,7 @@ double jaro_distance_from_codes(uint64_t* short_codes, size_t short_codes_len, u
   return (m/short_codes_len + m/long_codes_len + (m-t)/m) / 3;
 }
 
-double jaro_winkler_distance_from_codes(uint64_t* short_codes, size_t short_codes_len, uint64_t* long_codes, size_t long_codes_len, LibJaroOption *opt){
+double jaro_winkler_distance_from_codes(uint32_t* short_codes, size_t short_codes_len, uint32_t* long_codes, size_t long_codes_len, LibJaroOption *opt){
   double jaro_distance = jaro_distance_from_codes(short_codes, short_codes_len, long_codes, long_codes_len, opt);
 
   if(jaro_distance < opt->threshold) return jaro_distance;
