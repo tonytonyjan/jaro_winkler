@@ -3,12 +3,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
-typedef struct LibJaroOption{
+typedef struct {
   double weight, threshold;
   char ignore_case, adj_table;
-} LibJaroOption;
+} Options;
 
-extern const LibJaroOption DEFAULT_OPT;
+extern const Options DEFAULT_OPTIONS;
 
-double jaro_distance_from_codes(uint32_t* short_codes, size_t short_codes_len, uint32_t* long_codes, size_t long_codes_len, LibJaroOption *opt);
-double jaro_winkler_distance_from_codes(uint32_t* short_codes, size_t short_codes_len, uint32_t* long_codes, size_t long_codes_len, LibJaroOption *opt);
+double jaro_distance_from_codes(uint32_t* codepoints1, size_t len1, uint32_t* codepoints2, size_t len2, Options*);
+double jaro_winkler_distance_from_codes(uint32_t* codepoints1, size_t len1, uint32_t* codepoints2, size_t len2, Options*);

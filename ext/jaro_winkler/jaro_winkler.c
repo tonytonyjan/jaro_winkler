@@ -8,7 +8,7 @@ VALUE rb_mJaroWinkler,
 
 VALUE rb_jaro_winkler_distance(size_t argc, VALUE *argv, VALUE self);
 VALUE rb_jaro_distance(size_t argc, VALUE *argv, VALUE self);
-VALUE distance(size_t argc, VALUE *argv, VALUE self, double (*distance_fn)(uint32_t* short_codes, size_t short_codes_len, uint32_t* long_codes, size_t long_codes_len, LibJaroOption *opt));
+VALUE distance(size_t argc, VALUE *argv, VALUE self, double (*distance_fn)(uint32_t* codepoints1, size_t len1, uint32_t* codepoints2, size_t len2, Options*));
 
 void Init_jaro_winkler_ext(void){
   rb_mJaroWinkler = rb_define_module("JaroWinkler");
@@ -19,7 +19,7 @@ void Init_jaro_winkler_ext(void){
 }
 
 
-VALUE distance(size_t argc, VALUE *argv, VALUE self, double (*distance_fn)(uint32_t* short_codes, size_t short_codes_len, uint32_t* long_codes, size_t long_codes_len, LibJaroOption *opt)){
+VALUE distance(size_t argc, VALUE *argv, VALUE self, double (*distance_fn)(uint32_t* codepoints1, size_t len1, uint32_t* codepoints2, size_t len2, Options*)){
   VALUE s1, s2, opt;
   CodePoints cp1, cp2;
 
@@ -27,7 +27,7 @@ VALUE distance(size_t argc, VALUE *argv, VALUE self, double (*distance_fn)(uint3
   codepoints_init(&cp1, s1);
   codepoints_init(&cp2, s2);
 
-  LibJaroOption c_opt = DEFAULT_OPT;
+  Options c_opt = DEFAULT_OPTIONS;
   if(TYPE(opt) == T_HASH){
     VALUE weight = rb_hash_aref(opt, ID2SYM(rb_intern("weight"))),
           threshold = rb_hash_aref(opt, ID2SYM(rb_intern("threshold"))),
