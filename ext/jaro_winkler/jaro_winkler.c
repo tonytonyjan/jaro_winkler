@@ -54,8 +54,11 @@ VALUE distance(size_t argc, VALUE *argv, VALUE self,
       c_opt.adj_table =
           (TYPE(adj_table) == T_FALSE || NIL_P(adj_table)) ? 0 : 1;
   }
-  return rb_float_new(
+  VALUE ret = rb_float_new(
       (*distance_fn)(cp1.data, cp1.length, cp2.data, cp2.length, &c_opt));
+  codepoints_free(&cp1);
+  codepoints_free(&cp2);
+  return ret;
 }
 
 VALUE rb_jaro_distance(size_t argc, VALUE *argv, VALUE self) {
