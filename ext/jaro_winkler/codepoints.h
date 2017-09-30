@@ -1,7 +1,7 @@
 #pragma once
-#include <stdint.h>
-#include <stddef.h>
 #include "ruby.h"
+#include <stddef.h>
+#include <stdint.h>
 
 typedef struct {
   uint32_t *data;
@@ -9,5 +9,5 @@ typedef struct {
   size_t size;
 } CodePoints;
 
-void codepoints_init(CodePoints*, VALUE str);
-void codepoints_free(CodePoints*);
+void codepoints_init(CodePoints *, VALUE str);
+void codepoints_free(CodePoints *);

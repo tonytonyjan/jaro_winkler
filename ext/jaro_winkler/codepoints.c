@@ -1,11 +1,11 @@
+#include "codepoints.h"
+#include "ruby.h"
+#include "ruby/encoding.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include "ruby.h"
-#include "ruby/encoding.h"
-#include "codepoints.h"
 
-void codepoints_init(CodePoints *codepoints, VALUE str){
+void codepoints_init(CodePoints *codepoints, VALUE str) {
   int32_t n;
   uint32_t c;
   const char *ptr, *end;
@@ -20,18 +20,16 @@ void codepoints_init(CodePoints *codepoints, VALUE str){
   enc = rb_enc_get(str);
 
   while (ptr < end) {
-  	c = rb_enc_codepoint_len(ptr, end, &n, enc);
-    if(codepoints->length == codepoints->size) {
+    c = rb_enc_codepoint_len(ptr, end, &n, enc);
+    if (codepoints->length == codepoints->size) {
       codepoints->size *= 2;
-      codepoints->data = realloc(codepoints->data, sizeof(*codepoints->data) * codepoints->size);
+      codepoints->data = realloc(codepoints->data,
+                                 sizeof(*codepoints->data) * codepoints->size);
     }
     codepoints->data[codepoints->length++] = c;
-  	ptr += n;
+    ptr += n;
   }
   RB_GC_GUARD(str);
 }
 
-
-void codepoints_free(CodePoints *codepoints) {
-  free(codepoints->data);
-}
+void codepoints_free(CodePoints *codepoints) { free(codepoints->data); }
