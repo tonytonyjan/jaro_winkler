@@ -84,7 +84,6 @@ I reinvent this wheel because of the naming in `fuzzy-string-match` such as `get
 | Adjusting Table | **Yes**      | No               | No       | No      |
 | Native          | **Yes**      | **Yes**          | **Yes**  | **Yes** |
 | Pure Ruby       | **Yes**      | **Yes**          | No       | No      |
-| Speed           | **Fast**     | Medium           | **Fast** | Slow    |
 
 I made a table below to compare accuracy between each gem:
 
@@ -106,33 +105,31 @@ str_1      | str_2      | origin | jaro_winkler | fuzzystringmatch | hotwater | 
 
 ```
 $ bundle exec rake benchmark
-2015-12-26 20:35:47 UTC
-
-ruby 2.3.0p0 (2015-12-25 revision 53290) [x86_64-darwin15]
+ruby 2.4.1p111 (2017-03-22 revision 58053) [x86_64-darwin16]
 
 # C Extension
-Rehearsal ----------------------------------------------------------
-jaro_winkler 1.4.0       0.340000   0.000000   0.340000 (  0.343759)
-fuzzystringmatch 0.9.7   0.420000   0.000000   0.420000 (  0.434254)
-hotwater 0.1.2           0.300000   0.000000   0.300000 (  0.297175)
-amatch 0.3.0             0.960000   0.010000   0.970000 (  0.974599)
-------------------------------------------------- total: 2.030000sec
+Rehearsal --------------------------------------------------------------
+jaro_winkler (fba1b2e)       0.310000   0.000000   0.310000 (  0.312607)
+fuzzy-string-match (1.0.1)   0.390000   0.000000   0.390000 (  0.395162)
+hotwater (0.1.2)             0.250000   0.000000   0.250000 (  0.254470)
+amatch (0.4.0)               0.820000   0.010000   0.830000 (  0.823139)
+----------------------------------------------------- total: 1.780000sec
 
-                             user     system      total        real
-jaro_winkler 1.4.0       0.320000   0.000000   0.320000 (  0.320867)
-fuzzystringmatch 0.9.7   0.460000   0.000000   0.460000 (  0.473568)
-hotwater 0.1.2           0.310000   0.000000   0.310000 (  0.317671)
-amatch 0.3.0             1.060000   0.000000   1.060000 (  1.066627)
+                                 user     system      total        real
+jaro_winkler (fba1b2e)       0.300000   0.000000   0.300000 (  0.294156)
+fuzzy-string-match (1.0.1)   0.390000   0.000000   0.390000 (  0.391629)
+hotwater (0.1.2)             0.240000   0.000000   0.240000 (  0.248057)
+amatch (0.4.0)               0.840000   0.000000   0.840000 (  0.842343)
 
 # Pure Ruby
-Rehearsal ----------------------------------------------------------
-jaro_winkler 1.4.0       0.670000   0.010000   0.680000 (  0.678950)
-fuzzystringmatch 0.9.7   1.770000   0.000000   1.770000 (  1.778839)
-------------------------------------------------- total: 2.450000sec
+Rehearsal --------------------------------------------------------------
+jaro_winkler (fba1b2e)       0.410000   0.000000   0.410000 (  0.417471)
+fuzzy-string-match (1.0.1)   0.810000   0.010000   0.820000 (  0.809046)
+----------------------------------------------------- total: 1.230000sec
 
-                             user     system      total        real
-jaro_winkler 1.4.0       0.680000   0.010000   0.690000 (  0.684852)
-fuzzystringmatch 0.9.7   1.710000   0.000000   1.710000 (  1.720497)
+                                 user     system      total        real
+jaro_winkler (fba1b2e)       0.400000   0.000000   0.400000 (  0.404580)
+fuzzy-string-match (1.0.1)   0.800000   0.000000   0.800000 (  0.801512)
 ```
 
 # Todo
