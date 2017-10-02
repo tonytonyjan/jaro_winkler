@@ -9,8 +9,13 @@ Gem::Specification.new do |spec|
   spec.authors = ['Jian Weihang']
   spec.email = 'tonytonyjan@gmail.com'
   spec.extensions = ['ext/jaro_winkler/extconf.rb'] if RUBY_ENGINE == 'ruby'
-  spec.summary = 'Ruby & C implementation of Jaro-Winkler distance algorithm which both support UTF-8 string.'
-  spec.description = %q{It's a implementation of Jaro-Winkler distance algorithm, it uses C extension and will fallback to pure Ruby version in JRuby. Both implementation supports UTF-8 string.}
+  spec.summary = 'An implementation of Jaro-Winkler distance algorithm written \
+  in C extension which supports any kind of string encoding.'
+  spec.description = 'jaro_winkler is an implementation of Jaro-Winkler \
+  distance algorithm which is written in C extension and will fallback to pure \
+  Ruby version in platforms other than MRI/KRI like JRuby or Rubinius. Both of \
+  C and Ruby implementation support any kind of string encoding, such as \
+  UTF-8, EUC-JP, Big5, etc.'
   spec.homepage = 'https://github.com/tonytonyjan/jaro_winkler'
   spec.license = 'MIT'
   spec.files = Dir['lib/**/*.rb', 'ext/**/*.{h,c}']
