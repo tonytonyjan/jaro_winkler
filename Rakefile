@@ -67,3 +67,7 @@ end
 
 spec = Gem::Specification.load(File.expand_path('../jaro_winkler.gemspec', __FILE__))
 Gem::PackageTask.new(spec).define
+
+task 'CHANGELOG.md' do
+  sh 'conventional-changelog -p angular -i CHANGELOG.md -s'
+end
