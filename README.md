@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/tonytonyjan/jaro_winkler.svg?branch=master)](https://travis-ci.org/tonytonyjan/jaro_winkler)
 
-An implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm, it's a C extension and will fallback to pure Ruby version in JRuby. **Both of them supports UTF-8 string.**
+[jaro_winkler](https://rubygems.org/gems/jaro_winkler) is an implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm which is written in C extension and will fallback to pure Ruby version in platforms other than MRI/KRI like JRuby or Rubinius. **Both of C and Ruby implementation support any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.**
 
 # Installation
 
@@ -79,11 +79,12 @@ I reinvent this wheel because of the naming in `fuzzy-string-match` such as `get
 
 |                 | jaro_winkler | fuzzystringmatch | hotwater | amatch  |
 |-----------------|--------------|------------------|----------|---------|
-| UTF-8 Support   | **Yes**      | Pure Ruby only   | No       | No      |
-| Windows Support | **Yes**      |                  | No       | **Yes** |
+| Encoding Support| **Yes**      | Pure Ruby only   | No       | No      |
+| Windows Support | **Yes**      | ?                | No       | **Yes** |
 | Adjusting Table | **Yes**      | No               | No       | No      |
 | Native          | **Yes**      | **Yes**          | **Yes**  | **Yes** |
 | Pure Ruby       | **Yes**      | **Yes**          | No       | No      |
+| Speed           | **1st**      | 3rd              | 2nd      | 4th     |
 
 I made a table below to compare accuracy between each gem:
 
@@ -109,27 +110,27 @@ ruby 2.4.1p111 (2017-03-22 revision 58053) [x86_64-darwin16]
 
 # C Extension
 Rehearsal --------------------------------------------------------------
-jaro_winkler (fba1b2e)       0.310000   0.000000   0.310000 (  0.312607)
-fuzzy-string-match (1.0.1)   0.390000   0.000000   0.390000 (  0.395162)
-hotwater (0.1.2)             0.250000   0.000000   0.250000 (  0.254470)
-amatch (0.4.0)               0.820000   0.010000   0.830000 (  0.823139)
------------------------------------------------------ total: 1.780000sec
+jaro_winkler (8c16e09)       0.240000   0.000000   0.240000 (  0.241347)
+fuzzy-string-match (1.0.1)   0.400000   0.010000   0.410000 (  0.403673)
+hotwater (0.1.2)             0.250000   0.000000   0.250000 (  0.254503)
+amatch (0.4.0)               0.870000   0.000000   0.870000 (  0.875930)
+----------------------------------------------------- total: 1.770000sec
 
                                  user     system      total        real
-jaro_winkler (fba1b2e)       0.300000   0.000000   0.300000 (  0.294156)
-fuzzy-string-match (1.0.1)   0.390000   0.000000   0.390000 (  0.391629)
-hotwater (0.1.2)             0.240000   0.000000   0.240000 (  0.248057)
-amatch (0.4.0)               0.840000   0.000000   0.840000 (  0.842343)
+jaro_winkler (8c16e09)       0.230000   0.000000   0.230000 (  0.236921)
+fuzzy-string-match (1.0.1)   0.380000   0.000000   0.380000 (  0.381942)
+hotwater (0.1.2)             0.250000   0.000000   0.250000 (  0.254977)
+amatch (0.4.0)               0.860000   0.000000   0.860000 (  0.861207)
 
 # Pure Ruby
 Rehearsal --------------------------------------------------------------
-jaro_winkler (fba1b2e)       0.410000   0.000000   0.410000 (  0.417471)
-fuzzy-string-match (1.0.1)   0.810000   0.010000   0.820000 (  0.809046)
------------------------------------------------------ total: 1.230000sec
+jaro_winkler (8c16e09)       0.440000   0.000000   0.440000 (  0.438470)
+fuzzy-string-match (1.0.1)   0.860000   0.000000   0.860000 (  0.862850)
+----------------------------------------------------- total: 1.300000sec
 
                                  user     system      total        real
-jaro_winkler (fba1b2e)       0.400000   0.000000   0.400000 (  0.404580)
-fuzzy-string-match (1.0.1)   0.800000   0.000000   0.800000 (  0.801512)
+jaro_winkler (8c16e09)       0.440000   0.000000   0.440000 (  0.439237)
+fuzzy-string-match (1.0.1)   0.910000   0.010000   0.920000 (  0.920259)
 ```
 
 # Todo
