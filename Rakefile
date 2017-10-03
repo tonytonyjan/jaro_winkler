@@ -22,6 +22,17 @@ namespace :benchmark do
     load File.expand_path("../benchmark/pure.rb", __FILE__)
     puts
   end
+
+  task :measure do
+    tags = ENV['TAGS'] ? ENV['TAGS'].split(',') : `git tag --list`.split.select { |v| v.match? /\Av1\.[1-9]\.\d\z/ }
+    puts 'version,label,utime,stime,cutime,cstime,real'
+    tags.each do |tag|
+      sh("git checkout -f #{tag} 1>&2")
+      sh('git checkout master -- benchmark 1>&2')
+      sh('bundle exec rake clobber compile 1>&2')
+      sh("ruby #{File.expand_path("../benchmark/measure.rb", __FILE__)}")
+    end
+  end
 end
 
 task compare: :compile do
