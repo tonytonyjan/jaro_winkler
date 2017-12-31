@@ -87,7 +87,6 @@ AdjMatrix *adj_matrix_default() {
     size_t length = sizeof(DEFAULT_ADJ_TABLE) / sizeof(char *);
     for (size_t i = 0; i < length; i += 2) {
       uint64_t code_1, code_2;
-      size_t dummy_length;
       code_1 = *DEFAULT_ADJ_TABLE[i] & 0xff;
       code_2 = *DEFAULT_ADJ_TABLE[i + 1] & 0xff;
       adj_matrix_add(ret_matrix, code_1, code_2);
