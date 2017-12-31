@@ -29,7 +29,7 @@ VALUE distance(size_t argc, VALUE *argv, VALUE self,
   VALUE s1, s2, opt;
   CodePoints cp1, cp2;
 
-  rb_scan_args(argc, argv, "2:", &s1, &s2, &opt);
+  rb_scan_args((int32_t)argc, argv, "2:", &s1, &s2, &opt);
   codepoints_init(&cp1, s1);
   codepoints_init(&cp2, s2);
 

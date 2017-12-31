@@ -38,7 +38,7 @@ double jaro_distance_from_codes(uint32_t *codepoints1, size_t len1,
       codepoints2[i] = tolower(codepoints2[i]);
   }
 
-  int32_t window_size = len2 / 2 - 1;
+  int32_t window_size = (int32_t)len2 / 2 - 1;
   if (window_size < 0)
     window_size = 0;
 
@@ -50,7 +50,7 @@ double jaro_distance_from_codes(uint32_t *codepoints1, size_t len1,
   // count number of matching characters
   size_t match_count = 0;
   for (size_t i = 0; i < len1; i++) {
-    size_t left = (i >= window_size) ? i - window_size : 0;
+    size_t left = (i >= (size_t)window_size) ? i - window_size : 0;
     size_t right =
         (i + window_size <= len2 - 1) ? (i + window_size) : (len2 - 1);
     if (right > len2 - 1)
