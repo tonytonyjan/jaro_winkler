@@ -1,23 +1,30 @@
 language: ruby
-before_install: gem update bundler
+before_install:
+  - gem update --system
+  - gem update bundler
 bundler_args: --without benchmark
 os:
   - linux
   - osx
 rvm:
+  - 2.5.0
+  - 2.4.3
   - 2.3.5
-  - 2.2.8
+  - 2.2.9
   - 2.1.10
   - 2.0.0
   - 1.9.3
   - jruby-19mode
-  - rbx-3.86
 matrix:
+  exclude:
+    - rvm: 2.0.0
+      os: osx
+    - rvm: 1.9.3
+      os: osx
   include:
-    # https://github.com/travis-ci/travis-ci/issues/7848
-    - os: osx
-      rvm: ruby-head
-      osx_image: xcode9
-    - os: osx
-      rvm: 2.4.2
-      osx_image: xcode9
+    - rvm: 2.0.0
+      os: osx
+      osx_image: xcode7.3
+    - rvm: 1.9.3
+      os: osx
+      osx_image: xcode7.3
