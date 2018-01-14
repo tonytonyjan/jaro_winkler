@@ -1,0 +1,9 @@
+#!/bin/sh
+echo version,label,utime,stime,cutime,cstime,real
+gem search -ear jaro_winkler \
+  | grep -o '\((.*)\)$' \
+  | tr -d '() ' \
+  | tr ',' "\n" \
+  | grep -o '\d\.\d\.\d' \
+  | sort \
+  | xargs -I{} ruby "`dirname $0`"/../benchmark/measure.rb '{}'
