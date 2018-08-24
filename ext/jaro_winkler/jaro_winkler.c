@@ -27,11 +27,8 @@ VALUE distance(size_t argc, VALUE *argv, VALUE self,
                                      uint32_t *codepoints2, size_t len2,
                                      Options *)) {
   VALUE s1, s2, opt;
-  CodePoints cp1, cp2;
 
   rb_scan_args((int32_t)argc, argv, "2:", &s1, &s2, &opt);
-  codepoints_init(&cp1, s1);
-  codepoints_init(&cp2, s2);
 
   Options c_opt = DEFAULT_OPTIONS;
   if (TYPE(opt) == T_HASH) {
@@ -54,6 +51,9 @@ VALUE distance(size_t argc, VALUE *argv, VALUE self,
       c_opt.adj_table =
           (TYPE(adj_table) == T_FALSE || NIL_P(adj_table)) ? 0 : 1;
   }
+  CodePoints cp1, cp2;
+  codepoints_init(&cp1, s1);
+  codepoints_init(&cp2, s2);
   VALUE ret = rb_float_new(
       (*distance_fn)(cp1.data, cp1.length, cp2.data, cp2.length, &c_opt));
   codepoints_free(&cp1);
