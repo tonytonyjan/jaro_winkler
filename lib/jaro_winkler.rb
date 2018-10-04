@@ -2,7 +2,7 @@
 
 require 'jaro_winkler/version'
 
-if RUBY_ENGINE == 'ruby' && ENV['JARO_WINKLER_PURE_RUBY'].nil?
+if RUBY_ENGINE == 'ruby' && File.exists? 'jaro_winkler/jaro_winkler_ext'
   require 'jaro_winkler/jaro_winkler_ext'
 else
   require 'jaro_winkler/jaro_winkler_pure'
