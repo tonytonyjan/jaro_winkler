@@ -39,6 +39,13 @@ weight      | number  | 0.1     | A constant scaling factor for how much the sco
 threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above the threshold.
 adj_table   | boolean | false   | The option is used to give partial credit for characters that may be errors due to known phonetic or character recognition errors. A typical example is to match the letter "O" with the number "0".
 
+## Selecting Pure Ruby flavor
+
+```
+export JARO_WINKLER_PURE_RUBY=true
+gem install jaro_winkler
+```
+
 # Adjusting Table
 
 ## Default Table
