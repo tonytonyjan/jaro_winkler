@@ -59,7 +59,7 @@ task compare: :compile do
   table.each{|row| puts row.join(' | ')}
 end
 
-if RUBY_ENGINE == 'ruby'
+if RUBY_ENGINE == 'ruby' && ENV[JARO_WINKLER_PURE_RUBY].nil?
   Rake::ExtensionTask.new 'jaro_winkler_ext' do |ext|
     ext.lib_dir = 'lib/jaro_winkler'
     ext.ext_dir = 'ext/jaro_winkler'
