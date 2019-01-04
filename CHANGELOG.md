@@ -1,4 +1,17 @@
-<a name="1.5.0"></a>
+## [1.5.2](https://github.com/tonytonyjan/jaro_winkler/compare/v1.5.1...v1.5.2) (2019-01-04)
+
+
+### Bug Fixes
+
+* raises TypeError when input type is not string ([c146491](https://github.com/tonytonyjan/jaro_winkler/commit/c146491)), closes [#24](https://github.com/tonytonyjan/jaro_winkler/issues/24)
+* **memory:** make sure codepoints will be allocated/freed after rb_raise to prevent memory leak ([fe9d784](https://github.com/tonytonyjan/jaro_winkler/commit/fe9d784)), closes [#20](https://github.com/tonytonyjan/jaro_winkler/issues/20)
+
+
+
+## [1.5.1](https://github.com/tonytonyjan/jaro_winkler/compare/v1.5.0...v1.5.1) (2018-06-06)
+
+
+
 # [1.5.0](https://github.com/tonytonyjan/jaro_winkler/compare/v1.4.0...v1.5.0) (2017-10-02)
 
 
