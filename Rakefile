@@ -82,8 +82,9 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
-spec = Gem::Specification.load(File.expand_path('../jaro_winkler.gemspec', __FILE__))
-Gem::PackageTask.new(spec).define
+%w[jaro_winkler jaro_winkler.java]
+  .map { |name| Gem::Specification.load(File.expand_path("../#{name}.gemspec", __FILE__)) }
+  .each { |spec| Gem::PackageTask.new(spec).define }
 
 task 'CHANGELOG.md' do
   sh 'conventional-changelog -p angular -i CHANGELOG.md -s'

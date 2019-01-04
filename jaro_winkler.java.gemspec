@@ -1,4 +1,4 @@
-# coding: utf-8
+# frozen_string_literal: true
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'jaro_winkler/version'
@@ -8,7 +8,6 @@ Gem::Specification.new do |spec|
   spec.version = JaroWinkler::VERSION
   spec.authors = ['Jian Weihang']
   spec.email = 'tonytonyjan@gmail.com'
-  spec.extensions = ['ext/jaro_winkler/extconf.rb']
   spec.summary = 'An implementation of Jaro-Winkler distance algorithm written \
   in C extension which supports any kind of string encoding.'
   spec.description = 'jaro_winkler is an implementation of Jaro-Winkler \
@@ -18,9 +17,10 @@ Gem::Specification.new do |spec|
   UTF-8, EUC-JP, Big5, etc.'
   spec.homepage = 'https://github.com/tonytonyjan/jaro_winkler'
   spec.license = 'MIT'
-  spec.files = Dir['lib/**/*.rb', 'ext/**/*.{h,c}']
+  spec.files = Dir['lib/**/*.rb']
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rake-compiler'
   spec.add_development_dependency 'minitest'
+  spec.platform = 'java'
 end
