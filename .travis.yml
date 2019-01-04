@@ -1,8 +1,8 @@
 language: ruby
 before_install:
-  - gem update --system
-  - gem update bundler
-bundler_args: --without benchmark
+  - gem install -v '1.17.3' bundler
+install: bundle _1.17.3_ install
+bundler_args: --jobs 3 --retry 3 --without benchmark
 os:
   - linux
   - osx
@@ -14,7 +14,6 @@ rvm:
   - 2.1.10
   - 2.0.0
   - 1.9.3
-  - jruby-19mode
 matrix:
   exclude:
     - rvm: 2.0.0

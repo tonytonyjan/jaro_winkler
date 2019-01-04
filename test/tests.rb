@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Tests
   def test_distance
     assert_distance 0.9667, 'henka',       'henkan'
