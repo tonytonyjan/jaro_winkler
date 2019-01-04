@@ -72,7 +72,13 @@ end
 
 Rake::TestTask.new do |t|
   t.libs << 'test'
-  t.test_files = FileList['test/**/test_*.rb']
+  t.test_files = FileList['test/test_jaro_winkler.rb']
+  t.verbose = true
+end
+
+Rake::TestTask.new do |t|
+  t.libs << 'test'
+  t.test_files = FileList['test/test_pure_ruby.rb']
   t.verbose = true
 end
 
