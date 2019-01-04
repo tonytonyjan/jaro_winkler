@@ -30,6 +30,8 @@ VALUE distance(size_t argc, VALUE *argv, VALUE self,
 
   rb_scan_args((int32_t)argc, argv, "2:", &s1, &s2, &opt);
 
+  Check_Type(s1, T_STRING);
+  Check_Type(s2, T_STRING);
   Options c_opt = DEFAULT_OPTIONS;
   if (TYPE(opt) == T_HASH) {
     VALUE weight = rb_hash_aref(opt, ID2SYM(rb_intern("weight"))),
