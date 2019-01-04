@@ -14,10 +14,12 @@ module JaroWinkler
 
   class << self
     def distance(str1, str2, options = {})
+      validate!(str1, str2)
       _distance str1.codepoints.to_a, str2.codepoints.to_a, options
     end
 
     def jaro_distance(str1, str2, options = {})
+      validate!(str1, str2)
       _jaro_distance str1.codepoints.to_a, str2.codepoints.to_a, options
     end
 
@@ -124,6 +126,10 @@ module JaroWinkler
       t = transposition_count / 2
       m = similar_count / 10.0 + m if options[:adj_table]
       (m / len1 + m / len2 + (m - t) / m) / 3
+    end
+
+    def validate!(str1, str2)
+      raise TypeError unless str1.is_a?(String) && str2.is_a?(String)
     end
   end
 end

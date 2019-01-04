@@ -98,6 +98,15 @@ module Tests
     assert_distance 1.0, "\xe8".force_encoding('iso8859-1'), 'è'
   end
 
+  def test_raises_type_error
+    assert_raises(TypeError){ JaroWinkler.distance 'MARTHA', nil }
+    assert_raises(TypeError){ JaroWinkler.distance nil, 'MARTHA' }
+    assert_raises(TypeError){ JaroWinkler.distance nil, nil }
+    assert_raises(TypeError){ JaroWinkler.distance 'MARTHA', :non_string }
+    assert_raises(TypeError){ JaroWinkler.distance :non_string, 'MARTHA' }
+    assert_raises(TypeError){ JaroWinkler.distance :non_string, :non_string }
+  end
+
 private
 
   def assert_distance score, str1, str2, options={}
