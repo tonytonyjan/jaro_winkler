@@ -2,7 +2,8 @@ require 'rubygems/package_task'
 require 'rake/extensiontask'
 require 'rake/testtask'
 
-task default: %w[test:pure_ruby test:compiled]
+task default: :test
+task test: %w[test:pure_ruby test:compiled]
 
 task benchmark: %w[benchmark:native benchmark:pure]
 
