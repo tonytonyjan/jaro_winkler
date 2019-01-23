@@ -2,7 +2,8 @@ require 'rubygems/package_task'
 require 'rake/extensiontask'
 require 'rake/testtask'
 
-task default: [:compile, :test]
+task default: :test
+task test: %w[test:pure_ruby test:compiled]
 
 task benchmark: %w[benchmark:native benchmark:pure]
 
@@ -70,16 +71,18 @@ else
   end
 end
 
-Rake::TestTask.new do |t|
-  t.libs << 'test'
-  t.test_files = FileList['test/test_jaro_winkler.rb']
-  t.verbose = true
-end
+namespace :test do
+  Rake::TestTask.new(:compiled => :compile) do |t|
+    t.libs << 'test'
+    t.test_files = FileList['test/test_jaro_winkler.rb']
+    t.verbose = true
+  end
 
-Rake::TestTask.new do |t|
-  t.libs << 'test'
-  t.test_files = FileList['test/test_pure_ruby.rb']
-  t.verbose = true
+  Rake::TestTask.new(:pure_ruby) do |t|
+    t.libs << 'test'
+    t.test_files = FileList['test/test_pure_ruby.rb']
+    t.verbose = true
+  end
 end
 
 %w[jaro_winkler jaro_winkler.java]
