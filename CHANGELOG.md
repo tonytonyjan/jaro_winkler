@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/tonytonyjan/jaro_winkler/compare/v1.5.2...v1.5.3) (2019-06-18)
+
+
+* Fall back to pure ruby implementation on LoadError ([49f811e](https://github.com/tonytonyjan/jaro_winkler/commit/49f811e))
+* Rename Rake tasks for test ([42e0a36](https://github.com/tonytonyjan/jaro_winkler/commit/42e0a36))
+
+
 ## [1.5.2](https://github.com/tonytonyjan/jaro_winkler/compare/v1.5.1...v1.5.2) (2019-01-04)
 
 
