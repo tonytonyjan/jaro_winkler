@@ -17,6 +17,12 @@ Gem::Specification.new do |spec|
   UTF-8, EUC-JP, Big5, etc.'
   spec.homepage = 'https://github.com/tonytonyjan/jaro_winkler'
   spec.license = 'MIT'
+  spec.metadata = {
+    'bug_tracker_uri' => 'https://github.com/tonytonyjan/jaro_winkler/issues',
+    'changelog_uri' => "https://github.com/tonytonyjan/jaro_winkler/blob/v#{spec.version}/CHANGELOG.md",
+    'documentation_uri' => "https://www.rubydoc.info/gems/jaro_winkler/#{spec.version}",
+    'source_code_uri' => "https://github.com/tonytonyjan/jaro_winkler/tree/v#{spec.version}",
+  }
   spec.files = Dir['lib/**/*.rb', 'LICENSE.txt']
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 12.0'
