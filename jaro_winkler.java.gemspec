@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   UTF-8, EUC-JP, Big5, etc.'
   spec.homepage = 'https://github.com/tonytonyjan/jaro_winkler'
   spec.license = 'MIT'
-  spec.files = Dir['lib/**/*.rb']
+  spec.files = Dir['lib/**/*.rb', 'LICENSE.txt']
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rake-compiler'
