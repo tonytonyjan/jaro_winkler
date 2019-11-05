@@ -1,3 +1,7 @@
+# [1.5.4](https://github.com/tonytonyjan/jaro_winkler/compare/v1.5.3...v1.5.4) (2019-11-05)
+
+* Add license file to gem package.
+
 ## [1.5.3](https://github.com/tonytonyjan/jaro_winkler/compare/v1.5.2...v1.5.3) (2019-06-18)
 
 
