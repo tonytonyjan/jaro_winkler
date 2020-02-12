@@ -1,0 +1,58 @@
+name: jaro_winkler
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: >-
+      ${{ matrix.os }}, ${{ matrix.ruby }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-18.04, macos ]
+        ruby: [ 2.2, 2.3, 2.4, 2.5, 2.6, 2.7 ]
+
+    steps:
+      - name: repo checkout
+        uses: actions/checkout@v2
+
+      - name: setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: bundle install
+        run:  bundle install --without benchmark --jobs 4 --retry 3
+
+      - name: test:compiled
+        run:  rake test:compiled
+      - name: test:pure_ruby
+        run:  rake test:pure_ruby
+
+  win32:
+    name: >-
+      ${{ matrix.os }}, ${{ matrix.ruby }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest ]
+        ruby: [ 2.2, 2.3, 2.4, 2.5, 2.6, 2.7 ]
+
+    steps:
+      - name: repo checkout
+        uses: actions/checkout@v2
+
+      - name: setup Ruby, update MSYS2 gcc
+        uses: MSP-Greg/actions-ruby@v1
+        with:
+          base:  update
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: bundle install
+        run:  bundle install --without benchmark --jobs 4 --retry 3
+
+      - name: test:compiled
+        run:  rake test:compiled
+      - name: test:pure_ruby
+        run:  rake test:pure_ruby
