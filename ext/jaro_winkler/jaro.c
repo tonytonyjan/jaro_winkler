@@ -8,9 +8,9 @@
 
 #define DEFAULT_WEIGHT 0.1
 #define DEFAULT_THRESHOLD 0.7
-#define SWAP(x, y)                                                             \
+#define SWAP(type, x, y)                                                       \
   do {                                                                         \
-    __typeof__(x) SWAP = x;                                                    \
+    type SWAP = x;                                                             \
     x = y;                                                                     \
     y = SWAP;                                                                  \
   } while (0)
@@ -27,8 +27,8 @@ double jaro_distance_from_codes(uint32_t *codepoints1, size_t len1,
     return 0.0;
 
   if (len1 > len2) {
-    SWAP(codepoints1, codepoints2);
-    SWAP(len1, len2);
+    SWAP(uint32_t*, codepoints1, codepoints2);
+    SWAP(size_t, len1, len2);
   }
 
   if (opt->ignore_case) {
@@ -42,8 +42,8 @@ double jaro_distance_from_codes(uint32_t *codepoints1, size_t len1,
   if (window_size < 0)
     window_size = 0;
 
-  char short_codes_flag[len1];
-  char long_codes_flag[len2];
+  char * short_codes_flag = malloc(len1*sizeof(char));
+  char * long_codes_flag = malloc(len2*sizeof(char));
   memset(short_codes_flag, 0, len1);
   memset(long_codes_flag, 0, len2);
 
@@ -64,8 +64,11 @@ double jaro_distance_from_codes(uint32_t *codepoints1, size_t len1,
     }
   }
 
-  if (!match_count)
+  if (!match_count) {
+    free(short_codes_flag);
+    free(long_codes_flag);
     return 0.0;
+  }
 
   // count number of transpositions
   size_t transposition_count = 0, j = 0, k = 0;
@@ -99,6 +102,10 @@ double jaro_distance_from_codes(uint32_t *codepoints1, size_t len1,
   double t = (double)(transposition_count / 2);
   if (opt->adj_table)
     m = similar_count / 10.0 + m;
+
+  free(short_codes_flag);
+  free(long_codes_flag);
+
   return (m / len1 + m / len2 + (m - t) / m) / 3;
 }
 
