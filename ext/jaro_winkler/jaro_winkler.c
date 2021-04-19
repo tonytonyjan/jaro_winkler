@@ -12,6 +12,11 @@ VALUE distance(size_t argc, VALUE *argv, VALUE self,
                                      Options *));
 
 void Init_jaro_winkler_ext(void) {
+
+#ifdef HAVE_RB_EXT_RACTOR_SAFE
+    rb_ext_ractor_safe(true);
+#endif
+
   rb_mJaroWinkler = rb_define_module("JaroWinkler");
   rb_eError = rb_define_class_under(rb_mJaroWinkler, "Error", rb_eRuntimeError);
   rb_eInvalidWeightError =
