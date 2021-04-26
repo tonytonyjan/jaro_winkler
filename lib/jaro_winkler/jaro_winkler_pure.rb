@@ -35,7 +35,6 @@ module JaroWinkler
       else
         codes1, codes2 = codes2, codes1 if codes1.length > codes2.length
         len1 = codes1.length
-        len2 = codes2.length
         max_4 = len1 > 4 ? 4 : len1
         prefix = 0
         prefix += 1 while prefix < max_4 && codes1[prefix] == codes2[prefix]
