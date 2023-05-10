@@ -4,9 +4,9 @@
 
 VALUE rb_mJaroWinkler, rb_eError, rb_eInvalidWeightError;
 
-VALUE rb_jaro_winkler_distance(size_t argc, VALUE *argv, VALUE self);
-VALUE rb_jaro_distance(size_t argc, VALUE *argv, VALUE self);
-VALUE distance(size_t argc, VALUE *argv, VALUE self,
+VALUE rb_jaro_winkler_distance(int argc, VALUE *argv, VALUE self);
+VALUE rb_jaro_distance(int argc, VALUE *argv, VALUE self);
+VALUE distance(int argc, VALUE *argv, VALUE self,
                double (*distance_fn)(uint32_t *codepoints1, size_t len1,
                                      uint32_t *codepoints2, size_t len2,
                                      Options *));
@@ -22,13 +22,13 @@ void Init_jaro_winkler_ext(void) {
                              -1);
 }
 
-VALUE distance(size_t argc, VALUE *argv, VALUE self,
+VALUE distance(int argc, VALUE *argv, VALUE self,
                double (*distance_fn)(uint32_t *codepoints1, size_t len1,
                                      uint32_t *codepoints2, size_t len2,
                                      Options *)) {
   VALUE s1, s2, opt;
 
-  rb_scan_args((int32_t)argc, argv, "2:", &s1, &s2, &opt);
+  rb_scan_args(argc, argv, "2:", &s1, &s2, &opt);
 
   Check_Type(s1, T_STRING);
   Check_Type(s2, T_STRING);
@@ -63,10 +63,10 @@ VALUE distance(size_t argc, VALUE *argv, VALUE self,
   return ret;
 }
 
-VALUE rb_jaro_distance(size_t argc, VALUE *argv, VALUE self) {
+VALUE rb_jaro_distance(int argc, VALUE *argv, VALUE self) {
   return distance(argc, argv, self, jaro_distance_from_codes);
 }
 
-VALUE rb_jaro_winkler_distance(size_t argc, VALUE *argv, VALUE self) {
+VALUE rb_jaro_winkler_distance(int argc, VALUE *argv, VALUE self) {
   return distance(argc, argv, self, jaro_winkler_distance_from_codes);
 }
