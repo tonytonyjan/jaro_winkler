@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/tonytonyjan/jaro_winkler.svg?branch=master)](https://travis-ci.org/tonytonyjan/jaro_winkler)
+![test](https://github.com/tonytonyjan/jaro_winkler/actions/workflows/test.yml/badge.svg)
 
 [jaro_winkler](https://rubygems.org/gems/jaro_winkler) is an implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm which is written in C extension and will fallback to pure Ruby version in platforms other than MRI/KRI like JRuby or Rubinius. **Both of C and Ruby implementation support any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.**
 

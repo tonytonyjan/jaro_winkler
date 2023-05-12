@@ -1,0 +1,31 @@
+name: Test
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    env:
+      BUNDLE_WITHOUT: benchmark
+    continue-on-error: ${{ matrix.fallible }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - macos-13
+        ruby:
+          - "2.7"
+          - head
+        include:
+          - fallible: false
+          - ruby: head
+            fallible: true
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - run: bundle exec rake
