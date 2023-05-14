@@ -12,8 +12,11 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
+          - ubuntu-22.04
           - macos-latest
           - macos-13
+          - windows-latest
+          - windows-2022
         ruby:
           - "2.7"
           - "3.0"
@@ -23,6 +26,12 @@ jobs:
         include:
           - fallible: false
           - ruby: head
+            fallible: true
+          - os: ubuntu-latest
+            fallible: true
+          - os: windows-latest
+            fallible: true
+          - os: macos-latest
             fallible: true
     runs-on: ${{ matrix.os }}
     steps:
