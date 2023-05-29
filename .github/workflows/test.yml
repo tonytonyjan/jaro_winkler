@@ -1,0 +1,43 @@
+name: Test
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    env:
+      BUNDLE_WITHOUT: benchmark
+    continue-on-error: ${{ matrix.fallible }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - ubuntu-22.04
+          - macos-latest
+          - macos-13
+          - windows-latest
+          - windows-2022
+        ruby:
+          - "2.7"
+          - "3.0"
+          - "3.1"
+          - "3.2"
+          - head
+        include:
+          - fallible: false
+          - ruby: head
+            fallible: true
+          - os: ubuntu-latest
+            fallible: true
+          - os: windows-latest
+            fallible: true
+          - os: macos-latest
+            fallible: true
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - run: bundle exec rake

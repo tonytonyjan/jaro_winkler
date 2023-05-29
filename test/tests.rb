@@ -109,15 +109,15 @@ module Tests
 
 private
 
-  def assert_distance score, str1, str2, options={}
-    assert_in_delta score, JaroWinkler.distance(str1, str2, options)
+  def assert_distance score, str1, str2, **options
+    assert_in_delta score, JaroWinkler.distance(str1, str2, **options)
   end
 
-  def assert_encoding str1, str2, encoding, options={}
+  def assert_encoding str1, str2, encoding, **options
     assert_distance JaroWinkler.distance(str1, str2), str1.encode(encoding), str2.encode(encoding)
   end
 
-  def assert_jaro_distance score, str1, str2, options={}
-    assert_in_delta score, JaroWinkler.jaro_distance(str1, str2, options)
+  def assert_jaro_distance score, str1, str2, **options
+    assert_in_delta score, JaroWinkler.jaro_distance(str1, str2, **options)
   end
 end

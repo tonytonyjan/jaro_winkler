@@ -25,8 +25,7 @@ Gem::Specification.new do |spec|
     'source_code_uri' => "https://github.com/tonytonyjan/jaro_winkler/tree/v#{spec.version}",
   }
   spec.files = Dir['lib/**/*.rb', 'ext/**/*.{h,c}', 'LICENSE.txt']
-  spec.add_development_dependency 'bundler', '~> 1.7'
-  spec.add_development_dependency 'rake', '~> 12.0'
+  spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rake-compiler'
   spec.add_development_dependency 'minitest'
 end
