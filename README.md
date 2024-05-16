@@ -1,6 +1,6 @@
 ![test](https://github.com/tonytonyjan/jaro_winkler/actions/workflows/test.yml/badge.svg)
 
-[jaro_winkler](https://rubygems.org/gems/jaro_winkler) is an implementation of [Jaro-Winkler distance](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm which is written in C extension and will fallback to pure Ruby version in platforms other than MRI/KRI like JRuby or Rubinius. **Both of C and Ruby implementation support any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.**
+[jaro_winkler](https://rubygems.org/gems/jaro_winkler) is an implementation of [Jaro-Winkler similarity](http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) algorithm which is written in C extension and will fallback to pure Ruby version in platforms other than MRI/KRI like JRuby or Rubinius. **Both of C and Ruby implementation support any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.**
 
 # Installation
 
@@ -13,22 +13,22 @@ gem install jaro_winkler
 ```ruby
 require 'jaro_winkler'
 
-# Jaro Winkler Distance
+# Jaro Winkler Similarity
 
-JaroWinkler.distance "MARTHA", "MARHTA"
+JaroWinkler.similarity "MARTHA", "MARHTA"
 # => 0.9611
-JaroWinkler.distance "MARTHA", "marhta", ignore_case: true
+JaroWinkler.similarity "MARTHA", "marhta", ignore_case: true
 # => 0.9611
-JaroWinkler.distance "MARTHA", "MARHTA", weight: 0.2
+JaroWinkler.similarity "MARTHA", "MARHTA", weight: 0.2
 # => 0.9778
 
-# Jaro Distance
+# Jaro Similarity
 
-JaroWinkler.jaro_distance "MARTHA", "MARHTA"
+JaroWinkler.jaro_similarity "MARTHA", "MARHTA"
 # => 0.9444444444444445
 ```
 
-There is no `JaroWinkler.jaro_winkler_distance`, it's tediously long.
+There is no `JaroWinkler.jaro_winkler_similarity`, it's tediously long.
 
 ## Options
 
@@ -36,7 +36,7 @@ Name        | Type    | Default | Note
 ----------- | ------  | ------- | ------------------------------------------------------------------------------------------------------------
 ignore_case | boolean | false   | All lower case characters are converted to upper case prior to the comparison.
 weight      | number  | 0.1     | A constant scaling factor for how much the score is adjusted upwards for having common prefixes.
-threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro distance above the threshold.
+threshold   | number  | 0.7     | The prefix bonus is only added when the compared strings have a Jaro similarity above the threshold.
 adj_table   | boolean | false   | The option is used to give partial credit for characters that may be errors due to known phonetic or character recognition errors. A typical example is to match the letter "O" with the number "0".
 
 # Adjusting Table
