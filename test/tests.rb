@@ -122,7 +122,7 @@ private
   end
 
   def assert_encoding str1, str2, encoding, **options
-    assert_distance JaroWinkler.distance(str1, str2), str1.encode(encoding), str2.encode(encoding)
+    assert_similarity JaroWinkler.distance(str1, str2), str1.encode(encoding), str2.encode(encoding)
   end
 
   def assert_jaro_distance score, str1, str2, **options
