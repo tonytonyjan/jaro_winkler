@@ -47,7 +47,7 @@ task compare: :compile do
   table << %w[--- --- --- --- --- ---]
   jarow = FuzzyStringMatch::JaroWinkler.create(:native)
   @ary.each do |str_1, str_2|
-    table << ["\"#{str_1}\"", "\"#{str_2}\"", JaroWinkler.distance(str_1, str_2).round(4), jarow.getDistance(str_1, str_2).round(4), Hotwater.jaro_winkler_distance(str_1, str_2).round(4), Amatch::Jaro.new(str_1).match(str_2).round(4)]
+    table << ["\"#{str_1}\"", "\"#{str_2}\"", JaroWinkler.similarity(str_1, str_2).round(4), jarow.getDistance(str_1, str_2).round(4), Hotwater.jaro_winkler_distance(str_1, str_2).round(4), Amatch::Jaro.new(str_1).match(str_2).round(4)]
   end
   col_len = []
   table.first.length.times{ |i| col_len << table.map{ |row| row[i].to_s.length }.max }
