@@ -28,8 +28,8 @@ if version >= Gem::Version.new('1.2.0')
 end
 
 if version >= Gem::Version.new('1.4.0')
-  jobs[:ascii] = -> { n.times { SAMPLES[:ascii].each { |str1, str2| JaroWinkler.distance(str1, str2) } } }
-  jobs[:utf8] = -> { n.times { SAMPLES[:utf8].each { |str1, str2| JaroWinkler.distance(str1, str2) } } }
+  jobs[:ascii] = -> { n.times { SAMPLES[:ascii].each { |str1, str2| JaroWinkler.similarity(str1, str2) } } }
+  jobs[:utf8] = -> { n.times { SAMPLES[:utf8].each { |str1, str2| JaroWinkler.similarity(str1, str2) } } }
 end
 
 # rehearsal
