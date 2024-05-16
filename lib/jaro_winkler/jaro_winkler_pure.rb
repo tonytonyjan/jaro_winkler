@@ -14,7 +14,7 @@ module JaroWinkler
 
   class << self
     def distance(str1, str2, options = {})
-      warn("JaroWinkler.distance is deprecated. Use JaroWinkler.similarity instead.", category: :deprecated)
+      warn("JaroWinkler.distance is deprecated. Use JaroWinkler.similarity instead.")
       similarity(str1, str2, options)
     end
 
@@ -24,7 +24,7 @@ module JaroWinkler
     end
 
     def jaro_distance(str1, str2, options = {})
-      warn("JaroWinkler.jaro_distance is deprecated. Use JaroWinkler.jaro_similarity instead.", category: :deprecated)
+      warn("JaroWinkler.jaro_distance is deprecated. Use JaroWinkler.jaro_similarity instead.")
       jaro_similarity(str1, str2, options)
     end
 

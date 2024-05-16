@@ -75,10 +75,7 @@ VALUE distance(int argc, VALUE *argv, VALUE self,
 }
 
 VALUE rb_jaro_distance(int argc, VALUE *argv, VALUE self) {
-  rb_category_warn(
-    RB_WARN_CATEGORY_DEPRECATED,
-    "JaroWinkler.jaro_distance is deprecated. Use JaroWinkler.jaro_similarity instead."
-  );
+  rb_warn("JaroWinkler.jaro_distance is deprecated. Use JaroWinkler.jaro_similarity instead.");
   return rb_jaro_similarity(argc, argv, self);
 }
 
@@ -87,10 +84,7 @@ VALUE rb_jaro_similarity(int argc, VALUE *argv, VALUE self) {
 }
 
 VALUE rb_jaro_winkler_distance(int argc, VALUE *argv, VALUE self) {
-  rb_category_warn(
-    RB_WARN_CATEGORY_DEPRECATED,
-    "JaroWinkler.distance is deprecated. Use JaroWinkler.similarity instead."
-  );
+  rb_warn("JaroWinkler.distance is deprecated. Use JaroWinkler.similarity instead.");
   return rb_jaro_winkler_similarity(argc, argv, self);
 }
 
