@@ -5,7 +5,9 @@
 VALUE rb_mJaroWinkler, rb_eError, rb_eInvalidWeightError;
 
 VALUE rb_jaro_winkler_distance(int argc, VALUE *argv, VALUE self);
+VALUE rb_jaro_winkler_similarity(int argc, VALUE *argv, VALUE self);
 VALUE rb_jaro_distance(int argc, VALUE *argv, VALUE self);
+VALUE rb_jaro_similarity(int argc, VALUE *argv, VALUE self);
 VALUE distance(int argc, VALUE *argv, VALUE self,
                double (*distance_fn)(uint32_t *codepoints1, size_t len1,
                                      uint32_t *codepoints2, size_t len2,
@@ -24,6 +26,10 @@ void Init_jaro_winkler_ext(void) {
   rb_define_singleton_method(rb_mJaroWinkler, "distance",
                              rb_jaro_winkler_distance, -1);
   rb_define_singleton_method(rb_mJaroWinkler, "jaro_distance", rb_jaro_distance,
+                             -1);
+  rb_define_singleton_method(rb_mJaroWinkler, "similarity",
+                             rb_jaro_winkler_similarity, -1);
+  rb_define_singleton_method(rb_mJaroWinkler, "jaro_similarity", rb_jaro_similarity,
                              -1);
 }
 
@@ -69,9 +75,19 @@ VALUE distance(int argc, VALUE *argv, VALUE self,
 }
 
 VALUE rb_jaro_distance(int argc, VALUE *argv, VALUE self) {
+  rb_warn("JaroWinkler.jaro_distance is deprecated. Use JaroWinkler.jaro_similarity instead.");
+  return rb_jaro_similarity(argc, argv, self);
+}
+
+VALUE rb_jaro_similarity(int argc, VALUE *argv, VALUE self) {
   return distance(argc, argv, self, jaro_distance_from_codes);
 }
 
 VALUE rb_jaro_winkler_distance(int argc, VALUE *argv, VALUE self) {
+  rb_warn("JaroWinkler.distance is deprecated. Use JaroWinkler.similarity instead.");
+  return rb_jaro_winkler_similarity(argc, argv, self);
+}
+
+VALUE rb_jaro_winkler_similarity(int argc, VALUE *argv, VALUE self) {
   return distance(argc, argv, self, jaro_winkler_distance_from_codes);
 }
