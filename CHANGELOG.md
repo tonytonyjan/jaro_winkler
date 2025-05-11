@@ -1,4 +1,10 @@
-## 1.6.0 (2024-08-28)
+## 1.6.1 (2025-05-11)
+
+* chore: use "similarity" methods over deprecated "distance" methods for rake tasks ([b8bbec0](https://github.com/tonytonyjan/jaro_winkler/commit/b8bbec0))
+* ci: update strategy matrix ([8e4b0ef](https://github.com/tonytonyjan/jaro_winkler/commit/8e4b0ef))
+* feat: Use `append_cflags` instead of `CFLAGS` environment varaible ([f8f13a0](https://github.com/tonytonyjan/jaro_winkler/commit/f8f13a0))
+
+## <small>1.6.0 (2024-08-28)</small>
 
 * chore: chore: bump version to v1.6.0 ([483e7ca](https://github.com/tonytonyjan/jaro_winkler/commit/483e7ca))
 * fix: add "similarity" methods and deprecate "distance" methods ([1682f94](https://github.com/tonytonyjan/jaro_winkler/commit/1682f94))
