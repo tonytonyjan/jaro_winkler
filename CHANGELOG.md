@@ -1,3 +1,7 @@
+## 1.7.1 (2026-11-25)
+
+* Fix native stack overflow on long inputs in jaro_distance_from_codes ([GHSA-vc49-xjm8-cjjg](https://github.com/tonytonyjan/jaro_winkler/security/advisories/GHSA-vc49-xjm8-cjjg)) ([7128655](https://github.com/tonytonyjan/jaro_winkler/commit/7128655))
+
 ## 1.7.0 (2026-02-11)
 
 * Allow compiling the gem with MSVC (which is not C99 compliant) ([1c80dbf](https://github.com/tonytonyjan/jaro_winkler/commit/1c80dbf))
