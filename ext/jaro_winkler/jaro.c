@@ -6,22 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if HAVE_ALLOCA_H
-# include <alloca.h>
-#elif defined __GNUC__
-# define alloca __builtin_alloca
-#elif defined _AIX
-# define alloca __alloca
-#elif defined _MSC_VER
-# include <malloc.h>
-# define alloca _alloca
-#else
-# include <stddef.h>
-# ifdef  __cplusplus
-extern "C"
-# endif
-void *alloca (size_t);
-#endif
+#include "ruby.h"
 
 #define DEFAULT_WEIGHT 0.1
 #define DEFAULT_THRESHOLD 0.7
@@ -59,10 +44,16 @@ double jaro_distance_from_codes(uint32_t *codepoints1, size_t len1,
   if (window_size < 0)
     window_size = 0;
 
-  char * short_codes_flag = alloca(len1);
-  char * long_codes_flag = alloca(len2);
-  memset(short_codes_flag, 0, len1);
-  memset(long_codes_flag, 0, len2);
+  // Allocate the match flags on the heap rather than the stack: len1 and len2
+  // come from untrusted input and are unbounded, so a stack allocation here
+  // could overflow the (small) native stack of a Ruby Thread or Fiber.
+  char *short_codes_flag = calloc(len1, 1);
+  char *long_codes_flag = calloc(len2, 1);
+  if (!short_codes_flag || !long_codes_flag) {
+    free(short_codes_flag);
+    free(long_codes_flag);
+    rb_memerror();
+  }
 
   // count number of matching characters
   size_t match_count = 0;
@@ -81,8 +72,11 @@ double jaro_distance_from_codes(uint32_t *codepoints1, size_t len1,
     }
   }
 
-  if (!match_count)
+  if (!match_count) {
+    free(short_codes_flag);
+    free(long_codes_flag);
     return 0.0;
+  }
 
   // count number of transpositions
   size_t transposition_count = 0, j = 0, k = 0;
@@ -111,6 +105,9 @@ double jaro_distance_from_codes(uint32_t *codepoints1, size_t len1,
               similar_count += 3;
               break;
             }
+
+  free(short_codes_flag);
+  free(long_codes_flag);
 
   double m = (double)match_count;
   double t = (double)(transposition_count / 2);
